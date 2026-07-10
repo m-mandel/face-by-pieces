@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1179 2556">
+  <circle cx="589.5" cy="1508" r="185.71" fill="#fff" stroke="#000" stroke-miterlimit="10"/>
+  <rect y="1750.86" width="1179" height="805.14" fill="#fff" stroke="#000" stroke-miterlimit="10"/>
+  <rect x="48.82" y="1803.71" width="1091.75" height="137.14" fill="#fff" stroke="#000" stroke-miterlimit="10"/>
+  <rect x="134.86" y="352.29" width="911.43" height="911.43" fill="#fff" stroke="#000" stroke-miterlimit="10"/>
+  <text transform="translate(436.12 848.48)" font-family="MyriadHebrew-Regular, &apos;Myriad Hebrew&apos;" font-size="170.14"><tspan x="0" y="0">SVG</tspan></text>
+  <text transform="translate(246.1633 1928.4844)" font-family="MyriadHebrew-Regular, &apos;Myriad Hebrew&apos;" font-size="170.14"><tspan x="0" y="0">Input box</tspan></text>
+  <text transform="translate(468.3275 1533.0288)" font-family="MyriadHebrew-Regular, &apos;Myriad Hebrew&apos;" font-size="82.29"><tspan x="0" y="0">refresh</tspan></text>
+  <rect x="84.86" y="75.14" width="100" height="100" fill="none" stroke="#000" stroke-miterlimit="10"/>
+  <rect x="84.86" y="226.57" width="903.02" height="162.11" fill="none" stroke="#000" stroke-miterlimit="10"/>
+  <rect x="84.86" y="388.68" width="903.02" height="162.11" fill="none" stroke="#000" stroke-miterlimit="10"/>
+  <rect x="84.86" y="550.79" width="903.02" height="162.11" fill="none" stroke="#000" stroke-miterlimit="10"/>
+  <rect x="84.86" y="712.9" width="903.02" height="162.11" fill="none" stroke="#000" stroke-miterlimit="10"/>
+  <text transform="translate(132 337.04)" font-family="MyriadHebrew-Regular, &apos;Myriad Hebrew&apos;" font-size="99.06"><tspan x="0" y="0">1 element</tspan></text>
+  <text transform="translate(132 506.73)" font-family="MyriadHebrew-Regular, &apos;Myriad Hebrew&apos;" font-size="99.06"><tspan x="0" y="0">2 elements</tspan></text>
+  <text transform="translate(132 657.2)" font-family="MyriadHebrew-Regular, &apos;Myriad Hebrew&apos;" font-size="99.06"><tspan x="0" y="0">4 element</tspan></text>
+  <text transform="translate(132 808)" font-family="MyriadHebrew-Regular, &apos;Myriad Hebrew&apos;" font-size="99.06"><tspan x="0" y="0">Progressive</tspan></text>
+</svg>
