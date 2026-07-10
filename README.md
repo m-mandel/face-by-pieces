@@ -37,6 +37,8 @@ The server hosts the production build from `dist/` and listens on `PORT` (8080 b
 
 Refreshes are counted during the round and displayed on the result screen. Submitting an incorrect name ends the round and reveals the answer; the next portrait can then be started with **Play another face**.
 
+After a round, **Retrace your clues** opens an optional visual timeline of the initial element set and every refresh. Players can move through the reconstructed SVG frames and return to the normal result screen.
+
 ## Activity recording
 
 The browser creates two pseudonymous identifiers:
@@ -44,7 +46,15 @@ The browser creates two pseudonymous identifiers:
 - A persistent device ID in local storage links rounds played in the same browser.
 - A new session ID identifies each game round.
 
-The server records the portrait, mode, refresh events, submitted response, outcome, and canonical step count. A step is one refresh or the final submitted guess. Data is stored in `storage/game-activity.sqlite` by default.
+The server records the portrait, mode, exact elements shown initially and after every refresh, submitted response, outcome, and canonical step count. A step is one refresh or the final submitted guess. Data is stored in `storage/game-activity.sqlite` by default.
+
+`npm run report` displays element history in chronological form:
+
+```text
+Initial [#3, #6] → R1 [#2, #5] → R2 [#1, #7]
+```
+
+The report numbers are one-based positions in the portrait SVG's top-level revealable elements. The protected JSON API returns the same positions as zero-based `visibleElementIndices`, which can be used directly by the game code.
 
 The device ID identifies a browser installation rather than a person. Clearing browser data, changing browsers, or using private browsing creates a new ID. Different people sharing one browser use the same ID.
 

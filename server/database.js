@@ -29,7 +29,8 @@ database.exec(`
     outcome TEXT CHECK (outcome IN ('correct', 'incorrect')),
     submitted_answer TEXT,
     refresh_count INTEGER NOT NULL DEFAULT 0,
-    step_count INTEGER NOT NULL DEFAULT 0
+    step_count INTEGER NOT NULL DEFAULT 0,
+    initial_elements_json TEXT NOT NULL DEFAULT '[]'
   );
 
   CREATE TABLE IF NOT EXISTS events (
@@ -44,6 +45,11 @@ database.exec(`
   CREATE INDEX IF NOT EXISTS sessions_started_at_idx ON sessions(started_at DESC);
   CREATE INDEX IF NOT EXISTS events_session_id_idx ON events(session_id);
 `)
+
+const sessionColumns = database.prepare('PRAGMA table_info(sessions)').all()
+if (!sessionColumns.some((column) => column.name === 'initial_elements_json')) {
+  database.exec("ALTER TABLE sessions ADD COLUMN initial_elements_json TEXT NOT NULL DEFAULT '[]'")
+}
 
 const now = () => new Date().toISOString()
 
@@ -75,6 +81,12 @@ const touchSessionDevice = database.prepare(`
 const incrementRefreshCount = database.prepare(`
   UPDATE sessions
   SET refresh_count = refresh_count + 1
+  WHERE session_id = @sessionId AND completed_at IS NULL
+`)
+
+const updateInitialElements = database.prepare(`
+  UPDATE sessions
+  SET initial_elements_json = @elementsJson
   WHERE session_id = @sessionId AND completed_at IS NULL
 `)
 
@@ -127,6 +139,13 @@ export const addSessionEvent = database.transaction(({ sessionId, eventType, met
   touchSessionDevice.run({ sessionId, timestamp })
   return true
 })
+
+export function setInitialElements(sessionId, elementIndices) {
+  return updateInitialElements.run({
+    sessionId,
+    elementsJson: JSON.stringify(elementIndices),
+  }).changes > 0
+}
 
 export const completeSession = database.transaction(({ sessionId, outcome, submittedAnswer, metadata }) => {
   const timestamp = now()
@@ -213,4 +232,32 @@ export function listSessionEvents(sessionId) {
     metadata: JSON.parse(event.metadataJson),
     metadataJson: undefined,
   }))
+}
+
+export function getElementSequence(sessionId) {
+  const session = database.prepare(`
+    SELECT initial_elements_json AS initialElementsJson
+    FROM sessions
+    WHERE session_id = ?
+  `).get(sessionId)
+
+  if (!session) return null
+
+  const refreshes = database.prepare(`
+    SELECT metadata_json AS metadataJson
+    FROM events
+    WHERE session_id = ? AND event_type = 'clue_refreshed'
+    ORDER BY event_id
+  `).all(sessionId).map((event, index) => {
+    const metadata = JSON.parse(event.metadataJson)
+    return {
+      refreshNumber: index + 1,
+      visibleElementIndices: metadata.visibleElementIndices || [],
+    }
+  })
+
+  return {
+    initialElementIndices: JSON.parse(session.initialElementsJson),
+    refreshes,
+  }
 }

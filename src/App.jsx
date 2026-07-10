@@ -9,6 +9,7 @@ import {
   completeGameSession,
   createSessionId,
   getOrCreateDeviceId,
+  recordInitialElements,
   recordSessionEvent,
   startGameSession,
 } from './telemetry'
@@ -143,6 +144,23 @@ function getRandomPortraitIndex(currentIndex = -1) {
   return nextIndex
 }
 
+function getNextUnviewedPortraitIndex(currentIndex, viewedPortraits) {
+  let availableIndices = PORTRAITS
+    .map((_portrait, index) => index)
+    .filter((index) => !viewedPortraits.has(index))
+
+  if (availableIndices.length === 0) {
+    viewedPortraits.clear()
+    availableIndices = PORTRAITS
+      .map((_portrait, index) => index)
+      .filter((index) => index !== currentIndex)
+  }
+
+  const nextIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)]
+  viewedPortraits.add(nextIndex)
+  return nextIndex
+}
+
 function normalizeAnswer(value) {
   return value
     .normalize('NFD')
@@ -181,6 +199,23 @@ function ArrowIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M5 12h13M13 6l6 6-6 6" />
+    </svg>
+  )
+}
+
+function TimelineIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h10M4 17h16M14 7l3-3m-3 3 3 3" />
+      <circle cx="8" cy="17" r="2.5" />
+    </svg>
+  )
+}
+
+function ChevronIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m15 5-7 7 7 7" />
     </svg>
   )
 }
@@ -260,9 +295,122 @@ function SettingsSheet({ currentMode, open, onClose, onSave }) {
   )
 }
 
-function ResultScreen({ mode, portrait, refreshCount, result, submittedAnswer, onPlayAgain }) {
+function TimelineReplay({ elementHistory, isCorrect, onBack, onPlayAgain, portrait }) {
+  const [currentStep, setCurrentStep] = useState(0)
+  const timelineTrackRef = useRef(null)
+  const stepButtonRefs = useRef([])
+  const currentElements = elementHistory[currentStep] || []
+  const currentSvg = useMemo(
+    () => renderSvg(portrait.svg, currentElements),
+    [currentElements, portrait],
+  )
+  const uniqueElementsSeen = useMemo(
+    () => new Set(elementHistory.slice(0, currentStep + 1).flat()).size,
+    [currentStep, elementHistory],
+  )
+  const stepLabel = currentStep === 0 ? 'Initial clues' : `Refresh ${currentStep}`
+
+  useEffect(() => {
+    const track = timelineTrackRef.current
+    const activeStep = stepButtonRefs.current[currentStep]
+    if (!track || !activeStep) return
+
+    const centeredPosition = activeStep.offsetLeft - ((track.clientWidth - activeStep.offsetWidth) / 2)
+    track.scrollTo({
+      left: Math.max(0, centeredPosition),
+      behavior: 'smooth',
+    })
+  }, [currentStep])
+
+  return (
+    <main className={`result-screen timeline-screen ${isCorrect ? 'correct' : 'incorrect'}`}>
+      <div className="result-decoration result-decoration-one" />
+      <div className="result-decoration result-decoration-two" />
+      <div className="result-decoration result-decoration-three" />
+
+      <div className="timeline-content">
+        <button className="timeline-back" onClick={onBack}>
+          <ChevronIcon />
+          Result
+        </button>
+
+        <span className="result-kicker">Round replay</span>
+        <h1>Your clue trail.</h1>
+        <p className="timeline-intro">Step through exactly what you saw during the round.</p>
+
+        <div className="timeline-portrait-card">
+          <div
+            className="timeline-portrait"
+            aria-label={`${stepLabel}, showing ${currentElements.length} portrait elements`}
+            dangerouslySetInnerHTML={{ __html: currentSvg }}
+          />
+          <span className="timeline-frame-label">{stepLabel}</span>
+        </div>
+
+        <div className="timeline-summary" aria-live="polite">
+          <span>Step {currentStep + 1} of {elementHistory.length}</span>
+          <strong>
+            {uniqueElementsSeen} unique {uniqueElementsSeen === 1 ? 'element' : 'elements'} seen
+          </strong>
+        </div>
+
+        <div ref={timelineTrackRef} className="timeline-track" aria-label="Clue timeline">
+          {elementHistory.map((_elements, index) => (
+            <button
+              key={index}
+              ref={(element) => { stepButtonRefs.current[index] = element }}
+              className={`${index === currentStep ? 'active' : ''} ${index < currentStep ? 'visited' : ''}`}
+              onClick={() => setCurrentStep(index)}
+              aria-label={index === 0 ? 'Show initial clues' : `Show refresh ${index}`}
+              aria-current={index === currentStep ? 'step' : undefined}
+            >
+              {index === 0 ? 'S' : index}
+            </button>
+          ))}
+        </div>
+
+        <div className="timeline-navigation">
+          <button
+            onClick={() => setCurrentStep((step) => Math.max(0, step - 1))}
+            disabled={currentStep === 0}
+          >
+            <ChevronIcon />
+            Previous
+          </button>
+          <button
+            onClick={() => setCurrentStep((step) => Math.min(elementHistory.length - 1, step + 1))}
+            disabled={currentStep === elementHistory.length - 1}
+          >
+            Next
+            <span className="chevron-next"><ChevronIcon /></span>
+          </button>
+        </div>
+
+        <button className="primary-button timeline-play-again" onClick={onPlayAgain}>
+          Play another face
+          <ArrowIcon />
+        </button>
+      </div>
+    </main>
+  )
+}
+
+function ResultScreen({ elementHistory, mode, portrait, refreshCount, result, submittedAnswer, onPlayAgain }) {
   const fullPortrait = useMemo(() => renderSvg(portrait.svg), [portrait])
+  const [timelineOpen, setTimelineOpen] = useState(false)
   const isCorrect = result === 'correct'
+
+  if (timelineOpen) {
+    return (
+      <TimelineReplay
+        elementHistory={elementHistory}
+        isCorrect={isCorrect}
+        onBack={() => setTimelineOpen(false)}
+        onPlayAgain={onPlayAgain}
+        portrait={portrait}
+      />
+    )
+  }
 
   return (
     <main className={`result-screen ${isCorrect ? 'correct' : 'incorrect'}`}>
@@ -287,8 +435,8 @@ function ResultScreen({ mode, portrait, refreshCount, result, submittedAnswer, o
 
         <div className="round-stats" aria-label="Round statistics">
           <div>
-            <strong>{refreshCount}</strong>
-            <span>{refreshCount === 1 ? 'refresh' : 'refreshes'}</span>
+            <strong>{refreshCount + 1}</strong>
+            <span>{refreshCount + 1 === 1 ? 'step' : 'steps'}</span>
           </div>
           <div>
             <strong>{mode.shortLabel}</strong>
@@ -300,6 +448,10 @@ function ResultScreen({ mode, portrait, refreshCount, result, submittedAnswer, o
           Play another face
           <ArrowIcon />
         </button>
+        <button className="secondary-button replay-button" onClick={() => setTimelineOpen(true)}>
+          <TimelineIcon />
+          Retrace your clues
+        </button>
       </div>
     </main>
   )
@@ -307,10 +459,12 @@ function ResultScreen({ mode, portrait, refreshCount, result, submittedAnswer, o
 
 export default function App() {
   const [portraitIndex, setPortraitIndex] = useState(() => getRandomPortraitIndex())
+  const viewedPortraitsRef = useRef(new Set([portraitIndex]))
   const [modeId, setModeId] = useState(() => localStorage.getItem('face-by-pieces-mode') || 'two')
   const [deviceId] = useState(getOrCreateDeviceId)
   const [sessionId, setSessionId] = useState(createSessionId)
   const [visibleIndices, setVisibleIndices] = useState([])
+  const [elementHistory, setElementHistory] = useState([])
   const [refreshCount, setRefreshCount] = useState(0)
   const [answer, setAnswer] = useState('')
   const [answerError, setAnswerError] = useState('')
@@ -337,36 +491,38 @@ export default function App() {
   }, [deviceId, mode.id, portrait.id, sessionId])
 
   useEffect(() => {
-    setVisibleIndices(sampleIndices(totalElements, mode.count))
+    const initialIndices = sampleIndices(totalElements, mode.count)
+    setVisibleIndices(initialIndices)
+    setElementHistory([initialIndices])
+    recordInitialElements(sessionId, initialIndices)
     setRefreshCount(0)
     setAnswer('')
     setAnswerError('')
     setResult(null)
     setSubmittedAnswer('')
-  }, [mode.id, mode.count, portraitIndex, totalElements])
+  }, [mode.id, mode.count, portraitIndex, sessionId, totalElements])
 
   const handleRefresh = () => {
     if (progressiveComplete) return
 
-    const resultingVisibleElements = mode.id === 'progressive'
-      ? Math.min(visibleIndices.length + 1, totalElements)
-      : Math.min(mode.count, totalElements)
-
-    recordSessionEvent(sessionId, 'clue_refreshed', {
-      visibleElements: resultingVisibleElements,
-    })
-
-    setVisibleIndices((current) => {
-      if (mode.id !== 'progressive') {
-        return sampleIndices(totalElements, mode.count, current)
-      }
-
+    let nextVisibleIndices
+    if (mode.id === 'progressive') {
       const hidden = Array.from({ length: totalElements }, (_, index) => index).filter(
-        (index) => !current.includes(index),
+        (index) => !visibleIndices.includes(index),
       )
       const nextIndex = hidden[Math.floor(Math.random() * hidden.length)]
-      return [...current, nextIndex]
+      nextVisibleIndices = [...visibleIndices, nextIndex]
+    } else {
+      nextVisibleIndices = sampleIndices(totalElements, mode.count, visibleIndices)
+    }
+
+    recordSessionEvent(sessionId, 'clue_refreshed', {
+      refreshNumber: refreshCount + 1,
+      visibleElements: nextVisibleIndices.length,
+      visibleElementIndices: nextVisibleIndices,
     })
+    setVisibleIndices(nextVisibleIndices)
+    setElementHistory((history) => [...history, nextVisibleIndices])
     setRefreshCount((count) => count + 1)
   }
 
@@ -396,6 +552,7 @@ export default function App() {
     localStorage.setItem('face-by-pieces-mode', nextMode)
     if (nextMode !== mode.id) {
       recordSessionEvent(sessionId, 'mode_changed', { from: mode.id, to: nextMode })
+      viewedPortraitsRef.current = new Set([portraitIndex])
       setSessionId(createSessionId())
     }
     setModeId(nextMode)
@@ -403,8 +560,12 @@ export default function App() {
   }
 
   const handlePlayAgain = () => {
+    const nextPortraitIndex = getNextUnviewedPortraitIndex(
+      portraitIndex,
+      viewedPortraitsRef.current,
+    )
     setSessionId(createSessionId())
-    setPortraitIndex((current) => getRandomPortraitIndex(current))
+    setPortraitIndex(nextPortraitIndex)
   }
 
   const handleOpenSettings = () => {
@@ -415,6 +576,7 @@ export default function App() {
   if (result) {
     return (
       <ResultScreen
+        elementHistory={elementHistory}
         mode={mode}
         portrait={portrait}
         refreshCount={refreshCount}
@@ -435,9 +597,9 @@ export default function App() {
           <span>Face</span>
           <span>by pieces</span>
         </div>
-        <div className="refresh-counter" aria-label={`${refreshCount} refreshes used`}>
+        <div className="refresh-counter" aria-label={`${refreshCount} steps used`}>
           <span>{refreshCount}</span>
-          refresh
+          steps
         </div>
       </header>
 

@@ -50,6 +50,13 @@ export function recordSessionEvent(sessionId, eventType, metadata = {}) {
   })
 }
 
+export function recordInitialElements(sessionId, visibleElementIndices) {
+  return queueRequest(`/api/sessions/${encodeURIComponent(sessionId)}/initial-elements`, {
+    method: 'PUT',
+    body: JSON.stringify({ visibleElementIndices }),
+  })
+}
+
 export function completeGameSession(sessionId, details) {
   return queueRequest(`/api/sessions/${encodeURIComponent(sessionId)}/complete`, {
     method: 'POST',

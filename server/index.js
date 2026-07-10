@@ -7,10 +7,12 @@ import {
   completeSession,
   createSession,
   database,
+  getElementSequence,
   getSession,
   getSummary,
   listSessionEvents,
   listSessions,
+  setInitialElements,
 } from './database.js'
 
 const app = express()
@@ -33,6 +35,13 @@ app.use(express.json({ limit: '16kb' }))
 
 function isValidId(value) {
   return typeof value === 'string' && idPattern.test(value)
+}
+
+function isValidElementIndices(value) {
+  return Array.isArray(value)
+    && value.length <= 100
+    && new Set(value).size === value.length
+    && value.every((index) => Number.isInteger(index) && index >= 0 && index < 100)
 }
 
 function isAuthorized(request) {
@@ -83,10 +92,26 @@ app.post('/api/sessions/:sessionId/events', (request, response) => {
   if (metadata !== undefined && (typeof metadata !== 'object' || Array.isArray(metadata))) {
     return response.status(400).json({ error: 'Event metadata must be an object.' })
   }
+  if (eventType === 'clue_refreshed' && !isValidElementIndices(metadata?.visibleElementIndices)) {
+    return response.status(400).json({ error: 'Refresh events require valid element indices.' })
+  }
 
   const recorded = addSessionEvent({ sessionId, eventType, metadata })
   if (!recorded) return response.status(404).json({ error: 'Active session not found.' })
   return response.status(201).json({ recorded: true })
+})
+
+app.put('/api/sessions/:sessionId/initial-elements', (request, response) => {
+  const { sessionId } = request.params
+  const { visibleElementIndices } = request.body || {}
+
+  if (!isValidId(sessionId) || !isValidElementIndices(visibleElementIndices)) {
+    return response.status(400).json({ error: 'Invalid session ID or element indices.' })
+  }
+
+  const recorded = setInitialElements(sessionId, visibleElementIndices)
+  if (!recorded) return response.status(404).json({ error: 'Active session not found.' })
+  return response.json({ recorded: true })
 })
 
 app.post('/api/sessions/:sessionId/complete', (request, response) => {
@@ -118,7 +143,11 @@ app.get('/api/admin/summary', requireAdmin, (_request, response) => {
 app.get('/api/admin/sessions', requireAdmin, (request, response) => {
   const requestedLimit = Number.parseInt(request.query.limit, 10)
   const limit = Number.isFinite(requestedLimit) ? Math.min(Math.max(requestedLimit, 1), 500) : 100
-  response.json({ sessions: listSessions(limit) })
+  const sessions = listSessions(limit).map((session) => ({
+    ...session,
+    elementSequence: getElementSequence(session.sessionId),
+  }))
+  response.json({ sessions })
 })
 
 app.get('/api/admin/sessions/:sessionId/events', requireAdmin, (request, response) => {
