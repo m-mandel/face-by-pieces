@@ -75,16 +75,16 @@ const PORTRAITS = [
 
 const STYLES = [
   {
-    id: 'vector-lines',
-    label: 'Vector lines',
-    shortLabel: 'Lines',
-    description: 'Minimal line portraits with clues that shuffle independently.',
-  },
-  {
     id: 'abstract',
     label: 'Abstract color',
     shortLabel: 'Color',
     description: 'Layered color portraits that begin with their base silhouette.',
+  },
+  {
+    id: 'vector-lines',
+    label: 'Vector lines',
+    shortLabel: 'Lines',
+    description: 'Minimal line portraits with clues that shuffle independently.',
   },
 ]
 
@@ -607,7 +607,7 @@ function ResultScreen({ elementHistory, mode, portrait, portraitSvg, refreshCoun
 export default function App() {
   const [styleId, setStyleId] = useState(() => {
     const savedStyle = localStorage.getItem('face-by-pieces-style')
-    return STYLES.some((style) => style.id === savedStyle) ? savedStyle : 'vector-lines'
+    return STYLES.some((style) => style.id === savedStyle) ? savedStyle : 'abstract'
   })
   const [portraitIndex, setPortraitIndex] = useState(() => getRandomPortraitIndex(-1, styleId))
   const viewedPortraitsRef = useRef(new Set([portraitIndex]))
