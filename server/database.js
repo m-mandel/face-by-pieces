@@ -24,6 +24,7 @@ database.exec(`
     device_id TEXT NOT NULL REFERENCES devices(device_id),
     portrait_id TEXT NOT NULL,
     mode TEXT NOT NULL,
+    style TEXT NOT NULL DEFAULT 'vector-lines',
     started_at TEXT NOT NULL,
     completed_at TEXT,
     outcome TEXT CHECK (outcome IN ('correct', 'incorrect')),
@@ -50,6 +51,9 @@ const sessionColumns = database.prepare('PRAGMA table_info(sessions)').all()
 if (!sessionColumns.some((column) => column.name === 'initial_elements_json')) {
   database.exec("ALTER TABLE sessions ADD COLUMN initial_elements_json TEXT NOT NULL DEFAULT '[]'")
 }
+if (!sessionColumns.some((column) => column.name === 'style')) {
+  database.exec("ALTER TABLE sessions ADD COLUMN style TEXT NOT NULL DEFAULT 'vector-lines'")
+}
 
 const now = () => new Date().toISOString()
 
@@ -62,8 +66,8 @@ const insertDevice = database.prepare(`
 `)
 
 const insertSession = database.prepare(`
-  INSERT INTO sessions (session_id, device_id, portrait_id, mode, started_at)
-  VALUES (@sessionId, @deviceId, @portraitId, @mode, @timestamp)
+  INSERT INTO sessions (session_id, device_id, portrait_id, mode, style, started_at)
+  VALUES (@sessionId, @deviceId, @portraitId, @mode, @style, @timestamp)
   ON CONFLICT(session_id) DO NOTHING
 `)
 
@@ -110,7 +114,7 @@ export const createSession = database.transaction((session) => {
       sessionId: session.sessionId,
       eventType: 'session_started',
       timestamp,
-      metadataJson: JSON.stringify({ portraitId: session.portraitId, mode: session.mode }),
+      metadataJson: JSON.stringify({ portraitId: session.portraitId, mode: session.mode, style: session.style }),
     })
   }
 
@@ -169,6 +173,7 @@ export function getSession(sessionId) {
       device_id AS deviceId,
       portrait_id AS portraitId,
       mode,
+      style,
       started_at AS startedAt,
       completed_at AS completedAt,
       outcome,
@@ -200,6 +205,7 @@ export function listSessions(limit = 100) {
       s.device_id AS deviceId,
       s.portrait_id AS portraitId,
       s.mode,
+      s.style,
       s.started_at AS startedAt,
       s.completed_at AS completedAt,
       s.outcome,

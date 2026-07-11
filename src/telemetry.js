@@ -36,10 +36,10 @@ function queueRequest(url, options) {
   return requestQueue
 }
 
-export function startGameSession({ sessionId, deviceId, portraitId, mode }) {
+export function startGameSession({ sessionId, deviceId, portraitId, mode, style }) {
   return queueRequest('/api/sessions', {
     method: 'POST',
-    body: JSON.stringify({ sessionId, deviceId, portraitId, mode }),
+    body: JSON.stringify({ sessionId, deviceId, portraitId, mode, style }),
   })
 }
 

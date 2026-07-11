@@ -19,16 +19,16 @@ const app = express()
 const port = Number(process.env.PORT) || 8080
 const adminToken = process.env.ADMIN_TOKEN || ''
 const idPattern = /^[a-zA-Z0-9-]{8,80}$/
-const portraits = new Set([
-  'albert-einstein',
-  'barack-obama',
-  'cristiano-ronaldo',
-  'elvis-presley',
-  'john-lennon',
-  'lionel-messi',
+const portraitStyles = new Map([
+  ['albert-einstein', new Set(['vector-lines', 'abstract'])],
+  ['barack-obama', new Set(['vector-lines', 'abstract'])],
+  ['cristiano-ronaldo', new Set(['vector-lines', 'abstract'])],
+  ['elvis-presley', new Set(['vector-lines', 'abstract'])],
+  ['john-lennon', new Set(['vector-lines'])],
+  ['lionel-messi', new Set(['vector-lines'])],
 ])
 const modes = new Set(['one', 'two', 'four', 'progressive'])
-const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed'])
+const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed'])
 
 app.disable('x-powered-by')
 app.use(express.json({ limit: '16kb' }))
@@ -65,12 +65,12 @@ app.get('/api/health', (_request, response) => {
 })
 
 app.post('/api/sessions', (request, response) => {
-  const { sessionId, deviceId, portraitId, mode } = request.body || {}
+  const { sessionId, deviceId, portraitId, mode, style } = request.body || {}
   if (!isValidId(sessionId) || !isValidId(deviceId)) {
     return response.status(400).json({ error: 'Invalid session or device ID.' })
   }
-  if (!portraits.has(portraitId) || !modes.has(mode)) {
-    return response.status(400).json({ error: 'Invalid portrait or mode.' })
+  if (!portraitStyles.get(portraitId)?.has(style) || !modes.has(mode)) {
+    return response.status(400).json({ error: 'Invalid portrait, style, or mode.' })
   }
 
   const created = createSession({
@@ -78,6 +78,7 @@ app.post('/api/sessions', (request, response) => {
     deviceId,
     portraitId,
     mode,
+    style,
     userAgent: request.get('user-agent')?.slice(0, 500) || null,
   })
   return response.status(created ? 201 : 200).json({ sessionId })

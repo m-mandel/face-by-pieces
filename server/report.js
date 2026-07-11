@@ -4,13 +4,18 @@ function formatElements(elementIndices) {
   return `[${elementIndices.map((index) => `#${index + 1}`).join(', ')}]`
 }
 
-function formatSequence(sessionId) {
+function formatSequence(sessionId, style) {
   const sequence = getElementSequence(sessionId)
   if (!sequence) return '—'
 
-  const displays = [`Initial ${formatElements(sequence.initialElementIndices)}`]
+  const displays = [style === 'abstract'
+    ? 'Initial [base layers]'
+    : `Initial ${formatElements(sequence.initialElementIndices)}`]
   sequence.refreshes.forEach((refresh) => {
-    displays.push(`R${refresh.refreshNumber} ${formatElements(refresh.visibleElementIndices)}`)
+    const elements = formatElements(refresh.visibleElementIndices)
+    displays.push(style === 'abstract'
+      ? `R${refresh.refreshNumber} [base + ${elements.slice(1)}`
+      : `R${refresh.refreshNumber} ${elements}`)
   })
   return displays.join(' → ')
 }
@@ -21,12 +26,13 @@ const sessions = listSessions(50).map((session) => ({
   device: session.deviceId.slice(0, 8),
   deviceSessions: session.sessionsOnDevice,
   portrait: session.portraitId,
+  style: session.style,
   mode: session.mode,
   response: session.submittedAnswer || '—',
   result: session.outcome || 'in progress',
   refreshes: session.refreshCount,
   steps: session.stepCount || '—',
-  displayedElements: formatSequence(session.sessionId),
+  displayedElements: formatSequence(session.sessionId, session.style),
 }))
 
 console.log('\nFace by Pieces activity summary')

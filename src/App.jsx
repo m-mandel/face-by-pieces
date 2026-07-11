@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import albertEinsteinSvg from '../data/albert_einstein/sketch.svg?raw'
-import barackObamaSvg from '../data/barack_obama/sketch.svg?raw'
-import cristianoRonaldoSvg from '../data/christiano_ronaldo/sketch.svg?raw'
-import elvisSvg from '../data/elvis/sketch.svg?raw'
-import johnLennonSvg from '../data/john_lennon/sketch.svg?raw'
-import lionelMessiSvg from '../data/lionel_messi/sketch.svg?raw'
+import albertEinsteinSvg from '../data/vector-lines/albert_einstein/sketch.svg?raw'
+import barackObamaSvg from '../data/vector-lines/barack_obama/sketch.svg?raw'
+import cristianoRonaldoSvg from '../data/vector-lines/cristiano_ronaldo/sketch.svg?raw'
+import elvisSvg from '../data/vector-lines/elvis/sketch.svg?raw'
+import johnLennonSvg from '../data/vector-lines/john_lennon/sketch.svg?raw'
+import lionelMessiSvg from '../data/vector-lines/lionel_messi/sketch.svg?raw'
+import abstractAlbertEinsteinSvg from '../data/svg/albert_einstein/abstract.svg?raw'
+import abstractBarackObamaSvg from '../data/svg/barack_obama/abstract.svg?raw'
+import abstractCristianoRonaldoSvg from '../data/svg/cristiano_ronaldo/abstract.svg?raw'
+import abstractElvisSvg from '../data/svg/elvis/abstract.svg?raw'
 import {
   completeGameSession,
   createSessionId,
@@ -19,37 +23,68 @@ const PORTRAITS = [
     id: 'albert-einstein',
     name: 'Albert Einstein',
     aliases: ['Albert Einstein', 'Einstein'],
-    svg: albertEinsteinSvg,
+    styles: {
+      'vector-lines': albertEinsteinSvg,
+      abstract: abstractAlbertEinsteinSvg,
+    },
   },
   {
     id: 'barack-obama',
     name: 'Barack Obama',
     aliases: ['Barack Obama', 'Obama', 'President Obama'],
-    svg: barackObamaSvg,
+    styles: {
+      'vector-lines': barackObamaSvg,
+      abstract: abstractBarackObamaSvg,
+    },
   },
   {
     id: 'cristiano-ronaldo',
     name: 'Cristiano Ronaldo',
     aliases: ['Cristiano Ronaldo', 'Christiano Ronaldo', 'Ronaldo', 'CR7'],
-    svg: cristianoRonaldoSvg,
+    styles: {
+      'vector-lines': cristianoRonaldoSvg,
+      abstract: abstractCristianoRonaldoSvg,
+    },
   },
   {
     id: 'elvis-presley',
     name: 'Elvis Presley',
     aliases: ['Elvis Presley', 'Elvis'],
-    svg: elvisSvg,
+    styles: {
+      'vector-lines': elvisSvg,
+      abstract: abstractElvisSvg,
+    },
   },
   {
     id: 'john-lennon',
     name: 'John Lennon',
     aliases: ['John Lennon', 'Lennon'],
-    svg: johnLennonSvg,
+    styles: {
+      'vector-lines': johnLennonSvg,
+    },
   },
   {
     id: 'lionel-messi',
     name: 'Lionel Messi',
     aliases: ['Lionel Messi', 'Leo Messi', 'Messi'],
-    svg: lionelMessiSvg,
+    styles: {
+      'vector-lines': lionelMessiSvg,
+    },
+  },
+]
+
+const STYLES = [
+  {
+    id: 'vector-lines',
+    label: 'Vector lines',
+    shortLabel: 'Lines',
+    description: 'Minimal line portraits with clues that shuffle independently.',
+  },
+  {
+    id: 'abstract',
+    label: 'Abstract color',
+    shortLabel: 'Color',
+    description: 'Layered color portraits that begin with their base silhouette.',
   },
 ]
 
@@ -92,12 +127,25 @@ function getRevealableElements(root) {
   )
 }
 
-function getElementCount(svgText) {
-  const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml')
-  return getRevealableElements(doc.documentElement).length
+function getAbstractDetailElements(root) {
+  const detailGroups = ['face-details', 'clothing-details']
+
+  // Group order only provides stable indices for replay. Every child enters one
+  // shared pool and has the same chance of being selected on each reveal.
+  return detailGroups.flatMap((groupId) => {
+    const group = root.querySelector(`#${groupId}`)
+    return group ? Array.from(group.children) : []
+  })
 }
 
-function renderSvg(svgText, visibleIndices = null) {
+function getElementCount(svgText, styleId) {
+  const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml')
+  return styleId === 'abstract'
+    ? getAbstractDetailElements(doc.documentElement).length
+    : getRevealableElements(doc.documentElement).length
+}
+
+function renderSvg(svgText, visibleIndices = null, styleId = 'vector-lines') {
   const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml')
   const root = doc.documentElement
 
@@ -109,7 +157,10 @@ function renderSvg(svgText, visibleIndices = null) {
 
   if (visibleIndices) {
     const visible = new Set(visibleIndices)
-    getRevealableElements(root).forEach((element, index) => {
+    const revealableElements = styleId === 'abstract'
+      ? getAbstractDetailElements(root)
+      : getRevealableElements(root)
+    revealableElements.forEach((element, index) => {
       if (!visible.has(index)) element.setAttribute('visibility', 'hidden')
     })
   }
@@ -135,26 +186,30 @@ function sampleIndices(total, count, previous = []) {
   return selection
 }
 
-function getRandomPortraitIndex(currentIndex = -1) {
-  if (PORTRAITS.length === 1) return 0
-  let nextIndex = currentIndex
-  while (nextIndex === currentIndex) {
-    nextIndex = Math.floor(Math.random() * PORTRAITS.length)
-  }
-  return nextIndex
+function getAvailablePortraitIndices(styleId) {
+  return PORTRAITS
+    .map((portrait, index) => (portrait.styles[styleId] ? index : null))
+    .filter((index) => index !== null)
 }
 
-function getNextUnviewedPortraitIndex(currentIndex, viewedPortraits) {
-  let availableIndices = PORTRAITS
-    .map((_portrait, index) => index)
+function getRandomPortraitIndex(currentIndex = -1, styleId = 'vector-lines') {
+  const availableIndices = getAvailablePortraitIndices(styleId)
+    .filter((index) => index !== currentIndex)
+  if (availableIndices.length === 0) return currentIndex >= 0 ? currentIndex : 0
+  return availableIndices[Math.floor(Math.random() * availableIndices.length)]
+}
+
+function getNextUnviewedPortraitIndex(currentIndex, viewedPortraits, styleId) {
+  const stylePortraitIndices = getAvailablePortraitIndices(styleId)
+  let availableIndices = stylePortraitIndices
     .filter((index) => !viewedPortraits.has(index))
 
   if (availableIndices.length === 0) {
     viewedPortraits.clear()
-    availableIndices = PORTRAITS
-      .map((_portrait, index) => index)
-      .filter((index) => index !== currentIndex)
+    availableIndices = stylePortraitIndices.filter((index) => index !== currentIndex)
   }
+
+  if (availableIndices.length === 0) return currentIndex
 
   const nextIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)]
   viewedPortraits.add(nextIndex)
@@ -208,6 +263,17 @@ function TimelineIcon() {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M4 7h10M4 17h16M14 7l3-3m-3 3 3 3" />
       <circle cx="8" cy="17" r="2.5" />
+    </svg>
+  )
+}
+
+function PaletteIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3a9 9 0 1 0 0 18h1.2a1.7 1.7 0 0 0 1.2-2.9 1.7 1.7 0 0 1 1.2-2.9H18a3 3 0 0 0 3-3A9.2 9.2 0 0 0 12 3Z" />
+      <circle cx="7.5" cy="10" r="1" />
+      <circle cx="10" cy="6.8" r="1" />
+      <circle cx="15" cy="7.2" r="1" />
     </svg>
   )
 }
@@ -295,14 +361,94 @@ function SettingsSheet({ currentMode, open, onClose, onSave }) {
   )
 }
 
-function TimelineReplay({ elementHistory, isCorrect, onBack, onPlayAgain, portrait }) {
+function StyleSheet({ currentStyle, open, onClose, onSave }) {
+  const [draftStyle, setDraftStyle] = useState(currentStyle)
+  const closeButtonRef = useRef(null)
+
+  useEffect(() => {
+    if (!open) return undefined
+    setDraftStyle(currentStyle)
+    closeButtonRef.current?.focus()
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    document.body.classList.add('modal-open')
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.classList.remove('modal-open')
+    }
+  }, [currentStyle, onClose, open])
+
+  if (!open) return null
+
+  return (
+    <div className="settings-overlay" role="presentation" onMouseDown={onClose}>
+      <section
+        className="settings-sheet style-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="style-title"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <div className="sheet-handle" />
+        <div className="settings-heading">
+          <div>
+            <span className="eyebrow">Portrait style</span>
+            <h2 id="style-title">Choose a style</h2>
+          </div>
+          <button ref={closeButtonRef} className="icon-button close-button" onClick={onClose} aria-label="Close style chooser">
+            <CloseIcon />
+          </button>
+        </div>
+
+        <div className="style-list" role="radiogroup" aria-label="Portrait style">
+          {STYLES.map((option) => {
+            const portraitCount = PORTRAITS.filter((portrait) => portrait.styles[option.id]).length
+            return (
+              <button
+                type="button"
+                role="radio"
+                aria-checked={draftStyle === option.id}
+                className={`style-option ${draftStyle === option.id ? 'selected' : ''}`}
+                key={option.id}
+                onClick={() => setDraftStyle(option.id)}
+              >
+                <span className={`style-preview ${option.id}`} aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span className="mode-copy">
+                  <strong>{option.label}</strong>
+                  <small>{option.description}</small>
+                  <small className="portrait-count">{portraitCount} portraits available</small>
+                </span>
+                <span className="radio-mark" />
+              </button>
+            )
+          })}
+        </div>
+
+        <button className="primary-button settings-save" onClick={() => onSave(draftStyle)}>
+          Use this style
+          <ArrowIcon />
+        </button>
+      </section>
+    </div>
+  )
+}
+
+function TimelineReplay({ elementHistory, isCorrect, onBack, onPlayAgain, portraitSvg, styleId }) {
   const [currentStep, setCurrentStep] = useState(0)
   const timelineTrackRef = useRef(null)
   const stepButtonRefs = useRef([])
   const currentElements = elementHistory[currentStep] || []
   const currentSvg = useMemo(
-    () => renderSvg(portrait.svg, currentElements),
-    [currentElements, portrait],
+    () => renderSvg(portraitSvg, currentElements, styleId),
+    [currentElements, portraitSvg, styleId],
   )
   const uniqueElementsSeen = useMemo(
     () => new Set(elementHistory.slice(0, currentStep + 1).flat()).size,
@@ -350,7 +496,7 @@ function TimelineReplay({ elementHistory, isCorrect, onBack, onPlayAgain, portra
         <div className="timeline-summary" aria-live="polite">
           <span>Step {currentStep + 1} of {elementHistory.length}</span>
           <strong>
-            {uniqueElementsSeen} unique {uniqueElementsSeen === 1 ? 'element' : 'elements'} seen
+            {uniqueElementsSeen} unique {styleId === 'abstract' ? 'details' : uniqueElementsSeen === 1 ? 'element' : 'elements'} seen
           </strong>
         </div>
 
@@ -395,8 +541,8 @@ function TimelineReplay({ elementHistory, isCorrect, onBack, onPlayAgain, portra
   )
 }
 
-function ResultScreen({ elementHistory, mode, portrait, refreshCount, result, submittedAnswer, onPlayAgain }) {
-  const fullPortrait = useMemo(() => renderSvg(portrait.svg), [portrait])
+function ResultScreen({ elementHistory, mode, portrait, portraitSvg, refreshCount, result, styleId, submittedAnswer, onPlayAgain }) {
+  const fullPortrait = useMemo(() => renderSvg(portraitSvg, null, styleId), [portraitSvg, styleId])
   const [timelineOpen, setTimelineOpen] = useState(false)
   const isCorrect = result === 'correct'
 
@@ -407,7 +553,8 @@ function ResultScreen({ elementHistory, mode, portrait, refreshCount, result, su
         isCorrect={isCorrect}
         onBack={() => setTimelineOpen(false)}
         onPlayAgain={onPlayAgain}
-        portrait={portrait}
+        portraitSvg={portraitSvg}
+        styleId={styleId}
       />
     )
   }
@@ -458,7 +605,11 @@ function ResultScreen({ elementHistory, mode, portrait, refreshCount, result, su
 }
 
 export default function App() {
-  const [portraitIndex, setPortraitIndex] = useState(() => getRandomPortraitIndex())
+  const [styleId, setStyleId] = useState(() => {
+    const savedStyle = localStorage.getItem('face-by-pieces-style')
+    return STYLES.some((style) => style.id === savedStyle) ? savedStyle : 'vector-lines'
+  })
+  const [portraitIndex, setPortraitIndex] = useState(() => getRandomPortraitIndex(-1, styleId))
   const viewedPortraitsRef = useRef(new Set([portraitIndex]))
   const [modeId, setModeId] = useState(() => localStorage.getItem('face-by-pieces-mode') || 'two')
   const [deviceId] = useState(getOrCreateDeviceId)
@@ -471,13 +622,19 @@ export default function App() {
   const [result, setResult] = useState(null)
   const [submittedAnswer, setSubmittedAnswer] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [styleOpen, setStyleOpen] = useState(false)
 
   const portrait = PORTRAITS[portraitIndex]
   const mode = MODES.find((option) => option.id === modeId) || MODES[1]
-  const totalElements = useMemo(() => getElementCount(portrait.svg), [portrait])
+  const style = STYLES.find((option) => option.id === styleId) || STYLES[0]
+  const portraitSvg = portrait.styles[style.id]
+  const totalElements = useMemo(
+    () => getElementCount(portraitSvg, style.id),
+    [portraitSvg, style.id],
+  )
   const visibleSvg = useMemo(
-    () => renderSvg(portrait.svg, visibleIndices),
-    [portrait, visibleIndices],
+    () => renderSvg(portraitSvg, visibleIndices, style.id),
+    [portraitSvg, style.id, visibleIndices],
   )
   const progressiveComplete = mode.id === 'progressive' && visibleIndices.length >= totalElements
 
@@ -487,11 +644,14 @@ export default function App() {
       deviceId,
       portraitId: portrait.id,
       mode: mode.id,
+      style: style.id,
     })
-  }, [deviceId, mode.id, portrait.id, sessionId])
+  }, [deviceId, mode.id, portrait.id, sessionId, style.id])
 
   useEffect(() => {
-    const initialIndices = sampleIndices(totalElements, mode.count)
+    const initialIndices = style.id === 'abstract'
+      ? []
+      : sampleIndices(totalElements, mode.count)
     setVisibleIndices(initialIndices)
     setElementHistory([initialIndices])
     recordInitialElements(sessionId, initialIndices)
@@ -500,7 +660,7 @@ export default function App() {
     setAnswerError('')
     setResult(null)
     setSubmittedAnswer('')
-  }, [mode.id, mode.count, portraitIndex, sessionId, totalElements])
+  }, [mode.id, mode.count, portraitIndex, sessionId, style.id, totalElements])
 
   const handleRefresh = () => {
     if (progressiveComplete) return
@@ -563,6 +723,7 @@ export default function App() {
     const nextPortraitIndex = getNextUnviewedPortraitIndex(
       portraitIndex,
       viewedPortraitsRef.current,
+      style.id,
     )
     setSessionId(createSessionId())
     setPortraitIndex(nextPortraitIndex)
@@ -573,14 +734,34 @@ export default function App() {
     setSettingsOpen(true)
   }
 
+  const handleSaveStyle = (nextStyle) => {
+    localStorage.setItem('face-by-pieces-style', nextStyle)
+    if (nextStyle !== style.id) {
+      recordSessionEvent(sessionId, 'style_changed', { from: style.id, to: nextStyle })
+      const nextPortraitIndex = getRandomPortraitIndex(portraitIndex, nextStyle)
+      viewedPortraitsRef.current = new Set([nextPortraitIndex])
+      setSessionId(createSessionId())
+      setPortraitIndex(nextPortraitIndex)
+      setStyleId(nextStyle)
+    }
+    setStyleOpen(false)
+  }
+
+  const handleOpenStyle = () => {
+    recordSessionEvent(sessionId, 'style_opened')
+    setStyleOpen(true)
+  }
+
   if (result) {
     return (
       <ResultScreen
         elementHistory={elementHistory}
         mode={mode}
         portrait={portrait}
+        portraitSvg={portraitSvg}
         refreshCount={refreshCount}
         result={result}
+        styleId={style.id}
         submittedAnswer={submittedAnswer}
         onPlayAgain={handlePlayAgain}
       />
@@ -590,9 +771,15 @@ export default function App() {
   return (
     <main className="game-shell">
       <header className="game-header">
-        <button className="icon-button settings-button" onClick={handleOpenSettings} aria-label="Open settings">
-          <GearIcon />
-        </button>
+        <div className="header-actions">
+          <button className="icon-button settings-button" onClick={handleOpenSettings} aria-label="Open settings">
+            <GearIcon />
+          </button>
+          <button className="style-button" onClick={handleOpenStyle} aria-label={`Choose portrait style. Current style: ${style.label}`}>
+            <PaletteIcon />
+            <span>{style.shortLabel}</span>
+          </button>
+        </div>
         <div className="wordmark" aria-label="Face by Pieces">
           <span>Face</span>
           <span>by pieces</span>
@@ -666,6 +853,12 @@ export default function App() {
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
         onSave={handleSaveMode}
+      />
+      <StyleSheet
+        currentStyle={style.id}
+        open={styleOpen}
+        onClose={() => setStyleOpen(false)}
+        onSave={handleSaveStyle}
       />
     </main>
   )
