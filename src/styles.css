@@ -315,14 +315,6 @@ input:focus-visible {
   margin-top: 20px;
 }
 
-.refresh-wrap > span {
-  color: var(--muted);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
 .refresh-button {
   display: grid;
   width: 58px;

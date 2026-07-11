@@ -794,7 +794,11 @@ export default function App() {
         <div className="game-intro">
           <span className="mode-pill">{mode.shortLabel}</span>
           <h1 id="game-prompt">Who’s hiding here?</h1>
-          <p>Study the pieces. Refresh if you need a new clue.</p>
+          <p>
+            {mode.id === 'progressive'
+              ? 'Study the pieces. Tap next when you need another clue.'
+              : 'Study the pieces. Refresh if you need a new clue.'}
+          </p>
         </div>
 
         <div className="portrait-card">
@@ -812,13 +816,14 @@ export default function App() {
             className="refresh-button"
             onClick={handleRefresh}
             disabled={progressiveComplete}
-            aria-label={progressiveComplete ? 'All portrait elements revealed' : 'Refresh portrait clues'}
+            aria-label={progressiveComplete
+              ? 'All portrait elements revealed'
+              : mode.id === 'progressive'
+                ? 'Reveal the next portrait clue'
+                : 'Refresh portrait clues'}
           >
-            <RefreshIcon />
+            {mode.id === 'progressive' ? <ArrowIcon /> : <RefreshIcon />}
           </button>
-          {mode.id === 'progressive' && (
-            <span>{progressiveComplete ? 'All clues revealed' : 'Add a clue'}</span>
-          )}
         </div>
       </section>
 
