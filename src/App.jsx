@@ -9,6 +9,8 @@ import abstractAlbertEinsteinSvg from '../data/svg/albert_einstein/abstract.svg?
 import abstractBarackObamaSvg from '../data/svg/barack_obama/abstract.svg?raw'
 import abstractCristianoRonaldoSvg from '../data/svg/cristiano_ronaldo/abstract.svg?raw'
 import abstractElvisSvg from '../data/svg/elvis/abstract.svg?raw'
+import abstractLionelMessiSvg from '../data/svg/messi/abstract.svg?raw'
+import abstractMarilynMonroeSvg from '../data/svg/marilyn_monroe/abstract.svg?raw'
 import {
   completeGameSession,
   createSessionId,
@@ -69,6 +71,15 @@ const PORTRAITS = [
     aliases: ['Lionel Messi', 'Leo Messi', 'Messi'],
     styles: {
       'vector-lines': lionelMessiSvg,
+      abstract: abstractLionelMessiSvg,
+    },
+  },
+  {
+    id: 'marilyn-monroe',
+    name: 'Marilyn Monroe',
+    aliases: ['Marilyn Monroe', 'Marilyn', 'Monroe'],
+    styles: {
+      abstract: abstractMarilynMonroeSvg,
     },
   },
 ]
@@ -91,22 +102,25 @@ const STYLES = [
 const MODES = [
   {
     id: 'one',
-    label: '1 element',
+    label: '1 clue',
     shortLabel: '1 clue',
+    headerLabel: '1 clue',
     count: 1,
     description: 'Hard mode. One random piece at a time.',
   },
   {
     id: 'two',
-    label: '2 elements',
+    label: '2 clues',
     shortLabel: '2 clues',
+    headerLabel: '2 clues',
     count: 2,
     description: 'A balanced pair of clues.',
   },
   {
     id: 'four',
-    label: '4 elements',
+    label: '4 clues',
     shortLabel: '4 clues',
+    headerLabel: '4 clues',
     count: 4,
     description: 'More of the face, right from the start.',
   },
@@ -114,6 +128,7 @@ const MODES = [
     id: 'progressive',
     label: 'Progressive',
     shortLabel: 'Progressive',
+    headerLabel: 'Progress',
     count: 1,
     description: 'Start with one piece and add another each refresh.',
   },
@@ -128,12 +143,17 @@ function getRevealableElements(root) {
 }
 
 function getAbstractDetailElements(root) {
-  const detailGroups = ['face-details', 'clothing-details']
+  const detailGroups = [
+    ['face-details', 'face_details'],
+    ['clothing-details', 'clothing_details'],
+  ]
 
   // Group order only provides stable indices for replay. Every child enters one
   // shared pool and has the same chance of being selected on each reveal.
-  return detailGroups.flatMap((groupId) => {
-    const group = root.querySelector(`#${groupId}`)
+  return detailGroups.flatMap((groupIds) => {
+    const group = groupIds
+      .map((groupId) => root.querySelector(`#${groupId}`))
+      .find(Boolean)
     return group ? Array.from(group.children) : []
   })
 }
@@ -224,11 +244,11 @@ function normalizeAnswer(value) {
     .replace(/[^a-z0-9]/g, '')
 }
 
-function GearIcon() {
+function GameModeIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 15.35A3.35 3.35 0 1 0 12 8.65a3.35 3.35 0 0 0 0 6.7Z" />
-      <path d="m19.3 13.5 1.22 1-.02 2.02-1.62.93-1.47-.55a7.3 7.3 0 0 1-1.66.96l-.25 1.55-1.76.99-1.25-.98a7.72 7.72 0 0 1-1.94 0l-1.24.98-1.76-.99-.25-1.55a7.3 7.3 0 0 1-1.67-.96l-1.46.55-1.63-.93-.02-2.02 1.23-1a7.72 7.72 0 0 1 0-1.92l-1.23-1 .02-2.02 1.63-.93 1.46.55c.5-.4 1.06-.72 1.67-.97l.25-1.55 1.76-.99 1.24.98a7.72 7.72 0 0 1 1.94 0l1.25-.98 1.76.99.25 1.55c.6.25 1.16.57 1.66.97l1.47-.55 1.62.93.02 2.02-1.22 1c.08.31.12.63.12.96s-.04.65-.12.96Z" />
+      <path d="M8.2 7.5h7.6c2.8 0 4.8 2.1 5.1 5.3l.3 3.2c.2 2.1-2.2 3.3-3.7 1.8l-1.7-1.7H8.2l-1.7 1.7C5 19.3 2.6 18.1 2.8 16l.3-3.2c.3-3.2 2.3-5.3 5.1-5.3Z" />
+      <path d="M7.5 10.5v3M6 12h3M16.5 11.1h.01M18.1 12.7h.01" />
     </svg>
   )
 }
@@ -321,8 +341,8 @@ function SettingsSheet({ currentMode, open, onClose, onSave }) {
         <div className="sheet-handle" />
         <div className="settings-heading">
           <div>
-            <span className="eyebrow">Game settings</span>
-            <h2 id="settings-title">Choose your clues</h2>
+            <span className="eyebrow">Game mode</span>
+            <h2 id="settings-title">Choose a mode</h2>
           </div>
           <button ref={closeButtonRef} className="icon-button close-button" onClick={onClose} aria-label="Close settings">
             <CloseIcon />
@@ -772,8 +792,9 @@ export default function App() {
     <main className="game-shell">
       <header className="game-header">
         <div className="header-actions">
-          <button className="icon-button settings-button" onClick={handleOpenSettings} aria-label="Open settings">
-            <GearIcon />
+          <button className="style-button mode-button settings-button" onClick={handleOpenSettings} aria-label={`Choose game mode. Current mode: ${mode.label}`}>
+            <GameModeIcon />
+            <span>{mode.headerLabel}</span>
           </button>
           <button className="style-button" onClick={handleOpenStyle} aria-label={`Choose portrait style. Current style: ${style.label}`}>
             <PaletteIcon />
@@ -792,7 +813,6 @@ export default function App() {
 
       <section className="game-area" aria-labelledby="game-prompt">
         <div className="game-intro">
-          <span className="mode-pill">{mode.shortLabel}</span>
           <h1 id="game-prompt">Who’s hiding here?</h1>
           <p>
             {mode.id === 'progressive'

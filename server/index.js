@@ -25,7 +25,8 @@ const portraitStyles = new Map([
   ['cristiano-ronaldo', new Set(['vector-lines', 'abstract'])],
   ['elvis-presley', new Set(['vector-lines', 'abstract'])],
   ['john-lennon', new Set(['vector-lines'])],
-  ['lionel-messi', new Set(['vector-lines'])],
+  ['lionel-messi', new Set(['vector-lines', 'abstract'])],
+  ['marilyn-monroe', new Set(['abstract'])],
 ])
 const modes = new Set(['one', 'two', 'four', 'progressive'])
 const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed'])

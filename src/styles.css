@@ -71,6 +71,7 @@ input:focus-visible {
   z-index: 2;
   display: grid;
   grid-template-columns: auto 1fr 56px;
+  grid-template-rows: 48px auto;
   align-items: center;
   gap: 10px;
   padding: calc(14px + env(safe-area-inset-top)) 16px 8px;
@@ -78,6 +79,8 @@ input:focus-visible {
 
 .header-actions {
   display: flex;
+  grid-column: 1;
+  grid-row: 1;
   align-items: center;
   gap: 9px;
 }
@@ -155,8 +158,19 @@ input:focus-visible {
   white-space: nowrap;
 }
 
+.mode-button {
+  min-width: 96px;
+  background: #e8ecff;
+}
+
+.mode-button span {
+  max-width: 58px;
+}
+
 .wordmark {
   display: flex;
+  grid-column: 1 / -1;
+  grid-row: 2;
   flex-direction: column;
   align-items: center;
   font-family: 'Space Grotesk', sans-serif;
@@ -165,6 +179,7 @@ input:focus-visible {
   line-height: 0.75;
   letter-spacing: -0.05em;
   text-transform: uppercase;
+  justify-self: center;
 }
 
 .wordmark span:last-child {
@@ -175,8 +190,11 @@ input:focus-visible {
 
 .refresh-counter {
   display: flex;
+  grid-column: 3;
+  grid-row: 1;
   flex-direction: column;
   align-items: center;
+  justify-self: end;
   color: var(--muted);
   font-size: 9px;
   font-weight: 700;
@@ -210,7 +228,6 @@ input:focus-visible {
   text-align: center;
 }
 
-.mode-pill,
 .result-kicker,
 .eyebrow {
   display: inline-flex;
@@ -1219,6 +1236,46 @@ input:focus-visible {
   .timeline-play-again {
     min-height: 50px;
     margin-top: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .game-header {
+    gap: 7px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .style-button {
+    min-width: 56px;
+    padding: 0 5px;
+    gap: 3px;
+  }
+
+  .style-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .style-button span {
+    max-width: 30px;
+    font-size: 8px;
+  }
+
+  .mode-button {
+    min-width: 88px;
+  }
+
+  .mode-button span {
+    max-width: 52px;
+  }
+
+  .wordmark {
+    font-size: 17px;
   }
 }
 
