@@ -11,6 +11,7 @@ import abstractCristianoRonaldoSvg from '../data/svg/cristiano_ronaldo/abstract.
 import abstractElvisSvg from '../data/svg/elvis/abstract.svg?raw'
 import abstractLionelMessiSvg from '../data/svg/messi/abstract.svg?raw'
 import abstractMarilynMonroeSvg from '../data/svg/marilyn_monroe/abstract.svg?raw'
+import abstractTomHanksSvg from '../data/svg/tom_hanks/abstract.svg?raw'
 import {
   completeGameSession,
   createSessionId,
@@ -80,6 +81,14 @@ const PORTRAITS = [
     aliases: ['Marilyn Monroe', 'Marilyn', 'Monroe'],
     styles: {
       abstract: abstractMarilynMonroeSvg,
+    },
+  },
+  {
+    id: 'tom-hanks',
+    name: 'Tom Hanks',
+    aliases: ['Tom Hanks', 'Tom', 'Hanks'],
+    styles: {
+      abstract: abstractTomHanksSvg,
     },
   },
 ]
@@ -639,6 +648,13 @@ export default function App() {
   const [refreshCount, setRefreshCount] = useState(0)
   const [answer, setAnswer] = useState('')
   const [answerError, setAnswerError] = useState('')
+  const [answerFocused, setAnswerFocused] = useState(false)
+  const [viewportHeight, setViewportHeight] = useState(
+    () => Math.round(window.visualViewport?.height || window.innerHeight),
+  )
+  const [viewportOffset, setViewportOffset] = useState(
+    () => Math.round(window.visualViewport?.offsetTop || 0),
+  )
   const [result, setResult] = useState(null)
   const [submittedAnswer, setSubmittedAnswer] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -657,6 +673,30 @@ export default function App() {
     [portraitSvg, style.id, visibleIndices],
   )
   const progressiveComplete = mode.id === 'progressive' && visibleIndices.length >= totalElements
+
+  useEffect(() => {
+    const viewport = window.visualViewport
+    const updateViewportHeight = () => {
+      setViewportHeight(Math.round(viewport?.height || window.innerHeight))
+      setViewportOffset(Math.round(viewport?.offsetTop || 0))
+    }
+
+    updateViewportHeight()
+    viewport?.addEventListener('resize', updateViewportHeight)
+    viewport?.addEventListener('scroll', updateViewportHeight)
+    window.addEventListener('resize', updateViewportHeight)
+
+    return () => {
+      viewport?.removeEventListener('resize', updateViewportHeight)
+      viewport?.removeEventListener('scroll', updateViewportHeight)
+      window.removeEventListener('resize', updateViewportHeight)
+    }
+  }, [])
+
+  useEffect(() => {
+    document.body.classList.toggle('answer-input-focused', answerFocused)
+    return () => document.body.classList.remove('answer-input-focused')
+  }, [answerFocused])
 
   useEffect(() => {
     startGameSession({
@@ -726,6 +766,7 @@ export default function App() {
     setSubmittedAnswer(trimmedAnswer)
     setResult(outcome)
     setAnswerError('')
+    setAnswerFocused(false)
   }
 
   const handleSaveMode = (nextMode) => {
@@ -789,7 +830,13 @@ export default function App() {
   }
 
   return (
-    <main className="game-shell">
+    <main
+      className={`game-shell ${answerFocused ? 'answer-focused' : ''}`}
+      style={{
+        '--viewport-height': `${viewportHeight}px`,
+        '--viewport-offset': `${viewportOffset}px`,
+      }}
+    >
       <header className="game-header">
         <div className="header-actions">
           <button className="style-button mode-button settings-button" onClick={handleOpenSettings} aria-label={`Choose game mode. Current mode: ${mode.label}`}>
@@ -801,60 +848,55 @@ export default function App() {
             <span>{style.shortLabel}</span>
           </button>
         </div>
-        <div className="wordmark" aria-label="Face by Pieces">
-          <span>Face</span>
-          <span>by pieces</span>
-        </div>
         <div className="refresh-counter" aria-label={`${refreshCount} steps used`}>
           <span>{refreshCount}</span>
           steps
         </div>
+        <h1 className="game-prompt" id="game-prompt">Who’s hiding here?</h1>
       </header>
 
       <section className="game-area" aria-labelledby="game-prompt">
-        <div className="game-intro">
-          <h1 id="game-prompt">Who’s hiding here?</h1>
-          <p>
-            {mode.id === 'progressive'
-              ? 'Study the pieces. Tap next when you need another clue.'
-              : 'Study the pieces. Refresh if you need a new clue.'}
-          </p>
-        </div>
-
         <div className="portrait-card">
-          <div className="card-corner card-corner-top" />
-          <div className="card-corner card-corner-bottom" />
           <div
             className="portrait-svg"
             aria-label={`A partially revealed portrait with ${visibleIndices.length} visible ${visibleIndices.length === 1 ? 'element' : 'elements'}`}
             dangerouslySetInnerHTML={{ __html: visibleSvg }}
           />
         </div>
-
-        <div className="refresh-wrap">
-          <button
-            className="refresh-button"
-            onClick={handleRefresh}
-            disabled={progressiveComplete}
-            aria-label={progressiveComplete
-              ? 'All portrait elements revealed'
-              : mode.id === 'progressive'
-                ? 'Reveal the next portrait clue'
-                : 'Refresh portrait clues'}
-          >
-            {mode.id === 'progressive' ? <ArrowIcon /> : <RefreshIcon />}
-          </button>
-        </div>
       </section>
+
+      <div className="clue-action">
+        <p>{progressiveComplete ? 'All clues revealed' : 'tap for another clue'}</p>
+        <button
+          className="refresh-button"
+          onPointerDown={(event) => {
+            if (answerFocused) event.preventDefault()
+          }}
+          onClick={handleRefresh}
+          disabled={progressiveComplete}
+          aria-label={progressiveComplete
+            ? 'All portrait elements revealed'
+            : mode.id === 'progressive'
+              ? 'Reveal the next portrait clue'
+              : 'Refresh portrait clues'}
+        >
+          {mode.id === 'progressive' ? <ArrowIcon /> : <RefreshIcon />}
+        </button>
+      </div>
 
       <section className="answer-panel">
         <form onSubmit={handleSubmit} noValidate>
-          <label htmlFor="famous-person">Know the face?</label>
+          <label className="visually-hidden" htmlFor="famous-person">Enter the famous person’s name</label>
           <div className={`answer-control ${answerError ? 'has-error' : ''}`}>
             <input
               id="famous-person"
               type="text"
               value={answer}
+              onFocus={() => {
+                setAnswerFocused(true)
+                requestAnimationFrame(() => window.scrollTo(0, 0))
+              }}
+              onBlur={() => setAnswerFocused(false)}
               onChange={(event) => {
                 setAnswer(event.target.value)
                 if (answerError) setAnswerError('')

@@ -27,6 +27,7 @@ const portraitStyles = new Map([
   ['john-lennon', new Set(['vector-lines'])],
   ['lionel-messi', new Set(['vector-lines', 'abstract'])],
   ['marilyn-monroe', new Set(['abstract'])],
+  ['tom-hanks', new Set(['abstract'])],
 ])
 const modes = new Set(['one', 'two', 'four', 'progressive'])
 const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed'])

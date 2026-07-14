@@ -36,6 +36,13 @@ body.modal-open {
   overflow: hidden;
 }
 
+body.answer-input-focused {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  inset: 0;
+}
+
 button,
 input {
   font: inherit;
@@ -67,14 +74,19 @@ input:focus-visible {
   box-shadow: 0 0 50px rgba(27, 28, 30, 0.1);
 }
 
+.game-shell {
+  height: var(--viewport-height, 100dvh);
+  min-height: 0;
+}
+
 .game-header {
   z-index: 2;
   display: grid;
-  grid-template-columns: auto 1fr 56px;
+  grid-template-columns: minmax(0, 1fr) 56px;
   grid-template-rows: 48px auto;
   align-items: center;
-  gap: 10px;
-  padding: calc(14px + env(safe-area-inset-top)) 16px 8px;
+  gap: 9px 12px;
+  padding: calc(14px + env(safe-area-inset-top)) 16px 11px;
 }
 
 .header-actions {
@@ -167,30 +179,21 @@ input:focus-visible {
   max-width: 58px;
 }
 
-.wordmark {
-  display: flex;
+.game-prompt {
   grid-column: 1 / -1;
   grid-row: 2;
-  flex-direction: column;
-  align-items: center;
+  margin: 8px 0 12px;
+  color: var(--ink);
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 0.75;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  justify-self: center;
-}
-
-.wordmark span:last-child {
-  margin-top: 7px;
-  font-size: 9px;
-  letter-spacing: 0.15em;
+  font-size: clamp(22px, 6vw, 28px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-align: center;
 }
 
 .refresh-counter {
   display: flex;
-  grid-column: 3;
+  grid-column: 2;
   grid-row: 1;
   flex-direction: column;
   align-items: center;
@@ -217,15 +220,9 @@ input:focus-visible {
   flex: 1;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   min-height: 0;
-  padding: 3px 24px 16px;
-}
-
-.game-intro {
-  width: 100%;
-  max-width: 385px;
-  margin-bottom: 12px;
-  text-align: center;
+  padding: 0 12px;
 }
 
 .result-kicker,
@@ -244,7 +241,6 @@ input:focus-visible {
   border-radius: 99px;
 }
 
-.game-intro h1,
 .result-content h1,
 .settings-heading h2 {
   margin: 8px 0 0;
@@ -254,44 +250,27 @@ input:focus-visible {
   letter-spacing: -0.055em;
 }
 
-.game-intro p {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 12px;
-}
-
 .portrait-card {
   position: relative;
   display: grid;
-  width: min(78vw, 342px, 39svh);
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
   aspect-ratio: 0.88;
   flex: 0 1 auto;
   place-items: center;
   overflow: hidden;
   background-color: var(--white);
-  background-image: radial-gradient(rgba(27, 28, 30, 0.1) 0.8px, transparent 0.8px);
-  background-size: 13px 13px;
   border: 2px solid var(--ink);
   border-radius: 26px;
   box-shadow: 8px 8px 0 var(--ink);
   isolation: isolate;
 }
 
-.portrait-card::before {
-  position: absolute;
-  top: 9%;
-  left: 11%;
-  z-index: -1;
-  width: 78%;
-  aspect-ratio: 1;
-  content: '';
-  background: #e8ecff;
-  border-radius: 50%;
-}
-
 .portrait-svg {
-  width: 94%;
-  height: 94%;
+  width: 100%;
+  height: 100%;
   color: var(--ink);
 }
 
@@ -302,39 +281,28 @@ input:focus-visible {
   height: 100%;
 }
 
-.card-corner {
-  position: absolute;
+.clue-action {
+  position: relative;
   z-index: 2;
-  width: 40px;
-  height: 10px;
-  background: var(--coral);
-  border: 1.5px solid var(--ink);
-}
-
-.card-corner-top {
-  top: 23px;
-  left: -9px;
-  transform: rotate(-42deg);
-}
-
-.card-corner-bottom {
-  right: -8px;
-  bottom: 26px;
-  background: var(--yellow);
-  transform: rotate(-42deg);
-}
-
-.refresh-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  margin-top: 20px;
+  justify-content: center;
+  gap: 7px;
+  padding: 14px 12px 18px;
+}
+
+.clue-action p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .refresh-button {
   display: grid;
   width: 58px;
+  min-width: 58px;
   height: 58px;
   padding: 0;
   place-items: center;
@@ -348,7 +316,7 @@ input:focus-visible {
 }
 
 .refresh-button:active:not(:disabled) {
-  transform: translate(3px, 3px) rotate(20deg);
+  transform: translate(3px, 3px);
   box-shadow: 2px 2px 0 var(--ink);
 }
 
@@ -360,8 +328,8 @@ input:focus-visible {
 }
 
 .refresh-button svg {
-  width: 27px;
-  height: 27px;
+  width: 23px;
+  height: 23px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -371,7 +339,7 @@ input:focus-visible {
 
 .answer-panel {
   z-index: 2;
-  padding: 18px 22px calc(17px + env(safe-area-inset-bottom));
+  padding: 14px 22px calc(12px + env(safe-area-inset-bottom));
   background: var(--white);
   border-top: 2px solid var(--ink);
   border-radius: 27px 27px 0 0;
@@ -384,12 +352,17 @@ input:focus-visible {
   margin: 0 auto;
 }
 
-.answer-panel label {
-  display: block;
-  margin-bottom: 8px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 .answer-control {
@@ -492,6 +465,29 @@ input:focus-visible {
   color: #bd341f;
   font-size: 11px;
   font-weight: 600;
+}
+
+.answer-error:empty {
+  display: none;
+}
+
+.answer-focused .game-header {
+  grid-template-rows: 48px;
+  gap: 0;
+  padding-bottom: 8px;
+}
+
+.game-shell.answer-focused {
+  transform: translateY(var(--viewport-offset, 0));
+}
+
+.answer-focused .game-prompt {
+  display: none;
+}
+
+.answer-focused .clue-action {
+  padding-top: 6px;
+  padding-bottom: 8px;
 }
 
 .settings-overlay {
@@ -1164,38 +1160,31 @@ input:focus-visible {
 
 @media (max-height: 720px) {
   .game-header {
+    grid-template-rows: 48px;
+    gap: 0;
     padding-top: calc(9px + env(safe-area-inset-top));
+    padding-bottom: 8px;
   }
 
-  .game-intro p {
+  .game-prompt {
     display: none;
-  }
-
-  .game-intro h1 {
-    font-size: 27px;
-  }
-
-  .portrait-card {
-    width: min(66vw, 275px, 36svh);
   }
 
   .refresh-button {
     width: 52px;
+    min-width: 52px;
     height: 52px;
   }
 
-  .refresh-wrap {
-    margin-top: 13px;
+  .clue-action {
+    gap: 5px;
+    padding-top: 7px;
+    padding-bottom: 9px;
   }
 
   .answer-panel {
-    padding-top: 13px;
+    padding-top: 10px;
     padding-bottom: calc(10px + env(safe-area-inset-bottom));
-  }
-
-  .answer-error {
-    min-height: 7px;
-    margin-top: 3px;
   }
 
   .result-portrait-shell {
@@ -1274,9 +1263,6 @@ input:focus-visible {
     max-width: 52px;
   }
 
-  .wordmark {
-    font-size: 17px;
-  }
 }
 
 @media (min-width: 700px) {
@@ -1289,6 +1275,11 @@ input:focus-visible {
     min-height: calc(100vh - 48px);
     border: 2px solid var(--ink);
     border-radius: 34px;
+  }
+
+  .game-shell {
+    height: calc(var(--viewport-height, 100vh) - 48px);
+    min-height: 0;
   }
 
   .answer-panel {
