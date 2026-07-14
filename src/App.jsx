@@ -673,6 +673,8 @@ export default function App() {
     [portraitSvg, style.id, visibleIndices],
   )
   const progressiveComplete = mode.id === 'progressive' && visibleIndices.length >= totalElements
+  const usesOnScreenKeyboard = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+  const keyboardLayoutActive = answerFocused && usesOnScreenKeyboard
 
   useEffect(() => {
     const viewport = window.visualViewport
@@ -694,9 +696,9 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    document.body.classList.toggle('answer-input-focused', answerFocused)
+    document.body.classList.toggle('answer-input-focused', keyboardLayoutActive)
     return () => document.body.classList.remove('answer-input-focused')
-  }, [answerFocused])
+  }, [keyboardLayoutActive])
 
   useEffect(() => {
     startGameSession({
@@ -831,7 +833,7 @@ export default function App() {
 
   return (
     <main
-      className={`game-shell ${answerFocused ? 'answer-focused' : ''}`}
+      className={`game-shell ${keyboardLayoutActive ? 'answer-focused' : ''}`}
       style={{
         '--viewport-height': `${viewportHeight}px`,
         '--viewport-offset': `${viewportOffset}px`,
@@ -894,7 +896,9 @@ export default function App() {
               value={answer}
               onFocus={() => {
                 setAnswerFocused(true)
-                requestAnimationFrame(() => window.scrollTo(0, 0))
+                if (usesOnScreenKeyboard) {
+                  requestAnimationFrame(() => window.scrollTo(0, 0))
+                }
               }}
               onBlur={() => setAnswerFocused(false)}
               onChange={(event) => {
