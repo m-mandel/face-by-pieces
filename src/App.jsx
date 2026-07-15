@@ -11,6 +11,7 @@ import abstractCristianoRonaldoSvg from '../data/svg/cristiano_ronaldo/abstract.
 import abstractElvisSvg from '../data/svg/elvis/abstract.svg?raw'
 import abstractLionelMessiSvg from '../data/svg/messi/abstract.svg?raw'
 import abstractMarilynMonroeSvg from '../data/svg/marilyn_monroe/abstract.svg?raw'
+import abstractStevenSpielbergSvg from '../data/svg/steven_spielberg/abstract.svg?raw'
 import abstractTomHanksSvg from '../data/svg/tom_hanks/abstract.svg?raw'
 import {
   completeGameSession,
@@ -81,6 +82,14 @@ const PORTRAITS = [
     aliases: ['Marilyn Monroe', 'Marilyn', 'Monroe'],
     styles: {
       abstract: abstractMarilynMonroeSvg,
+    },
+  },
+  {
+    id: 'steven-spielberg',
+    name: 'Steven Spielberg',
+    aliases: ['Steven Spielberg', 'Spielberg'],
+    styles: {
+      abstract: abstractStevenSpielbergSvg,
     },
   },
   {
