@@ -9,6 +9,8 @@ import abstractAlbertEinsteinSvg from '../data/svg/albert_einstein/abstract.svg?
 import abstractBarackObamaSvg from '../data/svg/barack_obama/abstract.svg?raw'
 import abstractCristianoRonaldoSvg from '../data/svg/cristiano_ronaldo/abstract.svg?raw'
 import abstractElvisSvg from '../data/svg/elvis/abstract.svg?raw'
+import abstractJohnLennonSvg from '../data/svg/john_lennon/abstract.svg?raw'
+import abstractLebronJamesSvg from '../data/svg/lebron_james/abstract.svg?raw'
 import abstractLionelMessiSvg from '../data/svg/messi/abstract.svg?raw'
 import abstractMarilynMonroeSvg from '../data/svg/marilyn_monroe/abstract.svg?raw'
 import abstractStevenSpielbergSvg from '../data/svg/steven_spielberg/abstract.svg?raw'
@@ -65,6 +67,15 @@ const PORTRAITS = [
     aliases: ['John Lennon', 'Lennon'],
     styles: {
       'vector-lines': johnLennonSvg,
+      abstract: abstractJohnLennonSvg,
+    },
+  },
+  {
+    id: 'lebron-james',
+    name: 'LeBron James',
+    aliases: ['LeBron James', 'Lebron James', 'LeBron', 'Lebron', 'King James'],
+    styles: {
+      abstract: abstractLebronJamesSvg,
     },
   },
   {
