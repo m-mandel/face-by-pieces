@@ -4,6 +4,7 @@ import barackObamaSvg from '../data/vector-lines/barack_obama/sketch.svg?raw'
 import cristianoRonaldoSvg from '../data/vector-lines/cristiano_ronaldo/sketch.svg?raw'
 import elvisSvg from '../data/vector-lines/elvis/sketch.svg?raw'
 import johnLennonSvg from '../data/vector-lines/john_lennon/sketch.svg?raw'
+import lebronJamesSvg from '../data/vector-lines/lebron_james/abstract.svg?raw'
 import lionelMessiSvg from '../data/vector-lines/lionel_messi/sketch.svg?raw'
 import abstractAlbertEinsteinSvg from '../data/svg/albert_einstein/abstract.svg?raw'
 import abstractBarackObamaSvg from '../data/svg/barack_obama/abstract.svg?raw'
@@ -75,6 +76,7 @@ const PORTRAITS = [
     name: 'LeBron James',
     aliases: ['LeBron James', 'Lebron James', 'LeBron', 'Lebron', 'King James'],
     styles: {
+      'vector-lines': lebronJamesSvg,
       abstract: abstractLebronJamesSvg,
     },
   },

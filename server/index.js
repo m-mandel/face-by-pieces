@@ -25,7 +25,7 @@ const portraitStyles = new Map([
   ['cristiano-ronaldo', new Set(['vector-lines', 'abstract'])],
   ['elvis-presley', new Set(['vector-lines', 'abstract'])],
   ['john-lennon', new Set(['vector-lines', 'abstract'])],
-  ['lebron-james', new Set(['abstract'])],
+  ['lebron-james', new Set(['vector-lines', 'abstract'])],
   ['lionel-messi', new Set(['vector-lines', 'abstract'])],
   ['marilyn-monroe', new Set(['abstract'])],
   ['steven-spielberg', new Set(['abstract'])],
