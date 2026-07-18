@@ -3,17 +3,30 @@ import albertEinsteinSvg from '../data/vector-lines/albert_einstein/sketch.svg?r
 import barackObamaSvg from '../data/vector-lines/barack_obama/sketch.svg?raw'
 import cristianoRonaldoSvg from '../data/vector-lines/cristiano_ronaldo/sketch.svg?raw'
 import elvisSvg from '../data/vector-lines/elvis/sketch.svg?raw'
+import hillaryClintonSvg from '../data/vector-lines/hillary_clinton/abstract.svg?raw'
 import johnLennonSvg from '../data/vector-lines/john_lennon/sketch.svg?raw'
 import lebronJamesSvg from '../data/vector-lines/lebron_james/abstract.svg?raw'
 import lionelMessiSvg from '../data/vector-lines/lionel_messi/sketch.svg?raw'
+import marieCurieSvg from '../data/vector-lines/marie_curie/abstract.svg?raw'
+import marilynMonroeSvg from '../data/vector-lines/marilyn_monroe/abstract.svg?raw'
+import queenElizabethIISvg from '../data/vector-lines/queen_elizabeth_II/abstract.svg?raw'
+import ruthBaderGinsburgSvg from '../data/vector-lines/ruth_bader_ginsburg/abstract.svg?raw'
+import simoneBilesSvg from '../data/vector-lines/simone_biles/abstract.svg?raw'
+import stevenSpielbergSvg from '../data/vector-lines/steven_spielberg/abstract.svg?raw'
+import tomHanksSvg from '../data/vector-lines/tom_hanks/abstract.svg?raw'
 import abstractAlbertEinsteinSvg from '../data/svg/albert_einstein/abstract.svg?raw'
 import abstractBarackObamaSvg from '../data/svg/barack_obama/abstract.svg?raw'
 import abstractCristianoRonaldoSvg from '../data/svg/cristiano_ronaldo/abstract.svg?raw'
 import abstractElvisSvg from '../data/svg/elvis/abstract.svg?raw'
+import abstractHillaryClintonSvg from '../data/svg/hillary_clinton/abstract.svg?raw'
 import abstractJohnLennonSvg from '../data/svg/john_lennon/abstract.svg?raw'
 import abstractLebronJamesSvg from '../data/svg/lebron_james/abstract.svg?raw'
 import abstractLionelMessiSvg from '../data/svg/messi/abstract.svg?raw'
+import abstractMarieCurieSvg from '../data/svg/marie_curie/abstract.svg?raw'
 import abstractMarilynMonroeSvg from '../data/svg/marilyn_monroe/abstract.svg?raw'
+import abstractQueenElizabethIISvg from '../data/svg/queen_elizabeth_II/abstract.svg?raw'
+import abstractRuthBaderGinsburgSvg from '../data/svg/ruth_bader_ginsburg/abstract.svg?raw'
+import abstractSimoneBilesSvg from '../data/svg/simone_biles/abstract.svg?raw'
 import abstractStevenSpielbergSvg from '../data/svg/steven_spielberg/abstract.svg?raw'
 import abstractTomHanksSvg from '../data/svg/tom_hanks/abstract.svg?raw'
 import {
@@ -63,6 +76,15 @@ const PORTRAITS = [
     },
   },
   {
+    id: 'hillary-clinton',
+    name: 'Hillary Clinton',
+    aliases: ['Hillary Clinton', 'Hillary Rodham Clinton', 'Hillary', 'Clinton'],
+    styles: {
+      'vector-lines': hillaryClintonSvg,
+      abstract: abstractHillaryClintonSvg,
+    },
+  },
+  {
     id: 'john-lennon',
     name: 'John Lennon',
     aliases: ['John Lennon', 'Lennon'],
@@ -90,11 +112,48 @@ const PORTRAITS = [
     },
   },
   {
+    id: 'marie-curie',
+    name: 'Marie Curie',
+    aliases: ['Marie Curie', 'Marie', 'Curie', 'Madame Curie'],
+    styles: {
+      'vector-lines': marieCurieSvg,
+      abstract: abstractMarieCurieSvg,
+    },
+  },
+  {
     id: 'marilyn-monroe',
     name: 'Marilyn Monroe',
     aliases: ['Marilyn Monroe', 'Marilyn', 'Monroe'],
     styles: {
+      'vector-lines': marilynMonroeSvg,
       abstract: abstractMarilynMonroeSvg,
+    },
+  },
+  {
+    id: 'queen-elizabeth-ii',
+    name: 'Queen Elizabeth II',
+    aliases: ['Queen Elizabeth II', 'Elizabeth II', 'Queen Elizabeth', 'The Queen'],
+    styles: {
+      'vector-lines': queenElizabethIISvg,
+      abstract: abstractQueenElizabethIISvg,
+    },
+  },
+  {
+    id: 'ruth-bader-ginsburg',
+    name: 'Ruth Bader Ginsburg',
+    aliases: ['Ruth Bader Ginsburg', 'Ruth Ginsburg', 'RBG', 'Justice Ginsburg', 'Ginsburg'],
+    styles: {
+      'vector-lines': ruthBaderGinsburgSvg,
+      abstract: abstractRuthBaderGinsburgSvg,
+    },
+  },
+  {
+    id: 'simone-biles',
+    name: 'Simone Biles',
+    aliases: ['Simone Biles', 'Simone', 'Biles'],
+    styles: {
+      'vector-lines': simoneBilesSvg,
+      abstract: abstractSimoneBilesSvg,
     },
   },
   {
@@ -102,6 +161,7 @@ const PORTRAITS = [
     name: 'Steven Spielberg',
     aliases: ['Steven Spielberg', 'Spielberg'],
     styles: {
+      'vector-lines': stevenSpielbergSvg,
       abstract: abstractStevenSpielbergSvg,
     },
   },
@@ -110,6 +170,7 @@ const PORTRAITS = [
     name: 'Tom Hanks',
     aliases: ['Tom Hanks', 'Tom', 'Hanks'],
     styles: {
+      'vector-lines': tomHanksSvg,
       abstract: abstractTomHanksSvg,
     },
   },
@@ -166,26 +227,41 @@ const MODES = [
 ]
 
 const NON_REVEALABLE_TAGS = new Set(['defs', 'title', 'desc', 'metadata', 'style'])
+const MAX_INDIVIDUAL_DETAIL_ELEMENTS = 24
 
 function getRevealableElements(root) {
-  return Array.from(root.children).filter(
+  const rootElements = Array.from(root.children).filter(
     (child) => !NON_REVEALABLE_TAGS.has(child.tagName.toLowerCase()),
   )
+  const subject = rootElements.find((element) => element.id === 'subject')
+
+  // Some Illustrator exports keep the useful clue groups nested under one
+  // subject wrapper. Reveal those groups while retaining any background clue.
+  if (rootElements.length <= 2 && subject?.children.length > 1) {
+    return rootElements.flatMap((element) => (
+      element === subject ? Array.from(subject.children) : [element]
+    ))
+  }
+
+  return rootElements
 }
 
 function getAbstractDetailElements(root) {
   const detailGroups = [
-    ['face-details', 'face_details'],
+    ['face-details', 'face_details', 'head_face'],
     ['clothing-details', 'clothing_details'],
   ]
 
-  // Group order only provides stable indices for replay. Every child enters one
-  // shared pool and has the same chance of being selected on each reveal.
+  // Group order provides stable replay indices. Flat Illustrator exports with
+  // many raw paths stay together so a clue remains visually meaningful.
   return detailGroups.flatMap((groupIds) => {
     const group = groupIds
       .map((groupId) => root.querySelector(`#${groupId}`))
       .find(Boolean)
-    return group ? Array.from(group.children) : []
+    if (!group) return []
+
+    const elements = Array.from(group.children)
+    return elements.length > MAX_INDIVIDUAL_DETAIL_ELEMENTS ? [group] : elements
   })
 }
 

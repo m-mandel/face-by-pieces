@@ -24,12 +24,17 @@ const portraitStyles = new Map([
   ['barack-obama', new Set(['vector-lines', 'abstract'])],
   ['cristiano-ronaldo', new Set(['vector-lines', 'abstract'])],
   ['elvis-presley', new Set(['vector-lines', 'abstract'])],
+  ['hillary-clinton', new Set(['vector-lines', 'abstract'])],
   ['john-lennon', new Set(['vector-lines', 'abstract'])],
   ['lebron-james', new Set(['vector-lines', 'abstract'])],
   ['lionel-messi', new Set(['vector-lines', 'abstract'])],
-  ['marilyn-monroe', new Set(['abstract'])],
-  ['steven-spielberg', new Set(['abstract'])],
-  ['tom-hanks', new Set(['abstract'])],
+  ['marie-curie', new Set(['vector-lines', 'abstract'])],
+  ['marilyn-monroe', new Set(['vector-lines', 'abstract'])],
+  ['queen-elizabeth-ii', new Set(['vector-lines', 'abstract'])],
+  ['ruth-bader-ginsburg', new Set(['vector-lines', 'abstract'])],
+  ['simone-biles', new Set(['vector-lines', 'abstract'])],
+  ['steven-spielberg', new Set(['vector-lines', 'abstract'])],
+  ['tom-hanks', new Set(['vector-lines', 'abstract'])],
 ])
 const modes = new Set(['one', 'two', 'four', 'progressive'])
 const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed'])
