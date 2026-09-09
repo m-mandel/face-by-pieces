@@ -1,34 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import albertEinsteinSvg from '../data/vector-lines/albert_einstein/sketch.svg?raw'
-import barackObamaSvg from '../data/vector-lines/barack_obama/sketch.svg?raw'
-import cristianoRonaldoSvg from '../data/vector-lines/cristiano_ronaldo/sketch.svg?raw'
-import elvisSvg from '../data/vector-lines/elvis/sketch.svg?raw'
-import hillaryClintonSvg from '../data/vector-lines/hillary_clinton/abstract.svg?raw'
-import johnLennonSvg from '../data/vector-lines/john_lennon/sketch.svg?raw'
-import lebronJamesSvg from '../data/vector-lines/lebron_james/abstract.svg?raw'
-import lionelMessiSvg from '../data/vector-lines/lionel_messi/sketch.svg?raw'
-import marieCurieSvg from '../data/vector-lines/marie_curie/abstract.svg?raw'
-import marilynMonroeSvg from '../data/vector-lines/marilyn_monroe/abstract.svg?raw'
-import queenElizabethIISvg from '../data/vector-lines/queen_elizabeth_II/abstract.svg?raw'
-import ruthBaderGinsburgSvg from '../data/vector-lines/ruth_bader_ginsburg/abstract.svg?raw'
-import simoneBilesSvg from '../data/vector-lines/simone_biles/abstract.svg?raw'
-import stevenSpielbergSvg from '../data/vector-lines/steven_spielberg/abstract.svg?raw'
-import tomHanksSvg from '../data/vector-lines/tom_hanks/abstract.svg?raw'
-import abstractAlbertEinsteinSvg from '../data/svg/albert_einstein/abstract.svg?raw'
-import abstractBarackObamaSvg from '../data/svg/barack_obama/abstract.svg?raw'
-import abstractCristianoRonaldoSvg from '../data/svg/cristiano_ronaldo/abstract.svg?raw'
-import abstractElvisSvg from '../data/svg/elvis/abstract.svg?raw'
-import abstractHillaryClintonSvg from '../data/svg/hillary_clinton/abstract.svg?raw'
-import abstractJohnLennonSvg from '../data/svg/john_lennon/abstract.svg?raw'
-import abstractLebronJamesSvg from '../data/svg/lebron_james/abstract.svg?raw'
-import abstractLionelMessiSvg from '../data/svg/messi/abstract.svg?raw'
-import abstractMarieCurieSvg from '../data/svg/marie_curie/abstract.svg?raw'
-import abstractMarilynMonroeSvg from '../data/svg/marilyn_monroe/abstract.svg?raw'
-import abstractQueenElizabethIISvg from '../data/svg/queen_elizabeth_II/abstract.svg?raw'
-import abstractRuthBaderGinsburgSvg from '../data/svg/ruth_bader_ginsburg/abstract.svg?raw'
-import abstractSimoneBilesSvg from '../data/svg/simone_biles/abstract.svg?raw'
-import abstractStevenSpielbergSvg from '../data/svg/steven_spielberg/abstract.svg?raw'
-import abstractTomHanksSvg from '../data/svg/tom_hanks/abstract.svg?raw'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { PORTRAITS, getClueIndices } from './portraits'
+import PortraitArtwork from './PortraitArtwork'
 import {
   completeGameSession,
   createSessionId,
@@ -38,158 +10,31 @@ import {
   startGameSession,
 } from './telemetry'
 
-const PORTRAITS = [
-  {
-    id: 'albert-einstein',
-    name: 'Albert Einstein',
-    aliases: ['Albert Einstein', 'Einstein'],
-    styles: {
-      'vector-lines': albertEinsteinSvg,
-      abstract: abstractAlbertEinsteinSvg,
-    },
-  },
-  {
-    id: 'barack-obama',
-    name: 'Barack Obama',
-    aliases: ['Barack Obama', 'Obama', 'President Obama'],
-    styles: {
-      'vector-lines': barackObamaSvg,
-      abstract: abstractBarackObamaSvg,
-    },
-  },
-  {
-    id: 'cristiano-ronaldo',
-    name: 'Cristiano Ronaldo',
-    aliases: ['Cristiano Ronaldo', 'Christiano Ronaldo', 'Ronaldo', 'CR7'],
-    styles: {
-      'vector-lines': cristianoRonaldoSvg,
-      abstract: abstractCristianoRonaldoSvg,
-    },
-  },
-  {
-    id: 'elvis-presley',
-    name: 'Elvis Presley',
-    aliases: ['Elvis Presley', 'Elvis'],
-    styles: {
-      'vector-lines': elvisSvg,
-      abstract: abstractElvisSvg,
-    },
-  },
-  {
-    id: 'hillary-clinton',
-    name: 'Hillary Clinton',
-    aliases: ['Hillary Clinton', 'Hillary Rodham Clinton', 'Hillary', 'Clinton'],
-    styles: {
-      'vector-lines': hillaryClintonSvg,
-      abstract: abstractHillaryClintonSvg,
-    },
-  },
-  {
-    id: 'john-lennon',
-    name: 'John Lennon',
-    aliases: ['John Lennon', 'Lennon'],
-    styles: {
-      'vector-lines': johnLennonSvg,
-      abstract: abstractJohnLennonSvg,
-    },
-  },
-  {
-    id: 'lebron-james',
-    name: 'LeBron James',
-    aliases: ['LeBron James', 'Lebron James', 'LeBron', 'Lebron', 'King James'],
-    styles: {
-      'vector-lines': lebronJamesSvg,
-      abstract: abstractLebronJamesSvg,
-    },
-  },
-  {
-    id: 'lionel-messi',
-    name: 'Lionel Messi',
-    aliases: ['Lionel Messi', 'Leo Messi', 'Messi'],
-    styles: {
-      'vector-lines': lionelMessiSvg,
-      abstract: abstractLionelMessiSvg,
-    },
-  },
-  {
-    id: 'marie-curie',
-    name: 'Marie Curie',
-    aliases: ['Marie Curie', 'Marie', 'Curie', 'Madame Curie'],
-    styles: {
-      'vector-lines': marieCurieSvg,
-      abstract: abstractMarieCurieSvg,
-    },
-  },
-  {
-    id: 'marilyn-monroe',
-    name: 'Marilyn Monroe',
-    aliases: ['Marilyn Monroe', 'Marilyn', 'Monroe'],
-    styles: {
-      'vector-lines': marilynMonroeSvg,
-      abstract: abstractMarilynMonroeSvg,
-    },
-  },
-  {
-    id: 'queen-elizabeth-ii',
-    name: 'Queen Elizabeth II',
-    aliases: ['Queen Elizabeth II', 'Elizabeth II', 'Queen Elizabeth', 'The Queen'],
-    styles: {
-      'vector-lines': queenElizabethIISvg,
-      abstract: abstractQueenElizabethIISvg,
-    },
-  },
-  {
-    id: 'ruth-bader-ginsburg',
-    name: 'Ruth Bader Ginsburg',
-    aliases: ['Ruth Bader Ginsburg', 'Ruth Ginsburg', 'RBG', 'Justice Ginsburg', 'Ginsburg'],
-    styles: {
-      'vector-lines': ruthBaderGinsburgSvg,
-      abstract: abstractRuthBaderGinsburgSvg,
-    },
-  },
-  {
-    id: 'simone-biles',
-    name: 'Simone Biles',
-    aliases: ['Simone Biles', 'Simone', 'Biles'],
-    styles: {
-      'vector-lines': simoneBilesSvg,
-      abstract: abstractSimoneBilesSvg,
-    },
-  },
-  {
-    id: 'steven-spielberg',
-    name: 'Steven Spielberg',
-    aliases: ['Steven Spielberg', 'Spielberg'],
-    styles: {
-      'vector-lines': stevenSpielbergSvg,
-      abstract: abstractStevenSpielbergSvg,
-    },
-  },
-  {
-    id: 'tom-hanks',
-    name: 'Tom Hanks',
-    aliases: ['Tom Hanks', 'Tom', 'Hanks'],
-    styles: {
-      'vector-lines': tomHanksSvg,
-      abstract: abstractTomHanksSvg,
-    },
-  },
-]
-
 const STYLES = [
+  {
+    id: 'line-art',
+    label: 'Line art',
+    shortLabel: 'Line art',
+    description: 'Hand-drawn portraits revealed one layer at a time.',
+  },
   {
     id: 'abstract',
     label: 'Abstract color',
     shortLabel: 'Color',
-    description: 'Layered color portraits that begin with their base silhouette.',
+    description:
+      'Layered color portraits that begin with their base silhouette.',
   },
   {
     id: 'vector-lines',
     label: 'Vector lines',
     shortLabel: 'Lines',
-    description: 'Minimal line portraits with clues that shuffle independently.',
+    description:
+      'Minimal line portraits with clues that shuffle independently.',
   },
 ]
+
+// Apply the new default once to existing browsers, then remember style choices.
+const STYLE_STORAGE_KEY = 'face-by-pieces-style-v2'
 
 const MODES = [
   {
@@ -218,90 +63,21 @@ const MODES = [
   },
   {
     id: 'progressive',
-    label: 'Progressive',
-    shortLabel: 'Progressive',
-    headerLabel: 'Progress',
+    label: 'Sequence',
+    shortLabel: 'Sequence',
+    headerLabel: 'Sequence',
     count: 1,
     description: 'Start with one piece and add another each refresh.',
   },
 ]
 
-const NON_REVEALABLE_TAGS = new Set(['defs', 'title', 'desc', 'metadata', 'style'])
-const MAX_INDIVIDUAL_DETAIL_ELEMENTS = 24
-
-function getRevealableElements(root) {
-  const rootElements = Array.from(root.children).filter(
-    (child) => !NON_REVEALABLE_TAGS.has(child.tagName.toLowerCase()),
-  )
-  const subject = rootElements.find((element) => element.id === 'subject')
-
-  // Some Illustrator exports keep the useful clue groups nested under one
-  // subject wrapper. Reveal those groups while retaining any background clue.
-  if (rootElements.length <= 2 && subject?.children.length > 1) {
-    return rootElements.flatMap((element) => (
-      element === subject ? Array.from(subject.children) : [element]
-    ))
-  }
-
-  return rootElements
-}
-
-function getAbstractDetailElements(root) {
-  const detailGroups = [
-    ['face-details', 'face_details', 'head_face'],
-    ['clothing-details', 'clothing_details'],
-  ]
-
-  // Group order provides stable replay indices. Flat Illustrator exports with
-  // many raw paths stay together so a clue remains visually meaningful.
-  return detailGroups.flatMap((groupIds) => {
-    const group = groupIds
-      .map((groupId) => root.querySelector(`#${groupId}`))
-      .find(Boolean)
-    if (!group) return []
-
-    const elements = Array.from(group.children)
-    return elements.length > MAX_INDIVIDUAL_DETAIL_ELEMENTS ? [group] : elements
-  })
-}
-
-function getElementCount(svgText, styleId) {
-  const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml')
-  return styleId === 'abstract'
-    ? getAbstractDetailElements(doc.documentElement).length
-    : getRevealableElements(doc.documentElement).length
-}
-
-function renderSvg(svgText, visibleIndices = null, styleId = 'vector-lines') {
-  const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml')
-  const root = doc.documentElement
-
-  root.removeAttribute('width')
-  root.removeAttribute('height')
-  root.setAttribute('preserveAspectRatio', 'xMidYMid meet')
-  root.setAttribute('aria-hidden', 'true')
-  root.setAttribute('focusable', 'false')
-
-  if (visibleIndices) {
-    const visible = new Set(visibleIndices)
-    const revealableElements = styleId === 'abstract'
-      ? getAbstractDetailElements(root)
-      : getRevealableElements(root)
-    revealableElements.forEach((element, index) => {
-      if (!visible.has(index)) element.setAttribute('visibility', 'hidden')
-    })
-  }
-
-  return new XMLSerializer().serializeToString(root)
-}
-
-function sampleIndices(total, count, previous = []) {
-  const safeCount = Math.min(count, total)
+function sampleIndices(indices, count, previous = []) {
+  const safeCount = Math.min(count, indices.length)
   const previousKey = [...previous].sort((a, b) => a - b).join(',')
   let selection = []
 
   for (let attempt = 0; attempt < 12; attempt += 1) {
-    const pool = Array.from({ length: total }, (_, index) => index)
+    const pool = [...indices]
     for (let index = pool.length - 1; index > 0; index -= 1) {
       const swapIndex = Math.floor(Math.random() * (index + 1))
       ;[pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]]
@@ -314,31 +90,36 @@ function sampleIndices(total, count, previous = []) {
 }
 
 function getAvailablePortraitIndices(styleId) {
-  return PORTRAITS
-    .map((portrait, index) => (portrait.styles[styleId] ? index : null))
-    .filter((index) => index !== null)
+  return PORTRAITS.map((portrait, index) =>
+    portrait.styles[styleId] ? index : null,
+  ).filter((index) => index !== null)
 }
 
-function getRandomPortraitIndex(currentIndex = -1, styleId = 'vector-lines') {
-  const availableIndices = getAvailablePortraitIndices(styleId)
-    .filter((index) => index !== currentIndex)
+function getRandomPortraitIndex(currentIndex = -1, styleId = 'line-art') {
+  const availableIndices = getAvailablePortraitIndices(styleId).filter(
+    (index) => index !== currentIndex,
+  )
   if (availableIndices.length === 0) return currentIndex >= 0 ? currentIndex : 0
   return availableIndices[Math.floor(Math.random() * availableIndices.length)]
 }
 
 function getNextUnviewedPortraitIndex(currentIndex, viewedPortraits, styleId) {
   const stylePortraitIndices = getAvailablePortraitIndices(styleId)
-  let availableIndices = stylePortraitIndices
-    .filter((index) => !viewedPortraits.has(index))
+  let availableIndices = stylePortraitIndices.filter(
+    (index) => !viewedPortraits.has(index),
+  )
 
   if (availableIndices.length === 0) {
     viewedPortraits.clear()
-    availableIndices = stylePortraitIndices.filter((index) => index !== currentIndex)
+    availableIndices = stylePortraitIndices.filter(
+      (index) => index !== currentIndex,
+    )
   }
 
   if (availableIndices.length === 0) return currentIndex
 
-  const nextIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)]
+  const nextIndex =
+    availableIndices[Math.floor(Math.random() * availableIndices.length)]
   viewedPortraits.add(nextIndex)
   return nextIndex
 }
@@ -351,394 +132,406 @@ function normalizeAnswer(value) {
     .replace(/[^a-z0-9]/g, '')
 }
 
-function GameModeIcon() {
+function Icon({ name = 'arrow', ...props }) {
+  const paths = {
+    arrow: 'M4 12h15m-6-6 6 6-6 6',
+    refresh: 'M20 8a8 8 0 1 0 .1 7M20 3v5h-5',
+    close: 'm6 6 12 12M18 6 6 18',
+    back: 'm14 5-7 7 7 7',
+    chevron: 'm7 10 5 5 5-5',
+    check: 'm5 12 4 4L19 6',
+    replay: 'M5 5v14l14-7Z',
+  }
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M8.2 7.5h7.6c2.8 0 4.8 2.1 5.1 5.3l.3 3.2c.2 2.1-2.2 3.3-3.7 1.8l-1.7-1.7H8.2l-1.7 1.7C5 19.3 2.6 18.1 2.8 16l.3-3.2c.3-3.2 2.3-5.3 5.1-5.3Z" />
-      <path d="M7.5 10.5v3M6 12h3M16.5 11.1h.01M18.1 12.7h.01" />
+    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
+      <path d={paths[name]} />
     </svg>
   )
 }
 
-function RefreshIcon() {
+function FaceMark() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M19.1 8.2A8 8 0 1 0 20 13" />
-      <path d="M19.1 3.8v4.4h-4.4" />
+    <svg className="face-mark" viewBox="0 0 42 52" aria-hidden="true">
+      <path d="M9 18C8 6 17 3 25 5c10 2 13 12 11 24-1 9-8 18-16 18-7 0-13-6-14-15M5 28c-5-9 0-11 4-7M14 19c2-2 5-2 7 0m6-1 5 1M24 21l-3 9 5 1M16 37c4 2 8 2 11-1" />
     </svg>
   )
 }
 
-function CloseIcon() {
+function Masthead({
+  caption = 'A little less to see. A little more to imagine.',
+}) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m6 6 12 12M18 6 6 18" />
-    </svg>
+    <header className="masthead">
+      <div className="wordmark">
+        <FaceMark />
+        <span>
+          face <em>by</em> pieces
+        </span>
+      </div>
+      <span className="masthead-caption">{caption}</span>
+    </header>
   )
 }
 
-function ArrowIcon() {
+function PortraitFrame({
+  artwork,
+  styleId,
+  visibleIndices = null,
+  label,
+  className = '',
+}) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M5 12h13M13 6l6 6-6 6" />
-    </svg>
+    <div className={`portrait-frame ${className}`}>
+      <i className="frame-corner top-left" aria-hidden="true" />
+      <i className="frame-corner top-right" aria-hidden="true" />
+      <i className="frame-corner bottom-left" aria-hidden="true" />
+      <i className="frame-corner bottom-right" aria-hidden="true" />
+      <PortraitArtwork
+        className="portrait-artwork"
+        artwork={artwork}
+        styleId={styleId}
+        visibleIndices={visibleIndices}
+        label={label}
+        fitToInk
+      />
+    </div>
   )
 }
 
-function TimelineIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4 7h10M4 17h16M14 7l3-3m-3 3 3 3" />
-      <circle cx="8" cy="17" r="2.5" />
-    </svg>
-  )
-}
-
-function PaletteIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 3a9 9 0 1 0 0 18h1.2a1.7 1.7 0 0 0 1.2-2.9 1.7 1.7 0 0 1 1.2-2.9H18a3 3 0 0 0 3-3A9.2 9.2 0 0 0 12 3Z" />
-      <circle cx="7.5" cy="10" r="1" />
-      <circle cx="10" cy="6.8" r="1" />
-      <circle cx="15" cy="7.2" r="1" />
-    </svg>
-  )
-}
-
-function ChevronIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m15 5-7 7 7 7" />
-    </svg>
-  )
-}
-
-function SettingsSheet({ currentMode, open, onClose, onSave }) {
-  const [draftMode, setDraftMode] = useState(currentMode)
-  const closeButtonRef = useRef(null)
+function SettingsDropdown({
+  label,
+  options,
+  value,
+  open,
+  onToggle,
+  onClose,
+  onSelect,
+  legacyLink = false,
+}) {
+  const id = useId()
+  const rootRef = useRef(null)
+  const buttonRef = useRef(null)
+  const menuRef = useRef(null)
+  const selected = options.find((option) => option.id === value)
 
   useEffect(() => {
-    if (!open) return undefined
-    setDraftMode(currentMode)
-    closeButtonRef.current?.focus()
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') onClose()
+    if (!open) return
+    menuRef.current.querySelector('[aria-checked="true"]')?.focus()
+    const handleOutsideClick = (event) => {
+      if (!rootRef.current.contains(event.target)) onClose()
     }
-    document.addEventListener('keydown', handleKeyDown)
-    document.body.classList.add('modal-open')
+    document.addEventListener('pointerdown', handleOutsideClick)
+    return () => document.removeEventListener('pointerdown', handleOutsideClick)
+  }, [open, onClose])
 
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.classList.remove('modal-open')
+  const closeAndFocus = () => {
+    onClose()
+    buttonRef.current.focus({ preventScroll: true })
+  }
+
+  const handleMenuKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      closeAndFocus()
+      return
     }
-  }, [currentMode, onClose, open])
-
-  if (!open) return null
+    if (event.key === 'Tab') {
+      // Continue the page's normal tab order from the menu's trigger.
+      closeAndFocus()
+      return
+    }
+    const items = [...menuRef.current.querySelectorAll('[role^="menuitem"]')]
+    const index = items.indexOf(document.activeElement)
+    let nextIndex
+    if (event.key === 'ArrowDown') nextIndex = (index + 1) % items.length
+    if (event.key === 'ArrowUp')
+      nextIndex = (index - 1 + items.length) % items.length
+    if (event.key === 'Home') nextIndex = 0
+    if (event.key === 'End') nextIndex = items.length - 1
+    if (nextIndex !== undefined) {
+      event.preventDefault()
+      items[nextIndex].focus()
+    }
+  }
 
   return (
-    <div className="settings-overlay" role="presentation" onMouseDown={onClose}>
-      <section
-        className="settings-sheet"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="settings-title"
-        onMouseDown={(event) => event.stopPropagation()}
+    <div
+      ref={rootRef}
+      className="settings-dropdown"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) onClose()
+      }}
+    >
+      <button
+        ref={buttonRef}
+        id={`${id}-button`}
+        className="settings-dropdown-button"
+        aria-label={`${label}: ${selected.label}`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={open ? `${id}-menu` : undefined}
+        onClick={onToggle}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault()
+            if (!open) onToggle()
+          }
+        }}
       >
-        <div className="sheet-handle" />
-        <div className="settings-heading">
-          <div>
-            <span className="eyebrow">Game mode</span>
-            <h2 id="settings-title">Choose a mode</h2>
-          </div>
-          <button ref={closeButtonRef} className="icon-button close-button" onClick={onClose} aria-label="Close settings">
-            <CloseIcon />
-          </button>
-        </div>
-
-        <div className="mode-list" role="radiogroup" aria-label="Reveal mode">
-          {MODES.map((option) => (
+        {label}
+        <Icon name="chevron" />
+      </button>
+      {open && (
+        <div
+          ref={menuRef}
+          id={`${id}-menu`}
+          className="settings-dropdown-menu"
+          role="menu"
+          aria-labelledby={`${id}-button`}
+          onKeyDown={handleMenuKeyDown}
+        >
+          {options.map((option) => (
             <button
-              type="button"
-              role="radio"
-              aria-checked={draftMode === option.id}
-              className={`mode-option ${draftMode === option.id ? 'selected' : ''}`}
               key={option.id}
-              onClick={() => setDraftMode(option.id)}
+              role="menuitemradio"
+              aria-checked={value === option.id}
+              tabIndex={-1}
+              onClick={() => {
+                onSelect(option.id)
+                closeAndFocus()
+              }}
             >
-              <span className="mode-number">{option.id === 'progressive' ? '+' : option.count}</span>
-              <span className="mode-copy">
-                <strong>{option.label}</strong>
-                <small>{option.description}</small>
-              </span>
-              <span className="radio-mark" />
+              <span>{option.label}</span>
+              {value === option.id && <Icon name="check" />}
             </button>
           ))}
+          {legacyLink && (
+            <>
+              <div role="separator" />
+              <a href="?ux=legacy" role="menuitem" tabIndex={-1}>
+                Legacy interface <span aria-hidden="true">↗</span>
+              </a>
+            </>
+          )}
         </div>
-
-        <button className="primary-button settings-save" onClick={() => onSave(draftMode)}>
-          Use this mode
-          <ArrowIcon />
-        </button>
-        <p className="tracking-note">
-          Anonymous game activity is saved using a random ID for this browser.
-        </p>
-      </section>
+      )}
     </div>
   )
 }
 
-function StyleSheet({ currentStyle, open, onClose, onSave }) {
-  const [draftStyle, setDraftStyle] = useState(currentStyle)
-  const closeButtonRef = useRef(null)
-
-  useEffect(() => {
-    if (!open) return undefined
-    setDraftStyle(currentStyle)
-    closeButtonRef.current?.focus()
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    document.body.classList.add('modal-open')
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.classList.remove('modal-open')
-    }
-  }, [currentStyle, onClose, open])
-
-  if (!open) return null
-
-  return (
-    <div className="settings-overlay" role="presentation" onMouseDown={onClose}>
-      <section
-        className="settings-sheet style-sheet"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="style-title"
-        onMouseDown={(event) => event.stopPropagation()}
-      >
-        <div className="sheet-handle" />
-        <div className="settings-heading">
-          <div>
-            <span className="eyebrow">Portrait style</span>
-            <h2 id="style-title">Choose a style</h2>
-          </div>
-          <button ref={closeButtonRef} className="icon-button close-button" onClick={onClose} aria-label="Close style chooser">
-            <CloseIcon />
-          </button>
-        </div>
-
-        <div className="style-list" role="radiogroup" aria-label="Portrait style">
-          {STYLES.map((option) => {
-            const portraitCount = PORTRAITS.filter((portrait) => portrait.styles[option.id]).length
-            return (
-              <button
-                type="button"
-                role="radio"
-                aria-checked={draftStyle === option.id}
-                className={`style-option ${draftStyle === option.id ? 'selected' : ''}`}
-                key={option.id}
-                onClick={() => setDraftStyle(option.id)}
-              >
-                <span className={`style-preview ${option.id}`} aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span className="mode-copy">
-                  <strong>{option.label}</strong>
-                  <small>{option.description}</small>
-                  <small className="portrait-count">{portraitCount} portraits available</small>
-                </span>
-                <span className="radio-mark" />
-              </button>
-            )
-          })}
-        </div>
-
-        <button className="primary-button settings-save" onClick={() => onSave(draftStyle)}>
-          Use this style
-          <ArrowIcon />
-        </button>
-      </section>
-    </div>
-  )
-}
-
-function TimelineReplay({ elementHistory, isCorrect, onBack, onPlayAgain, portraitSvg, styleId }) {
+function TimelineReplay({ elementHistory, onBack, artwork, styleId }) {
   const [currentStep, setCurrentStep] = useState(0)
-  const timelineTrackRef = useRef(null)
-  const stepButtonRefs = useRef([])
+  const buttonRefs = useRef([])
+  const titleRef = useRef(null)
   const currentElements = elementHistory[currentStep] || []
-  const currentSvg = useMemo(
-    () => renderSvg(portraitSvg, currentElements, styleId),
-    [currentElements, portraitSvg, styleId],
-  )
-  const uniqueElementsSeen = useMemo(
-    () => new Set(elementHistory.slice(0, currentStep + 1).flat()).size,
-    [currentStep, elementHistory],
-  )
-  const stepLabel = currentStep === 0 ? 'Initial clues' : `Refresh ${currentStep}`
+  const uniqueClueCount = new Set(
+    elementHistory.slice(0, currentStep + 1).flat(),
+  ).size
+  const stepLabel = `Step ${currentStep + 1} of ${elementHistory.length}`
+  const clueLabel = `${uniqueClueCount} unique ${uniqueClueCount === 1 ? 'clue' : 'clues'} shown`
 
   useEffect(() => {
-    const track = timelineTrackRef.current
-    const activeStep = stepButtonRefs.current[currentStep]
-    if (!track || !activeStep) return
+    titleRef.current?.focus({ preventScroll: true })
+  }, [])
 
-    const centeredPosition = activeStep.offsetLeft - ((track.clientWidth - activeStep.offsetWidth) / 2)
-    track.scrollTo({
-      left: Math.max(0, centeredPosition),
+  useEffect(() => {
+    buttonRefs.current[currentStep]?.scrollIntoView({
+      block: 'nearest',
+      inline: 'center',
       behavior: 'smooth',
     })
   }, [currentStep])
 
   return (
-    <main className={`result-screen timeline-screen ${isCorrect ? 'correct' : 'incorrect'}`}>
-      <div className="result-decoration result-decoration-one" />
-      <div className="result-decoration result-decoration-two" />
-      <div className="result-decoration result-decoration-three" />
-
-      <div className="timeline-content">
-        <button className="timeline-back" onClick={onBack}>
-          <ChevronIcon />
-          Result
+    <main className="ink-app replay-screen">
+      <header className="replay-header">
+        <button
+          className="replay-icon-button"
+          onClick={onBack}
+          aria-label="Back to the reveal"
+          title="Back to the reveal"
+        >
+          <Icon name="back" />
         </button>
-
-        <span className="result-kicker">Round replay</span>
-        <h1>Your clue trail.</h1>
-        <p className="timeline-intro">Step through exactly what you saw during the round.</p>
-
-        <div className="timeline-portrait-card">
-          <div
-            className="timeline-portrait"
-            aria-label={`${stepLabel}, showing ${currentElements.length} portrait elements`}
-            dangerouslySetInnerHTML={{ __html: currentSvg }}
-          />
-          <span className="timeline-frame-label">{stepLabel}</span>
+        <h1 id="replay-title" ref={titleRef} tabIndex={-1}>
+          Round Replay
+        </h1>
+      </header>
+      <section
+        className="replay-portrait-region"
+        aria-labelledby="replay-title"
+      >
+        <PortraitArtwork
+          className="portrait-artwork replay-portrait"
+          artwork={artwork}
+          styleId={styleId}
+          visibleIndices={currentElements}
+          label={`${stepLabel}, ${currentElements.length} visible ${currentElements.length === 1 ? 'clue' : 'clues'}, ${clueLabel}`}
+          fitToInk
+        />
+      </section>
+      <div className="replay-controls">
+        <div className="replay-caption" role="status" aria-atomic="true">
+          <span>{stepLabel}</span>
+          <span>{clueLabel}</span>
         </div>
-
-        <div className="timeline-summary" aria-live="polite">
-          <span>Step {currentStep + 1} of {elementHistory.length}</span>
-          <strong>
-            {uniqueElementsSeen} unique {styleId === 'abstract' ? 'details' : uniqueElementsSeen === 1 ? 'element' : 'elements'} seen
-          </strong>
-        </div>
-
-        <div ref={timelineTrackRef} className="timeline-track" aria-label="Clue timeline">
-          {elementHistory.map((_elements, index) => (
-            <button
-              key={index}
-              ref={(element) => { stepButtonRefs.current[index] = element }}
-              className={`${index === currentStep ? 'active' : ''} ${index < currentStep ? 'visited' : ''}`}
-              onClick={() => setCurrentStep(index)}
-              aria-label={index === 0 ? 'Show initial clues' : `Show refresh ${index}`}
-              aria-current={index === currentStep ? 'step' : undefined}
-            >
-              {index === 0 ? 'S' : index}
-            </button>
-          ))}
-        </div>
-
         <div className="timeline-navigation">
           <button
-            onClick={() => setCurrentStep((step) => Math.max(0, step - 1))}
+            className="replay-icon-button"
+            onClick={() => setCurrentStep((step) => step - 1)}
             disabled={currentStep === 0}
+            aria-label="Previous step"
+            title="Previous step"
           >
-            <ChevronIcon />
-            Previous
+            <Icon name="back" />
           </button>
-          <button
-            onClick={() => setCurrentStep((step) => Math.min(elementHistory.length - 1, step + 1))}
-            disabled={currentStep === elementHistory.length - 1}
+          <div
+            className="timeline-track"
+            role="group"
+            aria-label="Replay steps"
           >
-            Next
-            <span className="chevron-next"><ChevronIcon /></span>
+            {elementHistory.map((_elements, index) => (
+              <button
+                key={index}
+                ref={(element) => {
+                  buttonRefs.current[index] = element
+                }}
+                className={index === currentStep ? 'active' : ''}
+                onClick={() => setCurrentStep(index)}
+                aria-label={`Show step ${index + 1}`}
+                aria-current={index === currentStep ? 'step' : undefined}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+          <button
+            className="replay-icon-button"
+            onClick={() => setCurrentStep((step) => step + 1)}
+            disabled={currentStep === elementHistory.length - 1}
+            aria-label="Next step"
+            title="Next step"
+          >
+            <Icon />
           </button>
         </div>
-
-        <button className="primary-button timeline-play-again" onClick={onPlayAgain}>
-          Play another face
-          <ArrowIcon />
-        </button>
       </div>
     </main>
   )
 }
 
-function ResultScreen({ elementHistory, mode, portrait, portraitSvg, refreshCount, result, styleId, submittedAnswer, onPlayAgain }) {
-  const fullPortrait = useMemo(() => renderSvg(portraitSvg, null, styleId), [portraitSvg, styleId])
+function ResultScreen({
+  elementHistory,
+  mode,
+  portrait,
+  artwork,
+  refreshCount,
+  result,
+  styleId,
+  submittedAnswer,
+  onPlayAgain,
+}) {
   const [timelineOpen, setTimelineOpen] = useState(false)
   const isCorrect = result === 'correct'
+  const titleRef = useRef(null)
+  useEffect(() => {
+    if (!timelineOpen) titleRef.current?.focus()
+  }, [timelineOpen])
 
-  if (timelineOpen) {
+  if (timelineOpen)
     return (
       <TimelineReplay
         elementHistory={elementHistory}
-        isCorrect={isCorrect}
         onBack={() => setTimelineOpen(false)}
-        onPlayAgain={onPlayAgain}
-        portraitSvg={portraitSvg}
+        artwork={artwork}
         styleId={styleId}
       />
     )
-  }
 
   return (
-    <main className={`result-screen ${isCorrect ? 'correct' : 'incorrect'}`}>
-      <div className="result-decoration result-decoration-one" />
-      <div className="result-decoration result-decoration-two" />
-      <div className="result-decoration result-decoration-three" />
-
-      <div className="result-content">
-        <span className="result-kicker">{isCorrect ? 'Spot on!' : 'Mystery solved'}</span>
-        <h1>{isCorrect ? 'You got it.' : 'Not this time.'}</h1>
-
-        <div className="result-portrait-shell">
-          <div className="result-portrait" dangerouslySetInnerHTML={{ __html: fullPortrait }} />
-          <span className="reveal-label">{portrait.name}</span>
+    <main
+      className={`ink-app result-screen ${isCorrect ? 'correct' : 'incorrect'}`}
+    >
+      <Masthead caption="The whole picture, at last." />
+      <div className="result-layout">
+        <div className="result-heading">
+          <span className="eyebrow">The reveal</span>
+          <h1 ref={titleRef} tabIndex={-1}>
+            {isCorrect ? 'Correct' : 'Incorrect'}
+          </h1>
         </div>
-
-        <p className="result-message">
-          {isCorrect
-            ? `That famous face is ${portrait.name}. Nicely spotted.`
-            : `You guessed “${submittedAnswer}”. The famous face was ${portrait.name}.`}
-        </p>
-
-        <div className="round-stats" aria-label="Round statistics">
-          <div>
-            <strong>{refreshCount + 1}</strong>
-            <span>{refreshCount + 1 === 1 ? 'step' : 'steps'}</span>
+        <figure className="result-figure">
+          <PortraitFrame
+            className="result-portrait"
+            artwork={artwork}
+            styleId={styleId}
+            label={`Portrait of ${portrait.name}`}
+          />
+          <figcaption>
+            <span className="eyebrow">The face behind the lines</span>
+            <h2>{portrait.name}</h2>
+          </figcaption>
+        </figure>
+        <div className="result-details">
+          <p className="result-message">
+            {isCorrect ? (
+              'A few pieces were all you needed. Nicely spotted.'
+            ) : (
+              <>
+                You guessed <strong>{submittedAnswer}</strong>. There’s always
+                another face to discover.
+              </>
+            )}
+          </p>
+          <div className="round-stats" aria-label="Round statistics">
+            <div>
+              <strong>{String(refreshCount + 1).padStart(2, '0')}</strong>
+              <span>
+                {refreshCount + 1 === 1
+                  ? 'step to your guess'
+                  : 'steps to your guess'}
+              </span>
+            </div>
+            <div>
+              <strong>{mode.shortLabel}</strong>
+              <span>reveal mode</span>
+            </div>
           </div>
-          <div>
-            <strong>{mode.shortLabel}</strong>
-            <span>mode</span>
-          </div>
+          <button className="primary-button" onClick={onPlayAgain}>
+            Play another face
+            <Icon />
+          </button>
+          <button
+            className="text-button replay-button"
+            onClick={() => setTimelineOpen(true)}
+          >
+            <Icon name="replay" />
+            Retrace your clues
+          </button>
         </div>
-
-        <button className="primary-button play-again" onClick={onPlayAgain}>
-          Play another face
-          <ArrowIcon />
-        </button>
-        <button className="secondary-button replay-button" onClick={() => setTimelineOpen(true)}>
-          <TimelineIcon />
-          Retrace your clues
-        </button>
       </div>
+      <footer className="page-footer">
+        <span>One face. Many little discoveries.</span>
+        <span>Face by Pieces</span>
+      </footer>
     </main>
   )
 }
 
 export default function App() {
   const [styleId, setStyleId] = useState(() => {
-    const savedStyle = localStorage.getItem('face-by-pieces-style')
-    return STYLES.some((style) => style.id === savedStyle) ? savedStyle : 'abstract'
+    const savedStyle = localStorage.getItem(STYLE_STORAGE_KEY)
+    return STYLES.some((style) => style.id === savedStyle)
+      ? savedStyle
+      : 'line-art'
   })
-  const [portraitIndex, setPortraitIndex] = useState(() => getRandomPortraitIndex(-1, styleId))
+  const [portraitIndex, setPortraitIndex] = useState(() =>
+    getRandomPortraitIndex(-1, styleId),
+  )
   const viewedPortraitsRef = useRef(new Set([portraitIndex]))
-  const [modeId, setModeId] = useState(() => localStorage.getItem('face-by-pieces-mode') || 'two')
+  const [modeId, setModeId] = useState(
+    () => localStorage.getItem('face-by-pieces-mode') || 'two',
+  )
   const [deviceId] = useState(getOrCreateDeviceId)
   const [sessionId, setSessionId] = useState(createSessionId)
   const [visibleIndices, setVisibleIndices] = useState([])
@@ -747,31 +540,29 @@ export default function App() {
   const [answer, setAnswer] = useState('')
   const [answerError, setAnswerError] = useState('')
   const [answerFocused, setAnswerFocused] = useState(false)
-  const [viewportHeight, setViewportHeight] = useState(
-    () => Math.round(window.visualViewport?.height || window.innerHeight),
+  const [viewportHeight, setViewportHeight] = useState(() =>
+    Math.round(window.visualViewport?.height || window.innerHeight),
   )
-  const [viewportOffset, setViewportOffset] = useState(
-    () => Math.round(window.visualViewport?.offsetTop || 0),
+  const [viewportOffset, setViewportOffset] = useState(() =>
+    Math.round(window.visualViewport?.offsetTop || 0),
   )
   const [result, setResult] = useState(null)
   const [submittedAnswer, setSubmittedAnswer] = useState('')
-  const [settingsOpen, setSettingsOpen] = useState(false)
-  const [styleOpen, setStyleOpen] = useState(false)
+  const [openMenu, setOpenMenu] = useState(null)
 
   const portrait = PORTRAITS[portraitIndex]
   const mode = MODES.find((option) => option.id === modeId) || MODES[1]
   const style = STYLES.find((option) => option.id === styleId) || STYLES[0]
-  const portraitSvg = portrait.styles[style.id]
-  const totalElements = useMemo(
-    () => getElementCount(portraitSvg, style.id),
-    [portraitSvg, style.id],
+  const artwork = portrait.styles[style.id]
+  const clueIndices = useMemo(
+    () => getClueIndices(artwork, style.id),
+    [artwork, style.id],
   )
-  const visibleSvg = useMemo(
-    () => renderSvg(portraitSvg, visibleIndices, style.id),
-    [portraitSvg, style.id, visibleIndices],
-  )
-  const progressiveComplete = mode.id === 'progressive' && visibleIndices.length >= totalElements
-  const usesOnScreenKeyboard = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+  const progressiveComplete =
+    mode.id === 'progressive' && visibleIndices.length >= clueIndices.length
+  const usesOnScreenKeyboard = window.matchMedia(
+    '(hover: none) and (pointer: coarse)',
+  ).matches
   const keyboardLayoutActive = answerFocused && usesOnScreenKeyboard
 
   useEffect(() => {
@@ -809,9 +600,8 @@ export default function App() {
   }, [deviceId, mode.id, portrait.id, sessionId, style.id])
 
   useEffect(() => {
-    const initialIndices = style.id === 'abstract'
-      ? []
-      : sampleIndices(totalElements, mode.count)
+    const initialIndices =
+      style.id === 'abstract' ? [] : sampleIndices(clueIndices, mode.count)
     setVisibleIndices(initialIndices)
     setElementHistory([initialIndices])
     recordInitialElements(sessionId, initialIndices)
@@ -820,20 +610,24 @@ export default function App() {
     setAnswerError('')
     setResult(null)
     setSubmittedAnswer('')
-  }, [mode.id, mode.count, portraitIndex, sessionId, style.id, totalElements])
+  }, [mode.id, mode.count, portraitIndex, sessionId, style.id, clueIndices])
 
   const handleRefresh = () => {
     if (progressiveComplete) return
 
     let nextVisibleIndices
     if (mode.id === 'progressive') {
-      const hidden = Array.from({ length: totalElements }, (_, index) => index).filter(
+      const hidden = clueIndices.filter(
         (index) => !visibleIndices.includes(index),
       )
       const nextIndex = hidden[Math.floor(Math.random() * hidden.length)]
       nextVisibleIndices = [...visibleIndices, nextIndex]
     } else {
-      nextVisibleIndices = sampleIndices(totalElements, mode.count, visibleIndices)
+      nextVisibleIndices = sampleIndices(
+        clueIndices,
+        mode.count,
+        visibleIndices,
+      )
     }
 
     recordSessionEvent(sessionId, 'clue_refreshed', {
@@ -855,7 +649,9 @@ export default function App() {
     }
 
     const normalizedGuess = normalizeAnswer(trimmedAnswer)
-    const correct = portrait.aliases.some((alias) => normalizeAnswer(alias) === normalizedGuess)
+    const correct = portrait.aliases.some(
+      (alias) => normalizeAnswer(alias) === normalizedGuess,
+    )
     const outcome = correct ? 'correct' : 'incorrect'
 
     completeGameSession(sessionId, {
@@ -869,15 +665,31 @@ export default function App() {
     setAnswerFocused(false)
   }
 
-  const handleSaveMode = (nextMode) => {
+  const handleChangeSettings = (nextMode, nextStyle) => {
     localStorage.setItem('face-by-pieces-mode', nextMode)
-    if (nextMode !== mode.id) {
-      recordSessionEvent(sessionId, 'mode_changed', { from: mode.id, to: nextMode })
-      viewedPortraitsRef.current = new Set([portraitIndex])
+    localStorage.setItem(STYLE_STORAGE_KEY, nextStyle)
+    const modeChanged = nextMode !== mode.id
+    const styleChanged = nextStyle !== style.id
+    if (modeChanged)
+      recordSessionEvent(sessionId, 'mode_changed', {
+        from: mode.id,
+        to: nextMode,
+      })
+    if (styleChanged)
+      recordSessionEvent(sessionId, 'style_changed', {
+        from: style.id,
+        to: nextStyle,
+      })
+    if (modeChanged || styleChanged) {
+      const nextPortraitIndex = styleChanged
+        ? getRandomPortraitIndex(portraitIndex, nextStyle)
+        : portraitIndex
+      viewedPortraitsRef.current = new Set([nextPortraitIndex])
       setSessionId(createSessionId())
+      setPortraitIndex(nextPortraitIndex)
+      setModeId(nextMode)
+      setStyleId(nextStyle)
     }
-    setModeId(nextMode)
-    setSettingsOpen(false)
   }
 
   const handlePlayAgain = () => {
@@ -890,28 +702,17 @@ export default function App() {
     setPortraitIndex(nextPortraitIndex)
   }
 
-  const handleOpenSettings = () => {
-    recordSessionEvent(sessionId, 'settings_opened')
-    setSettingsOpen(true)
-  }
-
-  const handleSaveStyle = (nextStyle) => {
-    localStorage.setItem('face-by-pieces-style', nextStyle)
-    if (nextStyle !== style.id) {
-      recordSessionEvent(sessionId, 'style_changed', { from: style.id, to: nextStyle })
-      const nextPortraitIndex = getRandomPortraitIndex(portraitIndex, nextStyle)
-      viewedPortraitsRef.current = new Set([nextPortraitIndex])
-      setSessionId(createSessionId())
-      setPortraitIndex(nextPortraitIndex)
-      setStyleId(nextStyle)
+  const handleToggleMenu = (menu) => {
+    if (openMenu !== menu) {
+      recordSessionEvent(
+        sessionId,
+        menu === 'style' ? 'style_opened' : 'settings_opened',
+      )
     }
-    setStyleOpen(false)
+    setOpenMenu((current) => (current === menu ? null : menu))
   }
 
-  const handleOpenStyle = () => {
-    recordSessionEvent(sessionId, 'style_opened')
-    setStyleOpen(true)
-  }
+  const handleCloseMenu = useCallback(() => setOpenMenu(null), [])
 
   if (result) {
     return (
@@ -919,7 +720,7 @@ export default function App() {
         elementHistory={elementHistory}
         mode={mode}
         portrait={portrait}
-        portraitSvg={portraitSvg}
+        artwork={artwork}
         refreshCount={refreshCount}
         result={result}
         styleId={style.id}
@@ -931,104 +732,111 @@ export default function App() {
 
   return (
     <main
-      className={`game-shell ${keyboardLayoutActive ? 'answer-focused' : ''}`}
+      className={`ink-app game-shell ${keyboardLayoutActive ? 'answer-focused' : ''}`}
       style={{
         '--viewport-height': `${viewportHeight}px`,
         '--viewport-offset': `${viewportOffset}px`,
       }}
     >
-      <header className="game-header">
-        <div className="header-actions">
-          <button className="style-button mode-button settings-button" onClick={handleOpenSettings} aria-label={`Choose game mode. Current mode: ${mode.label}`}>
-            <GameModeIcon />
-            <span>{mode.headerLabel}</span>
-          </button>
-          <button className="style-button" onClick={handleOpenStyle} aria-label={`Choose portrait style. Current style: ${style.label}`}>
-            <PaletteIcon />
-            <span>{style.shortLabel}</span>
-          </button>
-        </div>
-        <div className="refresh-counter" aria-label={`${refreshCount} steps used`}>
-          <span>{refreshCount}</span>
-          steps
-        </div>
-        <h1 className="game-prompt" id="game-prompt">Who’s hiding here?</h1>
-      </header>
-
-      <section className="game-area" aria-labelledby="game-prompt">
-        <div className="portrait-card">
-          <div
-            className="portrait-svg"
-            aria-label={`A partially revealed portrait with ${visibleIndices.length} visible ${visibleIndices.length === 1 ? 'element' : 'elements'}`}
-            dangerouslySetInnerHTML={{ __html: visibleSvg }}
+      <header className="guess-header">
+        <div className="guess-settings">
+          <SettingsDropdown
+            label="Mode"
+            options={MODES}
+            value={mode.id}
+            open={openMenu === 'mode'}
+            onToggle={() => handleToggleMenu('mode')}
+            onClose={handleCloseMenu}
+            onSelect={(nextMode) => handleChangeSettings(nextMode, style.id)}
+          />
+          <SettingsDropdown
+            label="Style"
+            options={STYLES}
+            value={style.id}
+            open={openMenu === 'style'}
+            onToggle={() => handleToggleMenu('style')}
+            onClose={handleCloseMenu}
+            onSelect={(nextStyle) => handleChangeSettings(mode.id, nextStyle)}
+            legacyLink
           />
         </div>
+        <h1 id="game-prompt">Guess Who?</h1>
+        <p className="guess-step-counter" role="status" aria-atomic="true">
+          <span>Step</span> {refreshCount + 1}
+        </p>
+      </header>
+      <section className="guess-sketch" aria-labelledby="game-prompt">
+        <PortraitArtwork
+          className="portrait-artwork"
+          artwork={artwork}
+          styleId={style.id}
+          visibleIndices={visibleIndices}
+          label={`A partially revealed portrait with ${visibleIndices.length} visible clues`}
+          fitToInk
+        />
       </section>
-
-      <div className="clue-action">
-        <p>{progressiveComplete ? 'All clues revealed' : 'tap for another clue'}</p>
+      <div className="guess-controls">
         <button
-          className="refresh-button"
+          className="next-clue-button"
           onPointerDown={(event) => {
             if (answerFocused) event.preventDefault()
           }}
           onClick={handleRefresh}
           disabled={progressiveComplete}
-          aria-label={progressiveComplete
-            ? 'All portrait elements revealed'
-            : mode.id === 'progressive'
-              ? 'Reveal the next portrait clue'
-              : 'Refresh portrait clues'}
+          title={progressiveComplete ? 'All clues revealed' : 'Next clue'}
+          aria-label={
+            progressiveComplete
+              ? 'All portrait elements revealed'
+              : mode.id === 'progressive'
+                ? 'Reveal the next portrait clue'
+                : 'Refresh portrait clues'
+          }
         >
-          {mode.id === 'progressive' ? <ArrowIcon /> : <RefreshIcon />}
+          <Icon
+            name={
+              progressiveComplete
+                ? 'check'
+                : mode.id === 'progressive'
+                  ? 'arrow'
+                  : 'refresh'
+            }
+          />
         </button>
-      </div>
-
-      <section className="answer-panel">
-        <form onSubmit={handleSubmit} noValidate>
-          <label className="visually-hidden" htmlFor="famous-person">Enter the famous person’s name</label>
-          <div className={`answer-control ${answerError ? 'has-error' : ''}`}>
+        <form className="guess-form" onSubmit={handleSubmit} noValidate>
+          <label className="visually-hidden" htmlFor="famous-person">
+            Enter their name
+          </label>
+          <div className={`guess-input ${answerError ? 'has-error' : ''}`}>
             <input
               id="famous-person"
               type="text"
               value={answer}
               onFocus={() => {
                 setAnswerFocused(true)
-                if (usesOnScreenKeyboard) {
+                if (usesOnScreenKeyboard)
                   requestAnimationFrame(() => window.scrollTo(0, 0))
-                }
               }}
               onBlur={() => setAnswerFocused(false)}
               onChange={(event) => {
                 setAnswer(event.target.value)
                 if (answerError) setAnswerError('')
               }}
-              placeholder="Type their name"
+              placeholder="Their name…"
               autoComplete="off"
               autoCapitalize="words"
               enterKeyHint="go"
+              aria-invalid={Boolean(answerError)}
               aria-describedby={answerError ? 'answer-error' : undefined}
             />
             <button type="submit" aria-label="Submit guess">
-              <ArrowIcon />
+              <Icon />
             </button>
           </div>
-          <p id="answer-error" className="answer-error" aria-live="polite">{answerError}</p>
+          <p id="answer-error" className="guess-error" aria-live="polite">
+            {answerError}
+          </p>
         </form>
-      </section>
-
-      <SettingsSheet
-        currentMode={mode.id}
-        open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-        onSave={handleSaveMode}
-      />
-      <StyleSheet
-        currentStyle={style.id}
-        open={styleOpen}
-        onClose={() => setStyleOpen(false)}
-        onSave={handleSaveStyle}
-      />
+      </div>
     </main>
   )
 }

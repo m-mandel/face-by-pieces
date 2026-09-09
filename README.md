@@ -1,6 +1,6 @@
 # Face by Pieces
 
-A mobile-first portrait guessing game built from the SVG artwork in `data/vector-lines/`, with server-side session and activity recording.
+A mobile-first portrait guessing game built from transparent PNG layers in `data/line-art/`, with legacy SVG styles and server-side session and activity recording.
 
 ## Run locally
 
@@ -28,23 +28,42 @@ npm start
 
 The server hosts the production build from `dist/` and listens on `PORT` (8080 by default).
 
+## Interface designs
+
+The default **Ink** interface shows **Guess Who?** with **Mode** and **Style** dropdown buttons together at the top left and a simple step counter at the top right. The counter starts at **Step 1**, increases with each clue refresh, and resets for a new round. On narrow screens, the centered title sits just below these controls. The sketch fills the space between the header and the bottom controls: a round clue button and a name field with a submit button. The Mode menu offers 1, 2, or 4 clues and Sequence mode. The Style menu offers Line art, Abstract color, and Vector lines. Selecting an option applies it immediately and starts a fresh round when the choice changes.
+
+Line-art portraits fit the combined visible bounds of every eligible PNG layer. Transparent and pure-white margins are removed from the displayed viewport, with one source pixel of padding for edge antialiasing. All layers retain their original alignment, and the viewport stays fixed as clues change. Bounds are measured once per portrait in the browser and cached. The portrait area stays empty until measurement finishes, so the initial clue appears at its final position and scale. If measurement fails, the full image canvas is shown as a fallback. Original PNG files remain unchanged.
+
+The previous colorful interface is preserved in `src/legacy/LegacyApp.jsx` and `src/legacy/styles.css`. Each interface loads its own stylesheet and uses the same portrait catalog, layer filter, and activity API.
+
+- Open `/?ux=ink` to use the new design.
+- Open `/?ux=legacy` to restore the original design.
+- The Style dropdown links to the legacy interface; the legacy Game mode panel links back to Ink.
+
+The choice is remembered in `face-by-pieces-ux` local storage. Switching interfaces reloads the app and starts a new round. Portrait style and game mode preferences carry across. To change the default for everyone, update the fallback in `src/main.jsx`.
+
 ## Game modes
 
-- **1 element:** shows one random top-level SVG element per refresh.
-- **2 elements:** shows two random elements per refresh.
-- **4 elements:** shows four random elements per refresh.
-- **Progressive:** begins with one element and reveals one additional random element on every refresh.
+- **1 clue:** shows one random layer per refresh.
+- **2 clues:** shows two random layers per refresh.
+- **4 clues:** shows four random layers per refresh.
+- **Sequence:** begins with one layer and reveals one additional random layer on every refresh, until all eligible layers are visible. This is called **Progressive** in the legacy interface and retains the `progressive` ID in saved preferences and activity records.
 
 ## Portrait styles
 
-- **Vector lines:** uses all six portraits in `data/vector-lines/` and preserves the original top-level-element reveal behavior.
-- **Abstract color:** uses the available portraits in `data/svg/`. The background, face base, and clothing base are always visible at step 0. All direct children from `face-details` and `clothing-details` form one shared, uniformly sampled clue pool. A refresh can therefore reveal face details, clothing details, or any mixture according to the selected mode.
+- **Line art (default):** automatically discovers portraits in `data/line-art/`. Each PNG in a portrait's `transparent/` folder is a separate layer, aligned at its original aspect ratio over a pure white background. Layers with fewer than 200 pixels in `report.json`'s `class_pixels` are excluded entirely, including random clues, progressive mode, the full reveal, and replay. Exactly 200 pixels is eligible. Files in `masks/`, `white/`, and contact sheets are not used. All 31 supplied portraits are available.
+- **Vector lines (legacy):** uses the portraits in `data/vector-lines/` and preserves the original SVG element reveal behavior.
+- **Abstract color (legacy):** uses the available portraits in `data/svg/`. The background, face base, and clothing base are always visible at step 0. Face and clothing details share one clue pool, retaining the existing SVG grouping behavior.
+
+Add new line-art portraits as `data/line-art/<person-name>/transparent/*.png`, alongside their `report.json` pixel counts. All layers for a portrait should share the same canvas dimensions. Both hyphens and underscores in folder names are supported. The catalog is discovered at build time; rebuild the app and restart the server after adding portraits. If a report or a layer's pixel count is missing, that PNG remains eligible.
+
+Line art is also the starting style for browsers with an older saved SVG preference. Subsequent choices are remembered under the updated style preference key.
 
 Changing style starts a new round, resets the non-repeating face deck, and limits the deck to portraits available in that style.
 
 Steps are counted during the round and displayed on the result screen. Each refresh is a step, and the submitted guess is the final step. Submitting an incorrect name ends the round and reveals the answer; the next portrait can then be started with **Play another face**.
 
-After a round, **Retrace your clues** opens an optional visual timeline of the initial element set and every refresh. Players can move through the reconstructed SVG frames and return to the normal result screen.
+After a round, **Retrace your clues** opens **Round Replay**, with a large portrait between a compact header and the playback controls. Every frame uses **Step 1**, **Step 2**, and so on, matching the in-game counter in all modes, including Sequence. The caption shows the current step, total steps, and cumulative number of unique clues shown through the selected step. Repeated clues count once, and moving backward excludes clues first shown at later steps. The portrait still displays the original layer set for that step. Players can select a numbered step or move backward or forward. The back button returns to the reveal screen, where **Play another face** starts the next round.
 
 ## Activity recording
 
@@ -61,7 +80,7 @@ The server records the portrait, mode, exact elements shown initially and after 
 Initial [#3, #6] → R1 [#2, #5] → R2 [#1, #7]
 ```
 
-The report numbers are one-based positions in the portrait SVG's top-level revealable elements. The protected JSON API returns the same positions as zero-based `visibleElementIndices`, which can be used directly by the game code.
+For line art, report numbers are one-based positions in the alphabetically sorted PNG filenames after filtering out layers below 200 pixels. For legacy styles, they refer to the SVG's revealable elements. The protected JSON API returns the same positions as zero-based `visibleElementIndices`, which can be used directly by the game code.
 
 The device ID identifies a browser installation rather than a person. Clearing browser data, changing browsers, or using private browsing creates a new ID. Different people sharing one browser use the same ID.
 

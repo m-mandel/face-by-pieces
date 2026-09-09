@@ -1,0 +1,30 @@
+{
+  "subject": "david-beckham",
+  "size": [
+    644,
+    922
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 18346,
+    "face-outline": 2183,
+    "hair": 6793,
+    "ears": 1525,
+    "eyebrows": 936,
+    "eyes": 1047,
+    "nose": 648,
+    "mouth": 781,
+    "face-details": 1399,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 11,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 33669,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

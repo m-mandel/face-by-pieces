@@ -1,0 +1,30 @@
+{
+  "subject": "bob-marley",
+  "size": [
+    655,
+    862
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 19751,
+    "face-outline": 1490,
+    "hair": 20101,
+    "ears": 819,
+    "eyebrows": 653,
+    "eyes": 1206,
+    "nose": 499,
+    "mouth": 1473,
+    "face-details": 987,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 2444,
+    "eyewear": 0,
+    "headwear": 67,
+    "face-piercings": 0,
+    "accessories": 85
+  },
+  "ink_pixels": 49575,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

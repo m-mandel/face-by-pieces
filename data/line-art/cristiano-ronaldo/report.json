@@ -1,0 +1,30 @@
+{
+  "subject": "cristiano-ronaldo",
+  "size": [
+    1686,
+    2528
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 147133,
+    "face-outline": 7148,
+    "hair": 120414,
+    "ears": 7499,
+    "eyebrows": 10416,
+    "eyes": 6168,
+    "nose": 2190,
+    "mouth": 4399,
+    "face-details": 360,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 26,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 305753,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

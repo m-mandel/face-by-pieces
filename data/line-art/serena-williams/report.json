@@ -1,0 +1,31 @@
+{
+  "subject": "serena-williams",
+  "size": [
+    1792,
+    2362
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 72865,
+    "face-outline": 19334,
+    "hair": 137990,
+    "ears": 11247,
+    "eyebrows": 6740,
+    "eyes": 13180,
+    "nose": 4254,
+    "mouth": 8403,
+    "face-details": 457,
+    "earrings": 0,
+    "necklace": 15934,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 39766,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 181
+  },
+  "ink_pixels": 330351,
+  "unassigned_pixels": 181,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,30 @@
+{
+  "subject": "oprah-winfrey",
+  "size": [
+    1728,
+    2416
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 12556,
+    "face-outline": 8510,
+    "hair": 87489,
+    "ears": 4969,
+    "eyebrows": 4775,
+    "eyes": 13569,
+    "nose": 2851,
+    "mouth": 9408,
+    "face-details": 5107,
+    "earrings": 8920,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 21025,
+    "headwear": 13194,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 192373,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

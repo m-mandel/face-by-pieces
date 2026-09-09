@@ -1,0 +1,31 @@
+{
+  "subject": "audrey-hepburn",
+  "size": [
+    1760,
+    2428
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 104697,
+    "face-outline": 16168,
+    "hair": 128377,
+    "ears": 7363,
+    "eyebrows": 5752,
+    "eyes": 27190,
+    "nose": 7713,
+    "mouth": 18720,
+    "face-details": 0,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 2
+  },
+  "ink_pixels": 315982,
+  "unassigned_pixels": 2,
+  "maximum_reconstruction_channel_error": 0
+}

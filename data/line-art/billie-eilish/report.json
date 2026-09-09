@@ -1,0 +1,30 @@
+{
+  "subject": "billie-eilish",
+  "size": [
+    1792,
+    2390
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 75791,
+    "face-outline": 7117,
+    "hair": 71387,
+    "ears": 1814,
+    "eyebrows": 6062,
+    "eyes": 7808,
+    "nose": 5220,
+    "mouth": 9478,
+    "face-details": 1422,
+    "earrings": 0,
+    "necklace": 34678,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 31991,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 252768,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

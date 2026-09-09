@@ -1,0 +1,30 @@
+{
+  "subject": "charles-darwin",
+  "size": [
+    630,
+    885
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 5619,
+    "face-outline": 1238,
+    "hair": 3728,
+    "ears": 336,
+    "eyebrows": 1106,
+    "eyes": 1576,
+    "nose": 1106,
+    "mouth": 587,
+    "face-details": 2085,
+    "earrings": 0,
+    "necklace": 8,
+    "facial-hair": 10398,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 1
+  },
+  "ink_pixels": 27788,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

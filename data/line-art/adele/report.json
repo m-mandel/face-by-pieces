@@ -1,0 +1,30 @@
+{
+  "subject": "adele",
+  "size": [
+    1607,
+    2134
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 15437,
+    "face-outline": 11376,
+    "hair": 87151,
+    "ears": 0,
+    "eyebrows": 6177,
+    "eyes": 13631,
+    "nose": 3760,
+    "mouth": 12516,
+    "face-details": 1767,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 83,
+    "face-piercings": 0,
+    "accessories": 80
+  },
+  "ink_pixels": 151978,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

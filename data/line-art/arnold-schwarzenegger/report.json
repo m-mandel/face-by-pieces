@@ -1,0 +1,31 @@
+{
+  "subject": "arnold-schwarzenegger",
+  "size": [
+    978,
+    1308
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 54438,
+    "face-outline": 21,
+    "hair": 19237,
+    "ears": 3153,
+    "eyebrows": 2952,
+    "eyes": 3142,
+    "nose": 1451,
+    "mouth": 3373,
+    "face-details": 3330,
+    "earrings": 0,
+    "necklace": 35,
+    "facial-hair": 11434,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 4
+  },
+  "ink_pixels": 102570,
+  "unassigned_pixels": 4,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,30 @@
+{
+  "subject": "abraham-lincoln",
+  "size": [
+    1824,
+    2350
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 90689,
+    "face-outline": 4,
+    "hair": 51692,
+    "ears": 14424,
+    "eyebrows": 8358,
+    "eyes": 11363,
+    "nose": 4535,
+    "mouth": 5942,
+    "face-details": 14799,
+    "earrings": 0,
+    "necklace": 135,
+    "facial-hair": 32655,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 155
+  },
+  "ink_pixels": 234751,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

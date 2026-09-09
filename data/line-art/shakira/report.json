@@ -1,0 +1,30 @@
+{
+  "subject": "shakira",
+  "size": [
+    1200,
+    1600
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 1463,
+    "face-outline": 6791,
+    "hair": 133240,
+    "ears": 0,
+    "eyebrows": 3951,
+    "eyes": 9760,
+    "nose": 1588,
+    "mouth": 5889,
+    "face-details": 499,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 66,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 163247,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

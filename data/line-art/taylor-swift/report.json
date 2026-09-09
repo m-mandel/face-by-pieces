@@ -1,0 +1,31 @@
+{
+  "subject": "taylor-swift",
+  "size": [
+    1728,
+    2456
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 179573,
+    "face-outline": 11031,
+    "hair": 112360,
+    "ears": 6177,
+    "eyebrows": 2668,
+    "eyes": 11032,
+    "nose": 2368,
+    "mouth": 5043,
+    "face-details": 545,
+    "earrings": 1161,
+    "necklace": 48165,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 145,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 4
+  },
+  "ink_pixels": 380272,
+  "unassigned_pixels": 4,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,31 @@
+{
+  "subject": "bill-gates",
+  "size": [
+    1688,
+    2528
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 83152,
+    "face-outline": 10890,
+    "hair": 43091,
+    "ears": 12822,
+    "eyebrows": 2975,
+    "eyes": 12001,
+    "nose": 4204,
+    "mouth": 13090,
+    "face-details": 14789,
+    "earrings": 0,
+    "necklace": 6,
+    "facial-hair": 0,
+    "eyewear": 31135,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 1
+  },
+  "ink_pixels": 228156,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}

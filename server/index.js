@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
@@ -18,6 +19,7 @@ import {
 const app = express()
 const port = Number(process.env.PORT) || 8080
 const adminToken = process.env.ADMIN_TOKEN || ''
+const currentDirectory = path.dirname(fileURLToPath(import.meta.url))
 const idPattern = /^[a-zA-Z0-9-]{8,80}$/
 const portraitStyles = new Map([
   ['albert-einstein', new Set(['vector-lines', 'abstract'])],
@@ -36,6 +38,19 @@ const portraitStyles = new Map([
   ['steven-spielberg', new Set(['vector-lines', 'abstract'])],
   ['tom-hanks', new Set(['vector-lines', 'abstract'])],
 ])
+
+// The PNG catalog follows the data folders; the SVG catalog above is legacy.
+const lineArtDirectory = path.resolve(currentDirectory, '../data/line-art')
+for (const folder of fs.readdirSync(lineArtDirectory, { withFileTypes: true })) {
+  if (!folder.isDirectory()) continue
+  const transparentDirectory = path.join(lineArtDirectory, folder.name, 'transparent')
+  if (!fs.existsSync(transparentDirectory)) continue
+  if (!fs.readdirSync(transparentDirectory).some((file) => file.endsWith('.png'))) continue
+
+  const portraitId = folder.name.replaceAll('_', '-').toLowerCase()
+  if (!portraitStyles.has(portraitId)) portraitStyles.set(portraitId, new Set())
+  portraitStyles.get(portraitId).add('line-art')
+}
 const modes = new Set(['one', 'two', 'four', 'progressive'])
 const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed'])
 
@@ -167,7 +182,6 @@ app.get('/api/admin/sessions/:sessionId/events', requireAdmin, (request, respons
   return response.json({ events: listSessionEvents(request.params.sessionId) })
 })
 
-const currentDirectory = path.dirname(fileURLToPath(import.meta.url))
 const distDirectory = path.resolve(currentDirectory, '../dist')
 app.use(express.static(distDirectory, { index: false, maxAge: '1h' }))
 

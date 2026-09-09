@@ -1,0 +1,30 @@
+{
+  "subject": "andy-warhol",
+  "size": [
+    2048,
+    2977
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 240529,
+    "face-outline": 10790,
+    "hair": 51849,
+    "ears": 5371,
+    "eyebrows": 3039,
+    "eyes": 7303,
+    "nose": 3255,
+    "mouth": 4185,
+    "face-details": 3814,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 20316,
+    "headwear": 26,
+    "face-piercings": 0,
+    "accessories": 519
+  },
+  "ink_pixels": 350996,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

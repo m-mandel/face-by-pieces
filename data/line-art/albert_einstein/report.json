@@ -1,0 +1,31 @@
+{
+  "subject": "albert_einstein",
+  "size": [
+    1792,
+    2352
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 119179,
+    "face-outline": 4499,
+    "hair": 21824,
+    "ears": 2201,
+    "eyebrows": 1560,
+    "eyes": 2269,
+    "nose": 1595,
+    "mouth": 784,
+    "face-details": 5798,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 3048,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 1
+  },
+  "ink_pixels": 162758,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,31 @@
+{
+  "subject": "barack-obama",
+  "size": [
+    2687,
+    3356
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 294529,
+    "face-outline": 12050,
+    "hair": 23083,
+    "ears": 16164,
+    "eyebrows": 7640,
+    "eyes": 6660,
+    "nose": 3340,
+    "mouth": 12685,
+    "face-details": 9339,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 17,
+    "face-piercings": 0,
+    "accessories": 13315,
+    "unassigned": 4
+  },
+  "ink_pixels": 398826,
+  "unassigned_pixels": 4,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,30 @@
+{
+  "subject": "simone-biles",
+  "size": [
+    1728,
+    2494
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 81156,
+    "face-outline": 12029,
+    "hair": 66814,
+    "ears": 7392,
+    "eyebrows": 4653,
+    "eyes": 11071,
+    "nose": 2634,
+    "mouth": 11137,
+    "face-details": 1179,
+    "earrings": 622,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 198687,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

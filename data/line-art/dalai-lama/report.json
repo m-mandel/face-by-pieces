@@ -1,0 +1,31 @@
+{
+  "subject": "dalai-lama",
+  "size": [
+    2048,
+    3072
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 231321,
+    "face-outline": 12415,
+    "hair": 22241,
+    "ears": 13738,
+    "eyebrows": 5324,
+    "eyes": 10393,
+    "nose": 5146,
+    "mouth": 10203,
+    "face-details": 20899,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 19617,
+    "headwear": 34,
+    "face-piercings": 0,
+    "accessories": 36887,
+    "unassigned": 1
+  },
+  "ink_pixels": 388219,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}

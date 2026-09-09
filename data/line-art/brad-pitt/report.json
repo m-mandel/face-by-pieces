@@ -1,0 +1,30 @@
+{
+  "subject": "brad-pitt",
+  "size": [
+    1435,
+    2153
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 68782,
+    "face-outline": 5225,
+    "hair": 72792,
+    "ears": 5245,
+    "eyebrows": 4802,
+    "eyes": 5979,
+    "nose": 2854,
+    "mouth": 5112,
+    "face-details": 4102,
+    "earrings": 0,
+    "necklace": 274,
+    "facial-hair": 13687,
+    "eyewear": 0,
+    "headwear": 16,
+    "face-piercings": 0,
+    "accessories": 81
+  },
+  "ink_pixels": 188951,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,30 @@
+{
+  "subject": "ariana-grande",
+  "size": [
+    517,
+    701
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 10086,
+    "face-outline": 722,
+    "hair": 10204,
+    "ears": 518,
+    "eyebrows": 396,
+    "eyes": 913,
+    "nose": 241,
+    "mouth": 777,
+    "face-details": 137,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 4,
+    "face-piercings": 0,
+    "accessories": 546
+  },
+  "ink_pixels": 24544,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

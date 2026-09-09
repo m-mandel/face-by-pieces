@@ -1,0 +1,30 @@
+{
+  "subject": "charlie-chaplin",
+  "size": [
+    2048,
+    2918
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 145144,
+    "face-outline": 22508,
+    "hair": 72234,
+    "ears": 9441,
+    "eyebrows": 7874,
+    "eyes": 16690,
+    "nose": 5337,
+    "mouth": 6258,
+    "face-details": 3499,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 83
+  },
+  "ink_pixels": 289068,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

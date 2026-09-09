@@ -1,0 +1,31 @@
+{
+  "subject": "queen-elizabeth-ii",
+  "size": [
+    1792,
+    2388
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 118130,
+    "face-outline": 4447,
+    "hair": 18020,
+    "ears": 816,
+    "eyebrows": 2291,
+    "eyes": 4016,
+    "nose": 1505,
+    "mouth": 2025,
+    "face-details": 180,
+    "earrings": 389,
+    "necklace": 9848,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 20587,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 1
+  },
+  "ink_pixels": 182255,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}

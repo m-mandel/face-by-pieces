@@ -1,0 +1,30 @@
+{
+  "subject": "nelson-mandela",
+  "size": [
+    1824,
+    2360
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 68413,
+    "face-outline": 17478,
+    "hair": 30926,
+    "ears": 8419,
+    "eyebrows": 1884,
+    "eyes": 7611,
+    "nose": 5303,
+    "mouth": 7195,
+    "face-details": 20985,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 33,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 168247,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

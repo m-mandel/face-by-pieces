@@ -1,0 +1,31 @@
+{
+  "subject": "beyonce",
+  "size": [
+    1792,
+    2390
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 188234,
+    "face-outline": 2986,
+    "hair": 80773,
+    "ears": 0,
+    "eyebrows": 2527,
+    "eyes": 5358,
+    "nose": 1040,
+    "mouth": 2737,
+    "face-details": 537,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 234,
+    "face-piercings": 0,
+    "accessories": 7508,
+    "unassigned": 2
+  },
+  "ink_pixels": 291936,
+  "unassigned_pixels": 2,
+  "maximum_reconstruction_channel_error": 0
+}

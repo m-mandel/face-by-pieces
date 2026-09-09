@@ -1,0 +1,30 @@
+{
+  "subject": "steve-jobs",
+  "size": [
+    1632,
+    2608
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 40135,
+    "face-outline": 19520,
+    "hair": 38103,
+    "ears": 29717,
+    "eyebrows": 7944,
+    "eyes": 17975,
+    "nose": 5422,
+    "mouth": 9504,
+    "face-details": 8933,
+    "earrings": 0,
+    "necklace": 151,
+    "facial-hair": 17694,
+    "eyewear": 24397,
+    "headwear": 242,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 219737,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

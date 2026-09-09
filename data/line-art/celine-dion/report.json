@@ -1,0 +1,30 @@
+{
+  "subject": "celine-dion",
+  "size": [
+    565,
+    800
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 9247,
+    "face-outline": 1644,
+    "hair": 32383,
+    "ears": 313,
+    "eyebrows": 845,
+    "eyes": 2108,
+    "nose": 478,
+    "mouth": 1177,
+    "face-details": 561,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 45,
+    "face-piercings": 0,
+    "accessories": 6
+  },
+  "ink_pixels": 48807,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}
