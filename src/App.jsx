@@ -791,6 +791,7 @@ export default function App() {
           visibleIndices={visibleIndices}
           label={`A partially revealed portrait with ${visibleIndices.length} visible clues`}
           fitToInk
+          roundId={sessionId}
           requestId={drawingRequestId}
           onLoadStateChange={setDrawingState}
         />

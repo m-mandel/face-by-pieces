@@ -194,6 +194,20 @@ h1:focus {
   min-width: 0;
   min-height: 0;
 }
+.portrait-artwork {
+  position: relative;
+}
+.png-layer-entering {
+  animation: clue-appear 180ms ease-out both;
+}
+@keyframes clue-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .png-layers {
   position: relative;
   background: #fff;
@@ -742,8 +756,13 @@ h1:focus {
   opacity: 0.65;
 }
 .portrait-load-error {
-  padding: 24px;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  padding: 12px;
   color: var(--muted);
+  background: rgb(255 255 255 / 95%);
   font-size: 13px;
   text-align: center;
 }

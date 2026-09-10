@@ -10,17 +10,26 @@ export default function PortraitArtwork({
   className,
   label,
   fitToInk = false,
+  roundId = null,
   requestId = null,
   onLoadStateChange,
 }) {
   const [preparation, setPreparation] = useState(null)
+  const [displayedFrame, setDisplayedFrame] = useState(null)
   const currentPreparation =
     preparation?.artwork === artwork &&
+    preparation.roundId === roundId &&
     preparation.visibleIndices === visibleIndices &&
     preparation.requestId === requestId
       ? preparation
       : null
-  const bounds = currentPreparation?.bounds
+  const frame =
+    displayedFrame?.artwork === artwork && displayedFrame.roundId === roundId
+      ? displayedFrame
+      : null
+  const bounds = frame?.bounds
+  const failed = currentPreparation?.status === 'error'
+  const loading = fitToInk && currentPreparation?.status !== 'ready' && !failed
   useEffect(() => {
     if (!fitToInk || styleId !== 'line-art') return undefined
     let active = true
@@ -30,8 +39,39 @@ export default function PortraitArtwork({
     )
     const finish = (status, bounds = null) => {
       if (!active) return
-      const state = { artwork, visibleIndices, requestId, status, bounds }
+      const state = {
+        artwork,
+        visibleIndices,
+        roundId,
+        requestId,
+        status,
+        bounds,
+      }
       setPreparation(state)
+      if (status === 'ready') {
+        setDisplayedFrame((previous) => {
+          const continuing =
+            previous?.artwork === artwork && previous.roundId === roundId
+          const nextIndices =
+            visibleIndices ?? artwork.layers.map((_layer, index) => index)
+          const previousIndices = continuing
+            ? (previous.visibleIndices ??
+              artwork.layers.map((_layer, index) => index))
+            : []
+          // Fade only additions to a retained drawing. Shuffled clue sets swap
+          // together at full opacity so there is never a fade through white.
+          const additive =
+            previousIndices.length > 0 &&
+            previousIndices.every((index) => nextIndices.includes(index))
+          return {
+            ...state,
+            label,
+            entering: additive
+              ? nextIndices.filter((index) => !previousIndices.includes(index))
+              : [],
+          }
+        })
+      }
       onLoadStateChange?.(state)
     }
     Promise.all([getPortraitBounds(artwork), loadPortraitLayers(layers)])
@@ -40,7 +80,16 @@ export default function PortraitArtwork({
     return () => {
       active = false
     }
-  }, [artwork, fitToInk, styleId, visibleIndices, requestId, onLoadStateChange])
+  }, [
+    artwork,
+    fitToInk,
+    styleId,
+    visibleIndices,
+    roundId,
+    requestId,
+    label,
+    onLoadStateChange,
+  ])
 
   const svg = useMemo(
     () =>
@@ -61,9 +110,9 @@ export default function PortraitArtwork({
     )
   }
 
-  // Show the drawing only when its framing and selected layers are ready.
-  if (fitToInk && currentPreparation?.status !== 'ready') {
-    const failed = currentPreparation?.status === 'error'
+  // The first frame waits for loading. Later requests retain the last complete
+  // frame, including its SVG/image nodes, until their replacement is decoded.
+  if (fitToInk && !frame) {
     return (
       <div
         className={className}
@@ -80,9 +129,22 @@ export default function PortraitArtwork({
     )
   }
 
+  const shownIndices = fitToInk ? frame.visibleIndices : visibleIndices
+  const shownLabel = fitToInk ? frame.label : label
+  const loadError = fitToInk && failed && (
+    <p className="portrait-load-error" role="alert">
+      Couldn’t load the drawing. Please try again.
+    </p>
+  )
+
   if (fitToInk && bounds) {
     return (
-      <div className={className} role="img" aria-label={label}>
+      <div
+        className={className}
+        role="img"
+        aria-label={shownLabel}
+        aria-busy={loading}
+      >
         <svg
           className="png-layer-viewport"
           viewBox={bounds.viewBox.join(' ')}
@@ -91,9 +153,14 @@ export default function PortraitArtwork({
           focusable="false"
         >
           {artwork.layers.map((layer, index) =>
-            visibleIndices === null || visibleIndices.includes(index) ? (
+            shownIndices === null || shownIndices.includes(index) ? (
               <image
                 key={layer.id}
+                className={
+                  frame.entering.includes(index)
+                    ? 'png-layer-entering'
+                    : undefined
+                }
                 href={layer.src}
                 data-layer={layer.id}
                 x="0"
@@ -104,17 +171,28 @@ export default function PortraitArtwork({
             ) : null,
           )}
         </svg>
+        {loadError}
       </div>
     )
   }
 
   return (
-    <div className={className} role="img" aria-label={label}>
+    <div
+      className={className}
+      role="img"
+      aria-label={shownLabel}
+      aria-busy={loading}
+    >
       <div className="png-layers">
         {artwork.layers.map((layer, index) =>
-          visibleIndices === null || visibleIndices.includes(index) ? (
+          shownIndices === null || shownIndices.includes(index) ? (
             <img
               key={layer.id}
+              className={
+                fitToInk && frame.entering.includes(index)
+                  ? 'png-layer-entering'
+                  : undefined
+              }
               src={layer.src}
               data-layer={layer.id}
               alt=""
@@ -123,6 +201,7 @@ export default function PortraitArtwork({
           ) : null,
         )}
       </div>
+      {loadError}
     </div>
   )
 }
