@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { renderLegacySvg } from './legacyPortraits'
 import { getPortraitBounds } from './portraitBounds'
+import { loadPortraitLayers } from './portraitLoading'
 
 export default function PortraitArtwork({
   artwork,
@@ -9,19 +10,37 @@ export default function PortraitArtwork({
   className,
   label,
   fitToInk = false,
+  requestId = null,
+  onLoadStateChange,
 }) {
-  const [measurement, setMeasurement] = useState(null)
-  const bounds = measurement?.artwork === artwork ? measurement.bounds : null
+  const [preparation, setPreparation] = useState(null)
+  const currentPreparation =
+    preparation?.artwork === artwork &&
+    preparation.visibleIndices === visibleIndices &&
+    preparation.requestId === requestId
+      ? preparation
+      : null
+  const bounds = currentPreparation?.bounds
   useEffect(() => {
     if (!fitToInk || styleId !== 'line-art') return undefined
     let active = true
-    getPortraitBounds(artwork).then((nextBounds) => {
-      if (active) setMeasurement({ artwork, bounds: nextBounds })
-    })
+    const layers = artwork.layers.filter(
+      (_layer, index) =>
+        visibleIndices === null || visibleIndices.includes(index),
+    )
+    const finish = (status, bounds = null) => {
+      if (!active) return
+      const state = { artwork, visibleIndices, requestId, status, bounds }
+      setPreparation(state)
+      onLoadStateChange?.(state)
+    }
+    Promise.all([getPortraitBounds(artwork), loadPortraitLayers(layers)])
+      .then(([bounds]) => finish('ready', bounds))
+      .catch(() => finish('error'))
     return () => {
       active = false
     }
-  }, [artwork, fitToInk, styleId])
+  }, [artwork, fitToInk, styleId, visibleIndices, requestId, onLoadStateChange])
 
   const svg = useMemo(
     () =>
@@ -42,16 +61,22 @@ export default function PortraitArtwork({
     )
   }
 
-  // Keep the portrait area empty until its final framing is known. Showing the
-  // full PNG canvas here would make the first clue jump when bounds arrive.
-  if (fitToInk && measurement?.artwork !== artwork) {
+  // Show the drawing only when its framing and selected layers are ready.
+  if (fitToInk && currentPreparation?.status !== 'ready') {
+    const failed = currentPreparation?.status === 'error'
     return (
       <div
         className={className}
         role="img"
-        aria-label="Loading portrait"
-        aria-busy="true"
-      />
+        aria-label={failed ? 'Drawing could not be loaded' : 'Loading portrait'}
+        aria-busy={!failed}
+      >
+        {failed && (
+          <p className="portrait-load-error" role="alert">
+            Couldn’t load the drawing. Please try again.
+          </p>
+        )}
+      </div>
     )
   }
 

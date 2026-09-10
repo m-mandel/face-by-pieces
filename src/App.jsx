@@ -537,6 +537,8 @@ export default function App() {
   const [visibleIndices, setVisibleIndices] = useState([])
   const [elementHistory, setElementHistory] = useState([])
   const [refreshCount, setRefreshCount] = useState(0)
+  const [drawingState, setDrawingState] = useState(null)
+  const [loadAttempt, setLoadAttempt] = useState(0)
   const [answer, setAnswer] = useState('')
   const [answerError, setAnswerError] = useState('')
   const [answerFocused, setAnswerFocused] = useState(false)
@@ -554,6 +556,18 @@ export default function App() {
   const mode = MODES.find((option) => option.id === modeId) || MODES[1]
   const style = STYLES.find((option) => option.id === styleId) || STYLES[0]
   const artwork = portrait.styles[style.id]
+  const drawingRequestId = `${sessionId}:${refreshCount}:${loadAttempt}`
+  const currentDrawingState =
+    drawingState?.artwork === artwork &&
+    drawingState.visibleIndices === visibleIndices &&
+    drawingState.requestId === drawingRequestId
+      ? drawingState.status
+      : 'loading'
+  const drawingReady =
+    style.id !== 'line-art' || currentDrawingState === 'ready'
+  const drawingFailed =
+    style.id === 'line-art' && currentDrawingState === 'error'
+  const drawingLoading = !drawingReady && !drawingFailed
   const clueIndices = useMemo(
     () => getClueIndices(artwork, style.id),
     [artwork, style.id],
@@ -613,7 +627,11 @@ export default function App() {
   }, [mode.id, mode.count, portraitIndex, sessionId, style.id, clueIndices])
 
   const handleRefresh = () => {
-    if (progressiveComplete) return
+    if (drawingFailed) {
+      setLoadAttempt((attempt) => attempt + 1)
+      return
+    }
+    if (!drawingReady || progressiveComplete) return
 
     let nextVisibleIndices
     if (mode.id === 'progressive') {
@@ -773,6 +791,8 @@ export default function App() {
           visibleIndices={visibleIndices}
           label={`A partially revealed portrait with ${visibleIndices.length} visible clues`}
           fitToInk
+          requestId={drawingRequestId}
+          onLoadStateChange={setDrawingState}
         />
       </section>
       <div className="guess-controls">
@@ -782,23 +802,37 @@ export default function App() {
             if (answerFocused) event.preventDefault()
           }}
           onClick={handleRefresh}
-          disabled={progressiveComplete}
-          title={progressiveComplete ? 'All clues revealed' : 'Next clue'}
+          disabled={drawingLoading || (progressiveComplete && !drawingFailed)}
+          title={
+            drawingLoading
+              ? 'Loading drawing…'
+              : drawingFailed
+                ? 'Retry loading drawing'
+                : progressiveComplete
+                  ? 'All clues revealed'
+                  : 'Next clue'
+          }
           aria-label={
-            progressiveComplete
-              ? 'All portrait elements revealed'
-              : mode.id === 'progressive'
-                ? 'Reveal the next portrait clue'
-                : 'Refresh portrait clues'
+            drawingLoading
+              ? 'Loading drawing'
+              : drawingFailed
+                ? 'Retry loading drawing'
+                : progressiveComplete
+                  ? 'All portrait elements revealed'
+                  : mode.id === 'progressive'
+                    ? 'Reveal the next portrait clue'
+                    : 'Refresh portrait clues'
           }
         >
           <Icon
             name={
-              progressiveComplete
-                ? 'check'
-                : mode.id === 'progressive'
-                  ? 'arrow'
-                  : 'refresh'
+              drawingFailed
+                ? 'refresh'
+                : progressiveComplete
+                  ? 'check'
+                  : mode.id === 'progressive'
+                    ? 'arrow'
+                    : 'refresh'
             }
           />
         </button>

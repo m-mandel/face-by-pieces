@@ -79,6 +79,7 @@ async function measureBounds(artwork) {
 }
 
 export function getPortraitBounds(artwork) {
+  if (Object.hasOwn(artwork, 'bounds')) return Promise.resolve(artwork.bounds)
   if (!boundsCache.has(artwork)) {
     // A failed download or canvas read must leave the full canvas visible.
     boundsCache.set(
