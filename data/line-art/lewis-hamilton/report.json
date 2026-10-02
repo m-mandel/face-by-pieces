@@ -1,0 +1,30 @@
+{
+  "subject": "lewis-hamilton",
+  "size": [
+    656,
+    875
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 28938,
+    "face-outline": 1073,
+    "hair": 6084,
+    "ears": 1557,
+    "eyebrows": 1035,
+    "eyes": 1458,
+    "nose": 691,
+    "mouth": 779,
+    "face-details": 309,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 3203,
+    "eyewear": 0,
+    "headwear": 12,
+    "face-piercings": 38,
+    "accessories": 3
+  },
+  "ink_pixels": 45180,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

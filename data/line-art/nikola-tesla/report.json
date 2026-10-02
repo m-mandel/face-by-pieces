@@ -1,0 +1,30 @@
+{
+  "subject": "nikola-tesla",
+  "size": [
+    940,
+    1260
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 27264,
+    "face-outline": 4744,
+    "hair": 16897,
+    "ears": 3691,
+    "eyebrows": 4562,
+    "eyes": 3285,
+    "nose": 1153,
+    "mouth": 1124,
+    "face-details": 423,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 6883,
+    "eyewear": 0,
+    "headwear": 65,
+    "face-piercings": 0,
+    "accessories": 292
+  },
+  "ink_pixels": 70383,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

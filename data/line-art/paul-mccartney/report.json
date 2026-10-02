@@ -1,0 +1,31 @@
+{
+  "subject": "paul-mccartney",
+  "size": [
+    2048,
+    1146
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 36061,
+    "face-outline": 920,
+    "hair": 9544,
+    "ears": 441,
+    "eyebrows": 611,
+    "eyes": 469,
+    "nose": 346,
+    "mouth": 561,
+    "face-details": 763,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 38,
+    "face-piercings": 0,
+    "accessories": 68568,
+    "unassigned": 2
+  },
+  "ink_pixels": 118324,
+  "unassigned_pixels": 2,
+  "maximum_reconstruction_channel_error": 0
+}

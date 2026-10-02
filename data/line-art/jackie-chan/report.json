@@ -1,0 +1,30 @@
+{
+  "subject": "jackie-chan",
+  "size": [
+    1760,
+    2426
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 117630,
+    "face-outline": 5578,
+    "hair": 217004,
+    "ears": 8207,
+    "eyebrows": 11012,
+    "eyes": 6971,
+    "nose": 3002,
+    "mouth": 6510,
+    "face-details": 3923,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 20664,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 400501,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

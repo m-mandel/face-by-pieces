@@ -1,0 +1,30 @@
+{
+  "subject": "volodymyr-zelenskyy",
+  "size": [
+    921,
+    1256
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 130805,
+    "face-outline": 0,
+    "hair": 8245,
+    "ears": 2140,
+    "eyebrows": 3353,
+    "eyes": 2467,
+    "nose": 1315,
+    "mouth": 1226,
+    "face-details": 522,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 27516,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 21
+  },
+  "ink_pixels": 177610,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

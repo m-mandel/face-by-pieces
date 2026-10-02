@@ -1,0 +1,31 @@
+{
+  "subject": "michelle-obama",
+  "size": [
+    1792,
+    2390
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 52252,
+    "face-outline": 17677,
+    "hair": 131614,
+    "ears": 1391,
+    "eyebrows": 6579,
+    "eyes": 16850,
+    "nose": 3162,
+    "mouth": 13995,
+    "face-details": 2631,
+    "earrings": 756,
+    "necklace": 29478,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 132,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 19
+  },
+  "ink_pixels": 276536,
+  "unassigned_pixels": 19,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,31 @@
+{
+  "subject": "tom-cruise",
+  "size": [
+    1844,
+    2304
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 79266,
+    "face-outline": 11927,
+    "hair": 67519,
+    "ears": 3963,
+    "eyebrows": 5689,
+    "eyes": 5511,
+    "nose": 3894,
+    "mouth": 7578,
+    "face-details": 5293,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 1
+  },
+  "ink_pixels": 190641,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}

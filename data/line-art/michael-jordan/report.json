@@ -1,0 +1,31 @@
+{
+  "subject": "michael-jordan",
+  "size": [
+    1633,
+    2162
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 188388,
+    "face-outline": 30118,
+    "hair": 0,
+    "ears": 15822,
+    "eyebrows": 5339,
+    "eyes": 12591,
+    "nose": 8677,
+    "mouth": 6443,
+    "face-details": 11638,
+    "earrings": 1749,
+    "necklace": 10,
+    "facial-hair": 7008,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 92,
+    "unassigned": 3
+  },
+  "ink_pixels": 287878,
+  "unassigned_pixels": 3,
+  "maximum_reconstruction_channel_error": 0
+}

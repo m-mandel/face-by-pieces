@@ -1,0 +1,31 @@
+{
+  "subject": "meryl-streep",
+  "size": [
+    1806,
+    2408
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 59566,
+    "face-outline": 6979,
+    "hair": 41022,
+    "ears": 8740,
+    "eyebrows": 3045,
+    "eyes": 8509,
+    "nose": 2437,
+    "mouth": 8686,
+    "face-details": 6340,
+    "earrings": 3190,
+    "necklace": 61607,
+    "facial-hair": 0,
+    "eyewear": 24436,
+    "headwear": 5,
+    "face-piercings": 0,
+    "accessories": 13,
+    "unassigned": 2
+  },
+  "ink_pixels": 234577,
+  "unassigned_pixels": 2,
+  "maximum_reconstruction_channel_error": 0
+}

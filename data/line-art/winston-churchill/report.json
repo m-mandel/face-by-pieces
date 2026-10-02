@@ -1,0 +1,30 @@
+{
+  "subject": "winston-churchill",
+  "size": [
+    1854,
+    2304
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 226668,
+    "face-outline": 8108,
+    "hair": 11329,
+    "ears": 3120,
+    "eyebrows": 2302,
+    "eyes": 2837,
+    "nose": 1804,
+    "mouth": 1769,
+    "face-details": 904,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 64
+  },
+  "ink_pixels": 258905,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

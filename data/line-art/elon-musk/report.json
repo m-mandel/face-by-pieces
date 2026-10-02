@@ -1,0 +1,30 @@
+{
+  "subject": "elon-musk",
+  "size": [
+    1760,
+    2408
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 58739,
+    "face-outline": 10955,
+    "hair": 50482,
+    "ears": 9728,
+    "eyebrows": 6280,
+    "eyes": 11661,
+    "nose": 5249,
+    "mouth": 6941,
+    "face-details": 1302,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 133,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 161470,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

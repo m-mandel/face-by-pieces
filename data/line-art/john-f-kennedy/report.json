@@ -1,0 +1,30 @@
+{
+  "subject": "john-f-kennedy",
+  "size": [
+    1824,
+    2366
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 88015,
+    "face-outline": 11554,
+    "hair": 35228,
+    "ears": 8524,
+    "eyebrows": 4280,
+    "eyes": 7408,
+    "nose": 3738,
+    "mouth": 8421,
+    "face-details": 9129,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 2
+  },
+  "ink_pixels": 176299,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

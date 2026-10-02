@@ -1,0 +1,31 @@
+{
+  "subject": "greta-thunberg",
+  "size": [
+    1822,
+    2368
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 644161,
+    "face-outline": 2192,
+    "hair": 28200,
+    "ears": 1273,
+    "eyebrows": 1063,
+    "eyes": 1680,
+    "nose": 556,
+    "mouth": 788,
+    "face-details": 368,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 16,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 598058
+  },
+  "ink_pixels": 1278355,
+  "unassigned_pixels": 598058,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,30 @@
+{
+  "subject": "whitney-houston",
+  "size": [
+    518,
+    736
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 9337,
+    "face-outline": 947,
+    "hair": 5426,
+    "ears": 258,
+    "eyebrows": 596,
+    "eyes": 1054,
+    "nose": 311,
+    "mouth": 1164,
+    "face-details": 75,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 9,
+    "face-piercings": 0,
+    "accessories": 3036
+  },
+  "ink_pixels": 22213,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

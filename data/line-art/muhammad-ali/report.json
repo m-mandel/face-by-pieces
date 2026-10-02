@@ -1,0 +1,30 @@
+{
+  "subject": "muhammad-ali",
+  "size": [
+    1842,
+    2304
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 32265,
+    "face-outline": 20023,
+    "hair": 42545,
+    "ears": 12763,
+    "eyebrows": 13610,
+    "eyes": 22212,
+    "nose": 8556,
+    "mouth": 8794,
+    "face-details": 3204,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 18,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 163990,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

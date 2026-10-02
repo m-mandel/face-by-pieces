@@ -1,0 +1,30 @@
+{
+  "subject": "mahatma-gandhi",
+  "size": [
+    1846,
+    2304
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 239685,
+    "face-outline": 26782,
+    "hair": 0,
+    "ears": 14533,
+    "eyebrows": 2764,
+    "eyes": 5400,
+    "nose": 3301,
+    "mouth": 2078,
+    "face-details": 8199,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 4782,
+    "eyewear": 10619,
+    "headwear": 16,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 318159,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

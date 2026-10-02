@@ -1,0 +1,31 @@
+{
+  "subject": "pope-francis",
+  "size": [
+    1797,
+    2381
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 118709,
+    "face-outline": 6032,
+    "hair": 6596,
+    "ears": 5706,
+    "eyebrows": 5358,
+    "eyes": 3728,
+    "nose": 1717,
+    "mouth": 5911,
+    "face-details": 7767,
+    "earrings": 0,
+    "necklace": 24761,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 8474,
+    "face-piercings": 0,
+    "accessories": 1577,
+    "unassigned": 4
+  },
+  "ink_pixels": 196340,
+  "unassigned_pixels": 4,
+  "maximum_reconstruction_channel_error": 0
+}

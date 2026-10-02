@@ -1,0 +1,30 @@
+{
+  "subject": "leonardo-dicaprio",
+  "size": [
+    1856,
+    2280
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 70087,
+    "face-outline": 0,
+    "hair": 51175,
+    "ears": 11602,
+    "eyebrows": 7739,
+    "eyes": 10497,
+    "nose": 3764,
+    "mouth": 7765,
+    "face-details": 4348,
+    "earrings": 0,
+    "necklace": 2,
+    "facial-hair": 25945,
+    "eyewear": 0,
+    "headwear": 53,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 192977,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

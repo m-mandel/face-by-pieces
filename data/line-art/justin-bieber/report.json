@@ -1,0 +1,30 @@
+{
+  "subject": "justin-bieber",
+  "size": [
+    1728,
+    2470
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 137361,
+    "face-outline": 5788,
+    "hair": 4532,
+    "ears": 4047,
+    "eyebrows": 3629,
+    "eyes": 2497,
+    "nose": 1599,
+    "mouth": 1832,
+    "face-details": 0,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 33084,
+    "face-piercings": 0,
+    "accessories": 2090
+  },
+  "ink_pixels": 196459,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

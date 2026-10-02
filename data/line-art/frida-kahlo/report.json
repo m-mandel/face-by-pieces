@@ -1,0 +1,30 @@
+{
+  "subject": "frida-kahlo",
+  "size": [
+    1888,
+    2272
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 98237,
+    "face-outline": 13545,
+    "hair": 53879,
+    "ears": 8055,
+    "eyebrows": 19369,
+    "eyes": 12464,
+    "nose": 2414,
+    "mouth": 3994,
+    "face-details": 0,
+    "earrings": 11224,
+    "necklace": 18863,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 18,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 242062,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

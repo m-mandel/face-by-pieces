@@ -1,0 +1,31 @@
+{
+  "subject": "lady-gaga",
+  "size": [
+    1758,
+    2432
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 88711,
+    "face-outline": 10128,
+    "hair": 124152,
+    "ears": 4001,
+    "eyebrows": 8080,
+    "eyes": 15332,
+    "nose": 4447,
+    "mouth": 7600,
+    "face-details": 2284,
+    "earrings": 10914,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 124,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 1
+  },
+  "ink_pixels": 275774,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}

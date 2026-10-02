@@ -1,0 +1,30 @@
+{
+  "subject": "marilyn-monroe",
+  "size": [
+    1728,
+    2484
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 45273,
+    "face-outline": 6493,
+    "hair": 63007,
+    "ears": 2028,
+    "eyebrows": 5904,
+    "eyes": 15922,
+    "nose": 2883,
+    "mouth": 9136,
+    "face-details": 0,
+    "earrings": 21167,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 4,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 171817,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

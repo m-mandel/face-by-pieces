@@ -1,0 +1,31 @@
+{
+  "subject": "natalie-portman",
+  "size": [
+    2048,
+    3072
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 66678,
+    "face-outline": 15534,
+    "hair": 247993,
+    "ears": 724,
+    "eyebrows": 7283,
+    "eyes": 15620,
+    "nose": 4249,
+    "mouth": 6434,
+    "face-details": 1323,
+    "earrings": 2030,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 340,
+    "face-piercings": 0,
+    "accessories": 12998,
+    "unassigned": 2
+  },
+  "ink_pixels": 381208,
+  "unassigned_pixels": 2,
+  "maximum_reconstruction_channel_error": 0
+}

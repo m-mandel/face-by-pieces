@@ -1,0 +1,31 @@
+{
+  "subject": "michael-phelps",
+  "size": [
+    1366,
+    1907
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 50012,
+    "face-outline": 8090,
+    "hair": 22102,
+    "ears": 16992,
+    "eyebrows": 5435,
+    "eyes": 10912,
+    "nose": 3519,
+    "mouth": 5272,
+    "face-details": 2465,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 46,
+    "face-piercings": 0,
+    "accessories": 13162,
+    "unassigned": 2
+  },
+  "ink_pixels": 138009,
+  "unassigned_pixels": 2,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,31 @@
+{
+  "subject": "snoop-dogg",
+  "size": [
+    2048,
+    3071
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 261104,
+    "face-outline": 9402,
+    "hair": 49803,
+    "ears": 12706,
+    "eyebrows": 0,
+    "eyes": 0,
+    "nose": 6867,
+    "mouth": 6453,
+    "face-details": 5056,
+    "earrings": 0,
+    "necklace": 65993,
+    "facial-hair": 38247,
+    "eyewear": 43436,
+    "headwear": 1,
+    "face-piercings": 0,
+    "accessories": 401,
+    "unassigned": 20
+  },
+  "ink_pixels": 499489,
+  "unassigned_pixels": 20,
+  "maximum_reconstruction_channel_error": 0
+}

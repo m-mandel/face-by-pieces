@@ -1,0 +1,31 @@
+{
+  "subject": "scarlett-johansson",
+  "size": [
+    2048,
+    2731
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 183223,
+    "face-outline": 13933,
+    "hair": 100497,
+    "ears": 5641,
+    "eyebrows": 6902,
+    "eyes": 15227,
+    "nose": 4370,
+    "mouth": 6105,
+    "face-details": 0,
+    "earrings": 4029,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 69,
+    "face-piercings": 0,
+    "accessories": 292,
+    "unassigned": 3
+  },
+  "ink_pixels": 340291,
+  "unassigned_pixels": 3,
+  "maximum_reconstruction_channel_error": 0
+}

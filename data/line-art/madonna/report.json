@@ -1,0 +1,31 @@
+{
+  "subject": "madonna",
+  "size": [
+    1632,
+    2612
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 253788,
+    "face-outline": 4122,
+    "hair": 61939,
+    "ears": 340,
+    "eyebrows": 3120,
+    "eyes": 4100,
+    "nose": 1282,
+    "mouth": 2648,
+    "face-details": 0,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 1121,
+    "face-piercings": 0,
+    "accessories": 208467,
+    "unassigned": 6
+  },
+  "ink_pixels": 540933,
+  "unassigned_pixels": 6,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,31 @@
+{
+  "subject": "roger-federer",
+  "size": [
+    2048,
+    2765
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 217132,
+    "face-outline": 7185,
+    "hair": 28383,
+    "ears": 4564,
+    "eyebrows": 7457,
+    "eyes": 3252,
+    "nose": 2377,
+    "mouth": 2194,
+    "face-details": 2618,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 11354,
+    "face-piercings": 0,
+    "accessories": 119565,
+    "unassigned": 3
+  },
+  "ink_pixels": 406084,
+  "unassigned_pixels": 3,
+  "maximum_reconstruction_channel_error": 0
+}

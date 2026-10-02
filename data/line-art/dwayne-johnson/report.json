@@ -1,0 +1,30 @@
+{
+  "subject": "dwayne-johnson",
+  "size": [
+    1792,
+    2388
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 110123,
+    "face-outline": 38699,
+    "hair": 0,
+    "ears": 15890,
+    "eyebrows": 5586,
+    "eyes": 8818,
+    "nose": 4246,
+    "mouth": 11396,
+    "face-details": 9096,
+    "earrings": 0,
+    "necklace": 5087,
+    "facial-hair": 0,
+    "eyewear": 16345,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 225286,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

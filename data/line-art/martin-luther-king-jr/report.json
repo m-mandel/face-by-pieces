@@ -1,0 +1,30 @@
+{
+  "subject": "martin-luther-king-jr",
+  "size": [
+    1141,
+    1521
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 44967,
+    "face-outline": 7710,
+    "hair": 9900,
+    "ears": 4789,
+    "eyebrows": 2978,
+    "eyes": 5806,
+    "nose": 2853,
+    "mouth": 2857,
+    "face-details": 2219,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 2989,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 13
+  },
+  "ink_pixels": 87081,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

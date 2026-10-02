@@ -1,0 +1,30 @@
+{
+  "subject": "dolly-parton",
+  "size": [
+    765,
+    941
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 10727,
+    "face-outline": 1999,
+    "hair": 34190,
+    "ears": 0,
+    "eyebrows": 928,
+    "eyes": 2800,
+    "nose": 585,
+    "mouth": 1694,
+    "face-details": 554,
+    "earrings": 2163,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 12466,
+    "face-piercings": 0,
+    "accessories": 18
+  },
+  "ink_pixels": 68124,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

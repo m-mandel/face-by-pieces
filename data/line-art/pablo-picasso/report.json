@@ -1,0 +1,30 @@
+{
+  "subject": "pablo-picasso",
+  "size": [
+    1079,
+    1261
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 33242,
+    "face-outline": 7983,
+    "hair": 3531,
+    "ears": 8482,
+    "eyebrows": 4211,
+    "eyes": 7091,
+    "nose": 2589,
+    "mouth": 3795,
+    "face-details": 6768,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 20668,
+    "face-piercings": 0,
+    "accessories": 64
+  },
+  "ink_pixels": 98424,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,30 @@
+{
+  "subject": "sylvester-stallone",
+  "size": [
+    677,
+    960
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 18036,
+    "face-outline": 3927,
+    "hair": 13137,
+    "ears": 2300,
+    "eyebrows": 1861,
+    "eyes": 3152,
+    "nose": 1313,
+    "mouth": 1445,
+    "face-details": 3983,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 7
+  },
+  "ink_pixels": 49161,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

@@ -1,0 +1,30 @@
+{
+  "subject": "thomas-edison",
+  "size": [
+    1069,
+    1554
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 74096,
+    "face-outline": 14524,
+    "hair": 25976,
+    "ears": 11533,
+    "eyebrows": 13794,
+    "eyes": 6171,
+    "nose": 4351,
+    "mouth": 4030,
+    "face-details": 4161,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 5,
+    "face-piercings": 0,
+    "accessories": 102
+  },
+  "ink_pixels": 158743,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

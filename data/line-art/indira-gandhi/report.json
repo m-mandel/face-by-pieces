@@ -1,0 +1,31 @@
+{
+  "subject": "indira-gandhi",
+  "size": [
+    2048,
+    2090
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 204398,
+    "face-outline": 9874,
+    "hair": 407246,
+    "ears": 0,
+    "eyebrows": 6343,
+    "eyes": 7965,
+    "nose": 3835,
+    "mouth": 3266,
+    "face-details": 3520,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 39,
+    "unassigned": 1
+  },
+  "ink_pixels": 646487,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}

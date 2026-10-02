@@ -1,0 +1,31 @@
+{
+  "subject": "samuel-l-jackson",
+  "size": [
+    2048,
+    3072
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 78760,
+    "face-outline": 48764,
+    "hair": 0,
+    "ears": 17342,
+    "eyebrows": 4345,
+    "eyes": 35045,
+    "nose": 11979,
+    "mouth": 34040,
+    "face-details": 14738,
+    "earrings": 0,
+    "necklace": 6,
+    "facial-hair": 0,
+    "eyewear": 58709,
+    "headwear": 2,
+    "face-piercings": 0,
+    "accessories": 34,
+    "unassigned": 752
+  },
+  "ink_pixels": 304516,
+  "unassigned_pixels": 752,
+  "maximum_reconstruction_channel_error": 0
+}

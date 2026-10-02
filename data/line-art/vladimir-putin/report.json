@@ -1,0 +1,31 @@
+{
+  "subject": "vladimir-putin",
+  "size": [
+    2048,
+    3072
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 131022,
+    "face-outline": 34218,
+    "hair": 63766,
+    "ears": 41604,
+    "eyebrows": 14036,
+    "eyes": 26386,
+    "nose": 11364,
+    "mouth": 12732,
+    "face-details": 16169,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 3,
+    "face-piercings": 0,
+    "accessories": 20,
+    "unassigned": 5
+  },
+  "ink_pixels": 351325,
+  "unassigned_pixels": 5,
+  "maximum_reconstruction_channel_error": 0
+}

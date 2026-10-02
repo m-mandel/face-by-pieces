@@ -1,0 +1,30 @@
+{
+  "subject": "rafael-nadal",
+  "size": [
+    1006,
+    1355
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 63507,
+    "face-outline": 2964,
+    "hair": 9732,
+    "ears": 3109,
+    "eyebrows": 4390,
+    "eyes": 2657,
+    "nose": 1088,
+    "mouth": 2998,
+    "face-details": 2590,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 14
+  },
+  "ink_pixels": 93049,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

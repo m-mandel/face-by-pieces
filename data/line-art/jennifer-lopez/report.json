@@ -1,0 +1,31 @@
+{
+  "subject": "jennifer-lopez",
+  "size": [
+    1824,
+    2342
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 749146,
+    "face-outline": 14706,
+    "hair": 167382,
+    "ears": 196,
+    "eyebrows": 4769,
+    "eyes": 10933,
+    "nose": 3482,
+    "mouth": 5367,
+    "face-details": 0,
+    "earrings": 4601,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 101,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 3
+  },
+  "ink_pixels": 960686,
+  "unassigned_pixels": 3,
+  "maximum_reconstruction_channel_error": 0
+}

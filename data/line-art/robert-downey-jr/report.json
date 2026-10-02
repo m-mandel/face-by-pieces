@@ -1,0 +1,30 @@
+{
+  "subject": "robert-downey-jr",
+  "size": [
+    1768,
+    2505
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 89380,
+    "face-outline": 14739,
+    "hair": 92471,
+    "ears": 17910,
+    "eyebrows": 29963,
+    "eyes": 25011,
+    "nose": 8286,
+    "mouth": 7273,
+    "face-details": 9378,
+    "earrings": 0,
+    "necklace": 120,
+    "facial-hair": 26868,
+    "eyewear": 0,
+    "headwear": 50,
+    "face-piercings": 0,
+    "accessories": 48060
+  },
+  "ink_pixels": 369509,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

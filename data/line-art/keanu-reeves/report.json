@@ -1,0 +1,30 @@
+{
+  "subject": "keanu-reeves",
+  "size": [
+    2048,
+    2729
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 100692,
+    "face-outline": 7,
+    "hair": 168372,
+    "ears": 1084,
+    "eyebrows": 8476,
+    "eyes": 14883,
+    "nose": 5640,
+    "mouth": 6552,
+    "face-details": 2066,
+    "earrings": 0,
+    "necklace": 108,
+    "facial-hair": 63785,
+    "eyewear": 0,
+    "headwear": 33,
+    "face-piercings": 0,
+    "accessories": 0
+  },
+  "ink_pixels": 371698,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

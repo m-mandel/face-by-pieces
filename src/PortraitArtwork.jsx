@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { renderLegacySvg } from './legacyPortraits'
 import { getPortraitBounds } from './portraitBounds'
-import { loadPortraitLayers } from './portraitLoading'
+import { loadPortraitLayers, preloadPortraitLayers } from './portraitLoading'
 
 export default function PortraitArtwork({
   artwork,
@@ -16,6 +16,7 @@ export default function PortraitArtwork({
 }) {
   const [preparation, setPreparation] = useState(null)
   const [displayedFrame, setDisplayedFrame] = useState(null)
+  const preloadCleanupRef = useRef(null)
   const currentPreparation =
     preparation?.artwork === artwork &&
     preparation.roundId === roundId &&
@@ -30,6 +31,13 @@ export default function PortraitArtwork({
   const bounds = frame?.bounds
   const failed = currentPreparation?.status === 'error'
   const loading = fitToInk && currentPreparation?.status !== 'ready' && !failed
+  useEffect(() => {
+    return () => {
+      preloadCleanupRef.current?.()
+      preloadCleanupRef.current = null
+    }
+  }, [artwork, roundId])
+
   useEffect(() => {
     if (!fitToInk || styleId !== 'line-art') return undefined
     let active = true
@@ -75,7 +83,14 @@ export default function PortraitArtwork({
       onLoadStateChange?.(state)
     }
     Promise.all([getPortraitBounds(artwork), loadPortraitLayers(layers)])
-      .then(([bounds]) => finish('ready', bounds))
+      .then(([bounds]) => {
+        finish('ready', bounds)
+        if (active && layers.length > 0 && !preloadCleanupRef.current) {
+          preloadCleanupRef.current = preloadPortraitLayers(
+            artwork.layers.filter((layer) => !layers.includes(layer)),
+          )
+        }
+      })
       .catch(() => finish('error'))
     return () => {
       active = false

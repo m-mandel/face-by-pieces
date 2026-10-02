@@ -1,0 +1,31 @@
+{
+  "subject": "kobe-bryant",
+  "size": [
+    2048,
+    2960
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 277420,
+    "face-outline": 10111,
+    "hair": 21387,
+    "ears": 9654,
+    "eyebrows": 8942,
+    "eyes": 6563,
+    "nose": 3194,
+    "mouth": 11096,
+    "face-details": 6329,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 38,
+    "face-piercings": 0,
+    "accessories": 334,
+    "unassigned": 5
+  },
+  "ink_pixels": 355073,
+  "unassigned_pixels": 5,
+  "maximum_reconstruction_channel_error": 0
+}

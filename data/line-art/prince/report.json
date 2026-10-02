@@ -1,0 +1,31 @@
+{
+  "subject": "prince",
+  "size": [
+    2048,
+    3200
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 202447,
+    "face-outline": 5690,
+    "hair": 58393,
+    "ears": 2640,
+    "eyebrows": 3710,
+    "eyes": 4571,
+    "nose": 1738,
+    "mouth": 1579,
+    "face-details": 0,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 1551,
+    "eyewear": 0,
+    "headwear": 1128,
+    "face-piercings": 0,
+    "accessories": 203,
+    "unassigned": 1878230
+  },
+  "ink_pixels": 2161880,
+  "unassigned_pixels": 1878230,
+  "maximum_reconstruction_channel_error": 0
+}

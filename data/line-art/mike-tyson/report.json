@@ -1,0 +1,31 @@
+{
+  "subject": "mike-tyson",
+  "size": [
+    844,
+    1126
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 173160,
+    "face-outline": 23791,
+    "hair": 0,
+    "ears": 6644,
+    "eyebrows": 6007,
+    "eyes": 7120,
+    "nose": 4249,
+    "mouth": 7879,
+    "face-details": 4057,
+    "earrings": 0,
+    "necklace": 4,
+    "facial-hair": 17248,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 20665,
+    "unassigned": 3
+  },
+  "ink_pixels": 270827,
+  "unassigned_pixels": 3,
+  "maximum_reconstruction_channel_error": 0
+}

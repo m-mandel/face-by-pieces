@@ -1,0 +1,31 @@
+{
+  "subject": "michael-jackson",
+  "size": [
+    1792,
+    2382
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 206475,
+    "face-outline": 3759,
+    "hair": 13829,
+    "ears": 2017,
+    "eyebrows": 3747,
+    "eyes": 3470,
+    "nose": 1058,
+    "mouth": 2419,
+    "face-details": 163,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 0,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 2
+  },
+  "ink_pixels": 236939,
+  "unassigned_pixels": 2,
+  "maximum_reconstruction_channel_error": 0
+}

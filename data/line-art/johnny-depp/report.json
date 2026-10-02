@@ -1,0 +1,30 @@
+{
+  "subject": "johnny-depp",
+  "size": [
+    400,
+    550
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 20302,
+    "face-outline": 548,
+    "hair": 1777,
+    "ears": 0,
+    "eyebrows": 436,
+    "eyes": 486,
+    "nose": 210,
+    "mouth": 309,
+    "face-details": 387,
+    "earrings": 342,
+    "necklace": 0,
+    "facial-hair": 1775,
+    "eyewear": 1668,
+    "headwear": 4787,
+    "face-piercings": 0,
+    "accessories": 10
+  },
+  "ink_pixels": 33037,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

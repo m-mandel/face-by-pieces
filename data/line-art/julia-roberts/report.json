@@ -1,0 +1,30 @@
+{
+  "subject": "julia-roberts",
+  "size": [
+    1244,
+    1470
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 3964,
+    "face-outline": 4739,
+    "hair": 94742,
+    "ears": 0,
+    "eyebrows": 2397,
+    "eyes": 6166,
+    "nose": 1514,
+    "mouth": 5201,
+    "face-details": 1156,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 24,
+    "face-piercings": 0,
+    "accessories": 30
+  },
+  "ink_pixels": 119933,
+  "unassigned_pixels": 0,
+  "maximum_reconstruction_channel_error": 0
+}

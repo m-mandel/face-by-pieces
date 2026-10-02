@@ -1,0 +1,31 @@
+{
+  "subject": "usain-bolt",
+  "size": [
+    1568,
+    2696
+  ],
+  "mask_radius": 1,
+  "near_white_threshold": 245,
+  "class_pixels": {
+    "body": 239246,
+    "face-outline": 7608,
+    "hair": 5202,
+    "ears": 3728,
+    "eyebrows": 1420,
+    "eyes": 2719,
+    "nose": 1695,
+    "mouth": 3298,
+    "face-details": 0,
+    "earrings": 0,
+    "necklace": 0,
+    "facial-hair": 0,
+    "eyewear": 0,
+    "headwear": 1,
+    "face-piercings": 0,
+    "accessories": 0,
+    "unassigned": 1
+  },
+  "ink_pixels": 264918,
+  "unassigned_pixels": 1,
+  "maximum_reconstruction_channel_error": 0
+}
