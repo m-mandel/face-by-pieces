@@ -629,7 +629,7 @@ h1:focus {
 .guess-step-counter span {
   color: var(--muted);
 }
-@media (max-width: 480px) {
+@media (max-width: 720px) {
   .guess-header {
     grid-template-columns: 1fr auto;
     grid-template-areas:
@@ -681,6 +681,13 @@ h1:focus {
   box-shadow: 0 4px 16px rgb(37 37 32 / 10%);
   text-align: left;
 }
+.settings-dropdown-menu.align-end {
+  right: 0;
+  left: auto;
+  width: max-content;
+  min-width: 174px;
+  max-width: calc(100vw - 12px);
+}
 .settings-dropdown-menu button,
 .settings-dropdown-menu a {
   display: flex;
@@ -704,6 +711,11 @@ h1:focus {
 }
 .settings-dropdown-menu :focus-visible {
   outline-offset: -2px;
+}
+.settings-dropdown-menu button:disabled {
+  color: var(--muted);
+  cursor: default;
+  background: transparent;
 }
 .settings-dropdown-menu svg {
   width: 16px;

@@ -52,7 +52,7 @@ for (const folder of fs.readdirSync(lineArtDirectory, { withFileTypes: true })) 
   portraitStyles.get(portraitId).add('line-art')
 }
 const modes = new Set(['one', 'two', 'four', 'progressive'])
-const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed'])
+const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed', 'category_opened', 'category_changed'])
 
 app.disable('x-powered-by')
 app.use(express.json({ limit: '16kb' }))

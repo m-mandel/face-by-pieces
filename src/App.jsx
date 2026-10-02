@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
-import { PORTRAITS, getClueIndices } from './portraits'
+import { PORTRAITS, getAvailablePortraitIndices, getClueIndices } from './portraits'
+import { CATEGORIES } from './portraitCategories'
 import PortraitArtwork from './PortraitArtwork'
 import {
   completeGameSession,
@@ -35,6 +36,7 @@ const STYLES = [
 
 // Apply the new default once to existing browsers, then remember style choices.
 const STYLE_STORAGE_KEY = 'face-by-pieces-style-v2'
+const CATEGORY_STORAGE_KEY = 'face-by-pieces-category'
 
 const MODES = [
   {
@@ -89,22 +91,26 @@ function sampleIndices(indices, count, previous = []) {
   return selection
 }
 
-function getAvailablePortraitIndices(styleId) {
-  return PORTRAITS.map((portrait, index) =>
-    portrait.styles[styleId] ? index : null,
-  ).filter((index) => index !== null)
-}
-
-function getRandomPortraitIndex(currentIndex = -1, styleId = 'line-art') {
-  const availableIndices = getAvailablePortraitIndices(styleId).filter(
+function getRandomPortraitIndex(
+  currentIndex = -1,
+  styleId = 'line-art',
+  categoryId = 'all',
+) {
+  const eligibleIndices = getAvailablePortraitIndices(styleId, categoryId)
+  const availableIndices = eligibleIndices.filter(
     (index) => index !== currentIndex,
   )
-  if (availableIndices.length === 0) return currentIndex >= 0 ? currentIndex : 0
+  if (availableIndices.length === 0) return eligibleIndices[0] ?? -1
   return availableIndices[Math.floor(Math.random() * availableIndices.length)]
 }
 
-function getNextUnviewedPortraitIndex(currentIndex, viewedPortraits, styleId) {
-  const stylePortraitIndices = getAvailablePortraitIndices(styleId)
+function getNextUnviewedPortraitIndex(
+  currentIndex,
+  viewedPortraits,
+  styleId,
+  categoryId,
+) {
+  const stylePortraitIndices = getAvailablePortraitIndices(styleId, categoryId)
   let availableIndices = stylePortraitIndices.filter(
     (index) => !viewedPortraits.has(index),
   )
@@ -207,6 +213,7 @@ function SettingsDropdown({
   onClose,
   onSelect,
   legacyLink = false,
+  alignEnd = false,
 }) {
   const id = useId()
   const rootRef = useRef(null)
@@ -240,7 +247,9 @@ function SettingsDropdown({
       closeAndFocus()
       return
     }
-    const items = [...menuRef.current.querySelectorAll('[role^="menuitem"]')]
+    const items = [
+      ...menuRef.current.querySelectorAll('[role^="menuitem"]:not(:disabled)'),
+    ]
     const index = items.indexOf(document.activeElement)
     let nextIndex
     if (event.key === 'ArrowDown') nextIndex = (index + 1) % items.length
@@ -285,7 +294,7 @@ function SettingsDropdown({
         <div
           ref={menuRef}
           id={`${id}-menu`}
-          className="settings-dropdown-menu"
+          className={`settings-dropdown-menu${alignEnd ? ' align-end' : ''}`}
           role="menu"
           aria-labelledby={`${id}-button`}
           onKeyDown={handleMenuKeyDown}
@@ -295,6 +304,7 @@ function SettingsDropdown({
               key={option.id}
               role="menuitemradio"
               aria-checked={value === option.id}
+              disabled={option.disabled}
               tabIndex={-1}
               onClick={() => {
                 onSelect(option.id)
@@ -525,8 +535,15 @@ export default function App() {
       ? savedStyle
       : 'line-art'
   })
+  const [categoryId, setCategoryId] = useState(() => {
+    const savedCategory = localStorage.getItem(CATEGORY_STORAGE_KEY)
+    return CATEGORIES.some((category) => category.id === savedCategory) &&
+      getAvailablePortraitIndices(styleId, savedCategory).length > 0
+      ? savedCategory
+      : 'all'
+  })
   const [portraitIndex, setPortraitIndex] = useState(() =>
-    getRandomPortraitIndex(-1, styleId),
+    getRandomPortraitIndex(-1, styleId, categoryId),
   )
   const viewedPortraitsRef = useRef(new Set([portraitIndex]))
   const [modeId, setModeId] = useState(
@@ -683,11 +700,14 @@ export default function App() {
     setAnswerFocused(false)
   }
 
-  const handleChangeSettings = (nextMode, nextStyle) => {
+  const handleChangeSettings = (nextMode, nextStyle, nextCategory = categoryId) => {
+    if (getAvailablePortraitIndices(nextStyle, nextCategory).length === 0) return
     localStorage.setItem('face-by-pieces-mode', nextMode)
     localStorage.setItem(STYLE_STORAGE_KEY, nextStyle)
+    localStorage.setItem(CATEGORY_STORAGE_KEY, nextCategory)
     const modeChanged = nextMode !== mode.id
     const styleChanged = nextStyle !== style.id
+    const categoryChanged = nextCategory !== categoryId
     if (modeChanged)
       recordSessionEvent(sessionId, 'mode_changed', {
         from: mode.id,
@@ -698,15 +718,21 @@ export default function App() {
         from: style.id,
         to: nextStyle,
       })
-    if (modeChanged || styleChanged) {
-      const nextPortraitIndex = styleChanged
-        ? getRandomPortraitIndex(portraitIndex, nextStyle)
+    if (categoryChanged)
+      recordSessionEvent(sessionId, 'category_changed', {
+        from: categoryId,
+        to: nextCategory,
+      })
+    if (modeChanged || styleChanged || categoryChanged) {
+      const nextPortraitIndex = styleChanged || categoryChanged
+        ? getRandomPortraitIndex(portraitIndex, nextStyle, nextCategory)
         : portraitIndex
       viewedPortraitsRef.current = new Set([nextPortraitIndex])
       setSessionId(createSessionId())
       setPortraitIndex(nextPortraitIndex)
       setModeId(nextMode)
       setStyleId(nextStyle)
+      setCategoryId(nextCategory)
     }
   }
 
@@ -715,6 +741,7 @@ export default function App() {
       portraitIndex,
       viewedPortraitsRef.current,
       style.id,
+      categoryId,
     )
     setSessionId(createSessionId())
     setPortraitIndex(nextPortraitIndex)
@@ -724,7 +751,11 @@ export default function App() {
     if (openMenu !== menu) {
       recordSessionEvent(
         sessionId,
-        menu === 'style' ? 'style_opened' : 'settings_opened',
+        menu === 'style'
+          ? 'style_opened'
+          : menu === 'category'
+            ? 'category_opened'
+            : 'settings_opened',
       )
     }
     setOpenMenu((current) => (current === menu ? null : menu))
@@ -769,13 +800,31 @@ export default function App() {
           />
           <SettingsDropdown
             label="Style"
-            options={STYLES}
+            options={STYLES.map((option) => ({
+              ...option,
+              disabled: getAvailablePortraitIndices(option.id, categoryId).length === 0,
+            }))}
             value={style.id}
             open={openMenu === 'style'}
             onToggle={() => handleToggleMenu('style')}
             onClose={handleCloseMenu}
             onSelect={(nextStyle) => handleChangeSettings(mode.id, nextStyle)}
             legacyLink
+          />
+          <SettingsDropdown
+            label="Categories"
+            options={CATEGORIES.map((option) => ({
+              ...option,
+              disabled: getAvailablePortraitIndices(style.id, option.id).length === 0,
+            }))}
+            value={categoryId}
+            open={openMenu === 'category'}
+            onToggle={() => handleToggleMenu('category')}
+            onClose={handleCloseMenu}
+            onSelect={(nextCategory) =>
+              handleChangeSettings(mode.id, style.id, nextCategory)
+            }
+            alignEnd
           />
         </div>
         <h1 id="game-prompt">Guess Who?</h1>

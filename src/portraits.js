@@ -1,4 +1,5 @@
 import { LEGACY_PORTRAITS, getLegacyElementCount } from './legacyPortraits'
+import { matchesCategory } from './portraitCategories'
 import lineArtBounds from './generated/line-art-bounds.json'
 
 // Import URLs instead of embedding PNG contents in the JavaScript bundle.
@@ -8,6 +9,15 @@ const pngFiles = import.meta.glob('../data/line-art/*/transparent/*.png', {
   import: 'default',
 })
 const reports = import.meta.glob('../data/line-art/*/report.json', {
+  eager: true,
+  import: 'default',
+})
+// Older styles share the subject's line-art labels when both are available.
+const legacyLabels = import.meta.glob('../data/vector-lines/*/labels.json', {
+  eager: true,
+  import: 'default',
+})
+const lineArtLabels = import.meta.glob('../data/line-art/*/labels.json', {
   eager: true,
   import: 'default',
 })
@@ -82,7 +92,31 @@ for (const [folder, metadata] of Object.entries(lineArtBounds)) {
   }
 }
 
+for (const [file, metadata] of [
+  ...Object.entries(legacyLabels),
+  ...Object.entries(lineArtLabels),
+]) {
+  const folder = file.split('/').at(-2)
+  const id = folder === 'elvis'
+    ? 'elvis-presley'
+    : folder.replaceAll('_', '-').toLowerCase()
+  const portrait = portraitsById.get(id)
+  if (portrait) portrait.labels = metadata.labels
+}
+
+for (const portrait of portraitsById.values()) {
+  portrait.labels ??= []
+}
+
 export const PORTRAITS = [...portraitsById.values()]
+
+export function getAvailablePortraitIndices(styleId, categoryId = 'all') {
+  return PORTRAITS.flatMap((portrait, index) =>
+    portrait.styles[styleId] && matchesCategory(portrait, categoryId)
+      ? [index]
+      : [],
+  )
+}
 
 export function getClueIndices(artwork, styleId) {
   if (styleId === 'line-art') {
