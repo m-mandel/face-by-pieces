@@ -3,7 +3,7 @@ export const CATEGORIES = [
   { id: 'politics', label: 'Politics', labels: ['politics'] },
   {
     id: 'science-technology',
-    label: 'Science and Technology',
+    label: 'Science & Technology',
     labels: ['science', 'technology'],
   },
   {
