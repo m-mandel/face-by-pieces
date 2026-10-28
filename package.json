@@ -8,7 +8,7 @@
     "npm": "11.6.2"
   },
   "scripts": {
-    "test": "node --test src/layerOrder.test.js",
+    "test": "node --test src/*.test.js",
     "prepare:portraits": "node scripts/generate-portrait-bounds.mjs",
     "dev": "concurrently -k -n client,server -c cyan,magenta \"npm:dev:client\" \"npm:dev:server\"",
     "predev:client": "npm run prepare:portraits",

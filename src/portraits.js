@@ -1,5 +1,6 @@
 import { LEGACY_PORTRAITS, getLegacyElementCount } from './legacyPortraits'
 import { matchesCategory } from './portraitCategories'
+import { getSubjectAliases } from './answerMatching'
 import lineArtBounds from './generated/line-art-bounds.json'
 
 // Import URLs instead of embedding PNG contents in the JavaScript bundle.
@@ -106,6 +107,7 @@ for (const [file, metadata] of [
 
 for (const portrait of portraitsById.values()) {
   portrait.labels ??= []
+  portrait.aliases = getSubjectAliases(portrait)
 }
 
 export const PORTRAITS = [...portraitsById.values()]

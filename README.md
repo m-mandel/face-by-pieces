@@ -69,6 +69,14 @@ Steps are counted during the round and displayed on the result screen. Each refr
 
 After a round, **Retrace your clues** opens **Round Replay**, with a large portrait between a compact header and the playback controls. Every frame uses **Step 1**, **Step 2**, and so on, matching the in-game counter. The caption shows the current step, total steps, and cumulative number of unique clues shown through the selected step. Moving backward excludes clues first shown at later steps. The portrait displays the original layer set for that step. Players can select a numbered step or move backward or forward. The back button returns to the reveal screen, where **Play another face** starts the next round.
 
+## Answer aliases
+
+Additional accepted spellings are listed by subject ID in [`src/config/subject-aliases.json`](src/config/subject-aliases.json). Every catalog subject has a curated list, including the 88 playable line-art subjects. These variants are added to the subject's canonical name and existing aliases. For example, Serena Williams accepts both `Wiliams` and `Serena Wiliams`; Albert Einstein accepts `Einstien` and `Albert Einstien`.
+
+Matching ignores capitalization, accents, spaces, and punctuation, then checks the explicit alias list. Other spelling errors are only accepted when added to the JSON. Surnames already accepted by the game remain accepted, including shared surnames, but suffixes such as `Jr` are not valid answers by themselves. The original submitted text is retained in activity records.
+
+To add a spelling, append it to the subject's JSON array and rebuild. Add full-name and surname variants separately when both should count. `npm test` checks catalog coverage, accepted typos, normalization, and rejection of unrelated names.
+
 ## Activity recording
 
 The browser creates two pseudonymous identifiers:

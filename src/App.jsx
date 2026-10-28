@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { PORTRAITS, getAvailablePortraitIndices, getClueIndices } from './portraits'
 import { CATEGORIES } from './portraitCategories'
 import { getNextLayerIndex } from './layerOrder'
+import { isCorrectAnswer } from './answerMatching'
 import CategoryWelcome from './CategoryWelcome'
 import PortraitArtwork from './PortraitArtwork'
 import {
@@ -69,14 +70,6 @@ function getNextUnviewedPortraitIndex(
     availableIndices[Math.floor(Math.random() * availableIndices.length)]
   viewedPortraits.add(nextIndex)
   return nextIndex
-}
-
-function normalizeAnswer(value) {
-  return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
 }
 
 function Icon({ name = 'arrow', ...props }) {
@@ -610,10 +603,7 @@ function Game({ deviceId, initialCategoryId }) {
       return
     }
 
-    const normalizedGuess = normalizeAnswer(trimmedAnswer)
-    const correct = portrait.aliases.some(
-      (alias) => normalizeAnswer(alias) === normalizedGuess,
-    )
+    const correct = isCorrectAnswer(trimmedAnswer, portrait.aliases)
     const outcome = correct ? 'correct' : 'incorrect'
 
     completeGameSession(sessionId, {
