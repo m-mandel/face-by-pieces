@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { PORTRAITS, getAvailablePortraitIndices, getClueIndices } from './portraits'
 import { CATEGORIES } from './portraitCategories'
+import { getNextLayerIndex } from './layerOrder'
+import CategoryWelcome from './CategoryWelcome'
 import PortraitArtwork from './PortraitArtwork'
 import {
   completeGameSession,
@@ -11,92 +13,32 @@ import {
   startGameSession,
 } from './telemetry'
 
-const STYLES = [
-  {
-    id: 'line-art',
-    label: 'Line art',
-    shortLabel: 'Line art',
-    description: 'Hand-drawn portraits revealed one layer at a time.',
-  },
-  {
-    id: 'abstract',
-    label: 'Abstract color',
-    shortLabel: 'Color',
-    description:
-      'Layered color portraits that begin with their base silhouette.',
-  },
-  {
-    id: 'vector-lines',
-    label: 'Vector lines',
-    shortLabel: 'Lines',
-    description:
-      'Minimal line portraits with clues that shuffle independently.',
-  },
-]
-
-// Apply the new default once to existing browsers, then remember style choices.
-const STYLE_STORAGE_KEY = 'face-by-pieces-style-v2'
+const STYLE_ID = 'line-art'
+const MODE_ID = 'progressive'
 const CATEGORY_STORAGE_KEY = 'face-by-pieces-category'
 
-const MODES = [
-  {
-    id: 'one',
-    label: '1 clue',
-    shortLabel: '1 clue',
-    headerLabel: '1 clue',
-    count: 1,
-    description: 'Hard mode. One random piece at a time.',
-  },
-  {
-    id: 'two',
-    label: '2 clues',
-    shortLabel: '2 clues',
-    headerLabel: '2 clues',
-    count: 2,
-    description: 'A balanced pair of clues.',
-  },
-  {
-    id: 'four',
-    label: '4 clues',
-    shortLabel: '4 clues',
-    headerLabel: '4 clues',
-    count: 4,
-    description: 'More of the face, right from the start.',
-  },
-  {
-    id: 'progressive',
-    label: 'Sequence',
-    shortLabel: 'Sequence',
-    headerLabel: 'Sequence',
-    count: 1,
-    description: 'Start with one piece and add another each refresh.',
-  },
-]
-
-function sampleIndices(indices, count, previous = []) {
-  const safeCount = Math.min(count, indices.length)
-  const previousKey = [...previous].sort((a, b) => a - b).join(',')
-  let selection = []
-
-  for (let attempt = 0; attempt < 12; attempt += 1) {
-    const pool = [...indices]
-    for (let index = pool.length - 1; index > 0; index -= 1) {
-      const swapIndex = Math.floor(Math.random() * (index + 1))
-      ;[pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]]
-    }
-    selection = pool.slice(0, safeCount)
-    if (selection.sort((a, b) => a - b).join(',') !== previousKey) break
-  }
-
-  return selection
+function getCategoryOptions() {
+  return CATEGORIES.map((option) => ({
+    ...option,
+    disabled: getAvailablePortraitIndices(STYLE_ID, option.id).length === 0,
+  }))
 }
 
-function getRandomPortraitIndex(
-  currentIndex = -1,
-  styleId = 'line-art',
-  categoryId = 'all',
-) {
-  const eligibleIndices = getAvailablePortraitIndices(styleId, categoryId)
+function getPlayerCategory(deviceId) {
+  const savedCategory = localStorage.getItem(`${CATEGORY_STORAGE_KEY}:${deviceId}`)
+  return CATEGORIES.some((category) => category.id === savedCategory) &&
+    getAvailablePortraitIndices(STYLE_ID, savedCategory).length > 0
+    ? savedCategory
+    : null
+}
+
+function savePlayerCategory(deviceId, categoryId) {
+  localStorage.setItem(`${CATEGORY_STORAGE_KEY}:${deviceId}`, categoryId)
+  localStorage.setItem(CATEGORY_STORAGE_KEY, categoryId)
+}
+
+function getRandomPortraitIndex(currentIndex = -1, categoryId = 'all') {
+  const eligibleIndices = getAvailablePortraitIndices(STYLE_ID, categoryId)
   const availableIndices = eligibleIndices.filter(
     (index) => index !== currentIndex,
   )
@@ -107,10 +49,9 @@ function getRandomPortraitIndex(
 function getNextUnviewedPortraitIndex(
   currentIndex,
   viewedPortraits,
-  styleId,
   categoryId,
 ) {
-  const stylePortraitIndices = getAvailablePortraitIndices(styleId, categoryId)
+  const stylePortraitIndices = getAvailablePortraitIndices(STYLE_ID, categoryId)
   let availableIndices = stylePortraitIndices.filter(
     (index) => !viewedPortraits.has(index),
   )
@@ -212,8 +153,6 @@ function SettingsDropdown({
   onToggle,
   onClose,
   onSelect,
-  legacyLink = false,
-  alignEnd = false,
 }) {
   const id = useId()
   const rootRef = useRef(null)
@@ -294,7 +233,7 @@ function SettingsDropdown({
         <div
           ref={menuRef}
           id={`${id}-menu`}
-          className={`settings-dropdown-menu${alignEnd ? ' align-end' : ''}`}
+          className="settings-dropdown-menu"
           role="menu"
           aria-labelledby={`${id}-button`}
           onKeyDown={handleMenuKeyDown}
@@ -315,14 +254,6 @@ function SettingsDropdown({
               {value === option.id && <Icon name="check" />}
             </button>
           ))}
-          {legacyLink && (
-            <>
-              <div role="separator" />
-              <a href="?ux=legacy" role="menuitem" tabIndex={-1}>
-                Legacy interface <span aria-hidden="true">↗</span>
-              </a>
-            </>
-          )}
         </div>
       )}
     </div>
@@ -432,7 +363,6 @@ function TimelineReplay({ elementHistory, onBack, artwork, styleId }) {
 
 function ResultScreen({
   elementHistory,
-  mode,
   portrait,
   artwork,
   refreshCount,
@@ -503,7 +433,7 @@ function ResultScreen({
               </span>
             </div>
             <div>
-              <strong>{mode.shortLabel}</strong>
+              <strong>Sequence</strong>
               <span>reveal mode</span>
             </div>
           </div>
@@ -529,27 +459,35 @@ function ResultScreen({
 }
 
 export default function App() {
-  const [styleId, setStyleId] = useState(() => {
-    const savedStyle = localStorage.getItem(STYLE_STORAGE_KEY)
-    return STYLES.some((style) => style.id === savedStyle)
-      ? savedStyle
-      : 'line-art'
-  })
-  const [categoryId, setCategoryId] = useState(() => {
-    const savedCategory = localStorage.getItem(CATEGORY_STORAGE_KEY)
-    return CATEGORIES.some((category) => category.id === savedCategory) &&
-      getAvailablePortraitIndices(styleId, savedCategory).length > 0
-      ? savedCategory
-      : 'all'
-  })
+  const [deviceId] = useState(getOrCreateDeviceId)
+  const [startingCategoryId, setStartingCategoryId] = useState(() =>
+    getPlayerCategory(deviceId),
+  )
+
+  const handleStart = (categoryId) => {
+    if (getAvailablePortraitIndices(STYLE_ID, categoryId).length === 0) return
+    savePlayerCategory(deviceId, categoryId)
+    setStartingCategoryId(categoryId)
+  }
+
+  if (startingCategoryId === null) {
+    return (
+      <main className="ink-app">
+        <Masthead />
+        <CategoryWelcome options={getCategoryOptions()} onStart={handleStart} />
+      </main>
+    )
+  }
+
+  return <Game deviceId={deviceId} initialCategoryId={startingCategoryId} />
+}
+
+function Game({ deviceId, initialCategoryId }) {
+  const [categoryId, setCategoryId] = useState(initialCategoryId)
   const [portraitIndex, setPortraitIndex] = useState(() =>
-    getRandomPortraitIndex(-1, styleId, categoryId),
+    getRandomPortraitIndex(-1, categoryId),
   )
   const viewedPortraitsRef = useRef(new Set([portraitIndex]))
-  const [modeId, setModeId] = useState(
-    () => localStorage.getItem('face-by-pieces-mode') || 'two',
-  )
-  const [deviceId] = useState(getOrCreateDeviceId)
   const [sessionId, setSessionId] = useState(createSessionId)
   const [visibleIndices, setVisibleIndices] = useState([])
   const [elementHistory, setElementHistory] = useState([])
@@ -567,12 +505,11 @@ export default function App() {
   )
   const [result, setResult] = useState(null)
   const [submittedAnswer, setSubmittedAnswer] = useState('')
-  const [openMenu, setOpenMenu] = useState(null)
+  const [categoriesOpen, setCategoriesOpen] = useState(false)
+  const promptRef = useRef(null)
 
   const portrait = PORTRAITS[portraitIndex]
-  const mode = MODES.find((option) => option.id === modeId) || MODES[1]
-  const style = STYLES.find((option) => option.id === styleId) || STYLES[0]
-  const artwork = portrait.styles[style.id]
+  const artwork = portrait.styles[STYLE_ID]
   const drawingRequestId = `${sessionId}:${refreshCount}:${loadAttempt}`
   const currentDrawingState =
     drawingState?.artwork === artwork &&
@@ -580,21 +517,22 @@ export default function App() {
     drawingState.requestId === drawingRequestId
       ? drawingState.status
       : 'loading'
-  const drawingReady =
-    style.id !== 'line-art' || currentDrawingState === 'ready'
-  const drawingFailed =
-    style.id === 'line-art' && currentDrawingState === 'error'
+  const drawingReady = currentDrawingState === 'ready'
+  const drawingFailed = currentDrawingState === 'error'
   const drawingLoading = !drawingReady && !drawingFailed
   const clueIndices = useMemo(
-    () => getClueIndices(artwork, style.id),
-    [artwork, style.id],
+    () => getClueIndices(artwork, STYLE_ID),
+    [artwork],
   )
-  const progressiveComplete =
-    mode.id === 'progressive' && visibleIndices.length >= clueIndices.length
+  const sequenceComplete = visibleIndices.length >= clueIndices.length
   const usesOnScreenKeyboard = window.matchMedia(
     '(hover: none) and (pointer: coarse)',
   ).matches
   const keyboardLayoutActive = answerFocused && usesOnScreenKeyboard
+
+  useEffect(() => {
+    promptRef.current?.focus({ preventScroll: true })
+  }, [])
 
   useEffect(() => {
     const viewport = window.visualViewport
@@ -625,14 +563,14 @@ export default function App() {
       sessionId,
       deviceId,
       portraitId: portrait.id,
-      mode: mode.id,
-      style: style.id,
+      mode: MODE_ID,
+      style: STYLE_ID,
     })
-  }, [deviceId, mode.id, portrait.id, sessionId, style.id])
+  }, [deviceId, portrait.id, sessionId])
 
   useEffect(() => {
-    const initialIndices =
-      style.id === 'abstract' ? [] : sampleIndices(clueIndices, mode.count)
+    const firstIndex = getNextLayerIndex(artwork.layers)
+    const initialIndices = firstIndex === null ? [] : [firstIndex]
     setVisibleIndices(initialIndices)
     setElementHistory([initialIndices])
     recordInitialElements(sessionId, initialIndices)
@@ -641,29 +579,18 @@ export default function App() {
     setAnswerError('')
     setResult(null)
     setSubmittedAnswer('')
-  }, [mode.id, mode.count, portraitIndex, sessionId, style.id, clueIndices])
+  }, [artwork, portraitIndex, sessionId])
 
   const handleRefresh = () => {
     if (drawingFailed) {
       setLoadAttempt((attempt) => attempt + 1)
       return
     }
-    if (!drawingReady || progressiveComplete) return
+    if (!drawingReady || sequenceComplete) return
 
-    let nextVisibleIndices
-    if (mode.id === 'progressive') {
-      const hidden = clueIndices.filter(
-        (index) => !visibleIndices.includes(index),
-      )
-      const nextIndex = hidden[Math.floor(Math.random() * hidden.length)]
-      nextVisibleIndices = [...visibleIndices, nextIndex]
-    } else {
-      nextVisibleIndices = sampleIndices(
-        clueIndices,
-        mode.count,
-        visibleIndices,
-      )
-    }
+    const nextIndex = getNextLayerIndex(artwork.layers, visibleIndices)
+    if (nextIndex === null) return
+    const nextVisibleIndices = [...visibleIndices, nextIndex]
 
     recordSessionEvent(sessionId, 'clue_refreshed', {
       refreshNumber: refreshCount + 1,
@@ -700,79 +627,49 @@ export default function App() {
     setAnswerFocused(false)
   }
 
-  const handleChangeSettings = (nextMode, nextStyle, nextCategory = categoryId) => {
-    if (getAvailablePortraitIndices(nextStyle, nextCategory).length === 0) return
-    localStorage.setItem('face-by-pieces-mode', nextMode)
-    localStorage.setItem(STYLE_STORAGE_KEY, nextStyle)
-    localStorage.setItem(CATEGORY_STORAGE_KEY, nextCategory)
-    const modeChanged = nextMode !== mode.id
-    const styleChanged = nextStyle !== style.id
-    const categoryChanged = nextCategory !== categoryId
-    if (modeChanged)
-      recordSessionEvent(sessionId, 'mode_changed', {
-        from: mode.id,
-        to: nextMode,
-      })
-    if (styleChanged)
-      recordSessionEvent(sessionId, 'style_changed', {
-        from: style.id,
-        to: nextStyle,
-      })
-    if (categoryChanged)
-      recordSessionEvent(sessionId, 'category_changed', {
-        from: categoryId,
-        to: nextCategory,
-      })
-    if (modeChanged || styleChanged || categoryChanged) {
-      const nextPortraitIndex = styleChanged || categoryChanged
-        ? getRandomPortraitIndex(portraitIndex, nextStyle, nextCategory)
-        : portraitIndex
-      viewedPortraitsRef.current = new Set([nextPortraitIndex])
-      setSessionId(createSessionId())
-      setPortraitIndex(nextPortraitIndex)
-      setModeId(nextMode)
-      setStyleId(nextStyle)
-      setCategoryId(nextCategory)
-    }
+  const handleChangeCategory = (nextCategory) => {
+    if (
+      nextCategory === categoryId ||
+      getAvailablePortraitIndices(STYLE_ID, nextCategory).length === 0
+    ) return
+    savePlayerCategory(deviceId, nextCategory)
+    recordSessionEvent(sessionId, 'category_changed', {
+      from: categoryId,
+      to: nextCategory,
+    })
+    const nextPortraitIndex = getRandomPortraitIndex(portraitIndex, nextCategory)
+    viewedPortraitsRef.current = new Set([nextPortraitIndex])
+    setSessionId(createSessionId())
+    setPortraitIndex(nextPortraitIndex)
+    setCategoryId(nextCategory)
   }
 
   const handlePlayAgain = () => {
     const nextPortraitIndex = getNextUnviewedPortraitIndex(
       portraitIndex,
       viewedPortraitsRef.current,
-      style.id,
       categoryId,
     )
     setSessionId(createSessionId())
     setPortraitIndex(nextPortraitIndex)
   }
 
-  const handleToggleMenu = (menu) => {
-    if (openMenu !== menu) {
-      recordSessionEvent(
-        sessionId,
-        menu === 'style'
-          ? 'style_opened'
-          : menu === 'category'
-            ? 'category_opened'
-            : 'settings_opened',
-      )
-    }
-    setOpenMenu((current) => (current === menu ? null : menu))
+  const handleToggleCategories = () => {
+    if (!categoriesOpen) recordSessionEvent(sessionId, 'category_opened')
+    setCategoriesOpen((current) => !current)
   }
 
-  const handleCloseMenu = useCallback(() => setOpenMenu(null), [])
+  const handleCloseMenu = useCallback(() => setCategoriesOpen(false), [])
 
   if (result) {
     return (
       <ResultScreen
         elementHistory={elementHistory}
-        mode={mode}
         portrait={portrait}
         artwork={artwork}
         refreshCount={refreshCount}
         result={result}
-        styleId={style.id}
+        styleId={STYLE_ID}
         submittedAnswer={submittedAnswer}
         onPlayAgain={handlePlayAgain}
       />
@@ -790,44 +687,18 @@ export default function App() {
       <header className="guess-header">
         <div className="guess-settings">
           <SettingsDropdown
-            label="Mode"
-            options={MODES}
-            value={mode.id}
-            open={openMenu === 'mode'}
-            onToggle={() => handleToggleMenu('mode')}
-            onClose={handleCloseMenu}
-            onSelect={(nextMode) => handleChangeSettings(nextMode, style.id)}
-          />
-          <SettingsDropdown
-            label="Style"
-            options={STYLES.map((option) => ({
-              ...option,
-              disabled: getAvailablePortraitIndices(option.id, categoryId).length === 0,
-            }))}
-            value={style.id}
-            open={openMenu === 'style'}
-            onToggle={() => handleToggleMenu('style')}
-            onClose={handleCloseMenu}
-            onSelect={(nextStyle) => handleChangeSettings(mode.id, nextStyle)}
-            legacyLink
-          />
-          <SettingsDropdown
             label="Categories"
-            options={CATEGORIES.map((option) => ({
-              ...option,
-              disabled: getAvailablePortraitIndices(style.id, option.id).length === 0,
-            }))}
+            options={getCategoryOptions()}
             value={categoryId}
-            open={openMenu === 'category'}
-            onToggle={() => handleToggleMenu('category')}
+            open={categoriesOpen}
+            onToggle={handleToggleCategories}
             onClose={handleCloseMenu}
-            onSelect={(nextCategory) =>
-              handleChangeSettings(mode.id, style.id, nextCategory)
-            }
-            alignEnd
+            onSelect={handleChangeCategory}
           />
         </div>
-        <h1 id="game-prompt">Guess Who?</h1>
+        <h1 id="game-prompt" ref={promptRef} tabIndex={-1}>
+          Guess Who?
+        </h1>
         <p className="guess-step-counter" role="status" aria-atomic="true">
           <span>Step</span> {refreshCount + 1}
         </p>
@@ -836,7 +707,7 @@ export default function App() {
         <PortraitArtwork
           className="portrait-artwork"
           artwork={artwork}
-          styleId={style.id}
+          styleId={STYLE_ID}
           visibleIndices={visibleIndices}
           label={`A partially revealed portrait with ${visibleIndices.length} visible clues`}
           fitToInk
@@ -852,13 +723,13 @@ export default function App() {
             if (answerFocused) event.preventDefault()
           }}
           onClick={handleRefresh}
-          disabled={drawingLoading || (progressiveComplete && !drawingFailed)}
+          disabled={drawingLoading || (sequenceComplete && !drawingFailed)}
           title={
             drawingLoading
               ? 'Loading drawing…'
               : drawingFailed
                 ? 'Retry loading drawing'
-                : progressiveComplete
+                : sequenceComplete
                   ? 'All clues revealed'
                   : 'Next clue'
           }
@@ -867,22 +738,18 @@ export default function App() {
               ? 'Loading drawing'
               : drawingFailed
                 ? 'Retry loading drawing'
-                : progressiveComplete
+                : sequenceComplete
                   ? 'All portrait elements revealed'
-                  : mode.id === 'progressive'
-                    ? 'Reveal the next portrait clue'
-                    : 'Refresh portrait clues'
+                  : 'Reveal the next portrait clue'
           }
         >
           <Icon
             name={
               drawingFailed
                 ? 'refresh'
-                : progressiveComplete
+                : sequenceComplete
                   ? 'check'
-                  : mode.id === 'progressive'
-                    ? 'arrow'
-                    : 'refresh'
+                  : 'arrow'
             }
           />
         </button>

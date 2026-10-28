@@ -1,6 +1,6 @@
 # Face by Pieces
 
-A mobile-first portrait guessing game built from transparent PNG layers in `data/line-art/`, with legacy SVG styles and server-side session and activity recording.
+A mobile-first portrait guessing game built from transparent PNG layers in `data/line-art/`, with one layer revealed at a time and server-side session and activity recording.
 
 ## Run locally
 
@@ -30,46 +30,44 @@ The server hosts the production build from `dist/` and listens on `PORT` (8080 b
 
 ## Interface designs
 
-The default **Ink** interface shows **Guess Who?** with **Mode**, **Style**, and **Categories** dropdown buttons together at the top left and a simple step counter at the top right. The counter starts at **Step 1**, increases with each clue refresh, and resets for a new round. On narrow screens, the centered title sits just below these controls. The sketch fills the space between the header and the bottom controls: a round clue button and a name field with a submit button. The Mode menu offers 1, 2, or 4 clues and Sequence mode. The Style menu offers Line art, Abstract color, and Vector lines. Selecting an option applies it immediately and starts a fresh round when the choice changes.
+The **Ink** interface shows **Guess Who?** with a **Categories** dropdown at the top left and a simple step counter at the top right. Every round uses **Sequence** mode and **Line art**; there are no mode or style selectors. The counter starts at **Step 1**, increases with each clue reveal, and resets for a new round. On narrow screens, the centered title sits just below these controls. The sketch fills the space between the header and the bottom controls: a round clue button and a name field with a submit button.
 
-Categories filters subjects using their `labels.json`: **All** includes every subject; **Politics** matches `politics`; **Science & Technology** matches `science` or `technology`; **Film, Art & Music** matches `film`, `art`, or `music`; **Sports** matches `sports`. The choice is remembered and applies across styles and subsequent rounds. Changing category starts a new round and resets the non-repeating deck within that category. Subjects with multiple labels can appear in multiple groups, while unlabeled subjects remain available under All. Combinations with no matching portraits are disabled. Line-art labels also apply to the same subject's older styles; subjects found only in older styles use `data/vector-lines/<subject>/labels.json`.
+Players without a saved category choice for their browser's player ID first see a **Choose a category** popup. **All** is selected by default, and **Start playing** confirms the choice. No portrait loads or game session starts until confirmation. This popup appears once per player ID, rather than once per round; a new ID or cleared browser storage shows it again. Existing players also see it once when they first use this version. The modal supports keyboard selection and keeps focus inside until the player starts.
 
-Line-art portraits fit the combined visible bounds of every eligible PNG layer. Transparent and pure-white margins are removed from the displayed viewport, with one source pixel of padding for edge antialiasing. All layers retain their original alignment, and the viewport stays fixed as clues change. `npm run dev:client` and `npm run build` automatically generate a small bounds manifest from the PNGs, so the browser only needs to download and decode the selected clues before displaying the drawing. The clue button is disabled and grey while those layers load. After the first clue, the current drawing stays visible until the next layer set is ready. Sequence additions fade in over 180 ms while existing layers stay in place; shuffled sets swap together without a blank frame. The fade respects reduced-motion preferences. A failed download keeps the current drawing visible and enables a retry of the same step without adding to the step count. Original PNG files remain unchanged.
+Categories filters line-art subjects using their `labels.json`: **All** includes every line-art subject; **Politics** matches `politics`; **Science & Technology** matches `science` or `technology`; **Film, Art & Music** matches `film`, `art`, or `music`; **Sports** matches `sports`. The choice is remembered per player ID for subsequent rounds and reloads, including changes made with the Categories dropdown during play. Changing category starts a new round and resets the non-repeating deck within that category. Subjects with multiple labels can appear in multiple groups, while unlabeled subjects remain available under All. Categories with no matching line-art portraits are disabled.
+
+Line-art portraits fit the combined visible bounds of every eligible PNG layer. Transparent and pure-white margins are removed from the displayed viewport, with one source pixel of padding for edge antialiasing. All layers retain their original alignment, and the viewport stays fixed as clues change. `npm run dev:client` and `npm run build` automatically generate a small bounds manifest from the PNGs, so the browser only needs to download and decode the selected clues before displaying the drawing. The clue button is disabled and grey while those layers load. After the first clue, the current drawing stays visible until the next layer set is ready. Sequence additions fade in over 180 ms while existing layers stay in place. The fade respects reduced-motion preferences. A failed download keeps the current drawing visible and enables a retry of the same step without adding to the step count. Original PNG files remain unchanged.
 
 After the first clue appears, the remaining eligible layers for that portrait preload in the background, two at a time with low fetch priority. Selecting a layer that is still preloading shares its pending download. Background failures do not interrupt play, and selecting a failed layer retries it normally. Changing portraits or leaving the view stops queued preloads; in-flight downloads may finish, and decoded images are not retained by the loader after completion.
 
 The generated manifest in `src/generated/` is ignored by Git and recreated during each build using the pure JavaScript `pngjs` development dependency. Run `npm run prepare:portraits` (or restart the dev client) after changing PNGs or pixel-count reports during development. If the layer list no longer matches the manifest, the browser measures that portrait as a fallback; unusable bounds retain the full image canvas.
 
-The previous colorful interface is preserved in `src/legacy/LegacyApp.jsx` and `src/legacy/styles.css`. Each interface loads its own stylesheet and uses the same portrait catalog, layer filter, and activity API.
+The previous colorful interface remains archived in `src/legacy/LegacyApp.jsx` and `src/legacy/styles.css`. It is no longer loaded by the app. Old `?ux=legacy` links and saved interface, mode, or style preferences open the same Sequence/Line art game.
 
-- Open `/?ux=ink` to use the new design.
-- Open `/?ux=legacy` to restore the original design.
-- The Style dropdown links to the legacy interface; the legacy Game mode panel links back to Ink.
+## Sequence mode
 
-The choice is remembered in `face-by-pieces-ux` local storage. Switching interfaces reloads the app and starts a new round. Portrait style and game mode preferences carry across. To change the default for everyone, update the fallback in `src/main.jsx`.
+Reveal order is configured in [`src/config/layer-order.json`](src/config/layer-order.json). Groups run from top to bottom. Within each group, `"ordered"` follows the listed order and `"random"` chooses an unrevealed layer at random until that group is exhausted:
 
-## Game modes
+1. `face-outline`
+2. Random core features: `eyes`, `eyebrows`, `nose`, `mouth`, `hair`, `ears`
+3. `facial-hair`, then `eyewear`
+4. `face-details`
+5. `body`
+6. `headwear`, `earrings`, `necklace`, `face-piercings`, `accessories`, `unassigned`
 
-- **1 clue:** shows one random layer per refresh.
-- **2 clues:** shows two random layers per refresh.
-- **4 clues:** shows four random layers per refresh.
-- **Sequence:** begins with one layer and reveals one additional random layer on every refresh, until all eligible layers are visible. This is called **Progressive** in the legacy interface and retains the `progressive` ID in saved preferences and activity records.
+The first clue follows the same order as subsequent clues. Missing layers and layers excluded by the pixel-count filter are skipped; a portrait without an eligible outline starts in the first available group. New layer names omitted from the configuration are revealed last, in catalog order. Edit the JSON and rebuild to change the deployed order. `npm test` checks the selection rules and coverage of every current portrait.
 
-## Portrait styles
+**Next clue** adds one previously hidden layer and keeps every existing layer visible. Once all eligible layers are revealed, the clue button is disabled. The catalog's layer indices and stacking order remain unchanged for activity recording and replay. Activity records use the existing `progressive` mode ID and `line-art` style ID.
 
-- **Line art (default):** automatically discovers portraits in `data/line-art/`. Each PNG in a portrait's `transparent/` folder is a separate layer, aligned at its original aspect ratio over a pure white background. Layers with fewer than 200 pixels in `report.json`'s `class_pixels` are excluded entirely, including random clues, progressive mode, the full reveal, and replay. Exactly 200 pixels is eligible. Files in `masks/`, `white/`, and contact sheets are not used.
-- **Vector lines (legacy):** uses the portraits in `data/vector-lines/` and preserves the original SVG element reveal behavior.
-- **Abstract color (legacy):** uses the available portraits in `data/svg/`. The background, face base, and clothing base are always visible at step 0. Face and clothing details share one clue pool, retaining the existing SVG grouping behavior.
+## Line-art portraits
+
+The game automatically discovers portraits in `data/line-art/`. Each PNG in a portrait's `transparent/` folder is a separate layer, aligned at its original aspect ratio over a pure white background. Layers with fewer than 200 pixels in `report.json`'s `class_pixels` are excluded entirely, including the initial clue, subsequent clues, the full reveal, and replay. Exactly 200 pixels is eligible. Files in `masks/`, `white/`, and contact sheets are not used. Archived SVG assets remain in `data/vector-lines/` and `data/svg/`, but subjects without line-art layers are not selected for play.
 
 Add new line-art portraits as `data/line-art/<person-name>/transparent/*.png`, alongside their `report.json` pixel counts. All layers for a portrait should share the same canvas dimensions. Both hyphens and underscores in folder names are supported. The catalog is discovered at build time; rebuild the app and restart the server after adding portraits. If a report or a layer's pixel count is missing, that PNG remains eligible.
 
-Line art is also the starting style for browsers with an older saved SVG preference. Subsequent choices are remembered under the updated style preference key.
-
-Changing style starts a new round, resets the non-repeating face deck, and limits the deck to portraits available in that style.
-
 Steps are counted during the round and displayed on the result screen. Each refresh is a step, and the submitted guess is the final step. Submitting an incorrect name ends the round and reveals the answer; the next portrait can then be started with **Play another face**.
 
-After a round, **Retrace your clues** opens **Round Replay**, with a large portrait between a compact header and the playback controls. Every frame uses **Step 1**, **Step 2**, and so on, matching the in-game counter in all modes, including Sequence. The caption shows the current step, total steps, and cumulative number of unique clues shown through the selected step. Repeated clues count once, and moving backward excludes clues first shown at later steps. The portrait still displays the original layer set for that step. Players can select a numbered step or move backward or forward. The back button returns to the reveal screen, where **Play another face** starts the next round.
+After a round, **Retrace your clues** opens **Round Replay**, with a large portrait between a compact header and the playback controls. Every frame uses **Step 1**, **Step 2**, and so on, matching the in-game counter. The caption shows the current step, total steps, and cumulative number of unique clues shown through the selected step. Moving backward excludes clues first shown at later steps. The portrait displays the original layer set for that step. Players can select a numbered step or move backward or forward. The back button returns to the reveal screen, where **Play another face** starts the next round.
 
 ## Activity recording
 

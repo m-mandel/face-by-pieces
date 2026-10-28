@@ -1,0 +1,35 @@
+{
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": ["face-outline"]
+    },
+    {
+      "order": "random",
+      "layers": ["eyes", "eyebrows", "nose", "mouth", "hair", "ears"]
+    },
+    {
+      "order": "ordered",
+      "layers": ["facial-hair", "eyewear"]
+    },
+    {
+      "order": "ordered",
+      "layers": ["face-details"]
+    },
+    {
+      "order": "ordered",
+      "layers": ["body"]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear",
+        "earrings",
+        "necklace",
+        "face-piercings",
+        "accessories",
+        "unassigned"
+      ]
+    }
+  ]
+}
