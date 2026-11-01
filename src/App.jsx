@@ -476,14 +476,75 @@ export default function App() {
 }
 
 function Game({ deviceId, initialCategoryId }) {
-  const [categoryId, setCategoryId] = useState(initialCategoryId)
-  const [portraitIndex, setPortraitIndex] = useState(() =>
-    getRandomPortraitIndex(-1, categoryId),
-  )
+  const [round, setRound] = useState(() => ({
+    categoryId: initialCategoryId,
+    portraitIndex: getRandomPortraitIndex(-1, initialCategoryId),
+    sessionId: createSessionId(),
+  }))
+  const { categoryId, portraitIndex, sessionId } = round
   const viewedPortraitsRef = useRef(new Set([portraitIndex]))
-  const [sessionId, setSessionId] = useState(createSessionId)
-  const [visibleIndices, setVisibleIndices] = useState([])
-  const [elementHistory, setElementHistory] = useState([])
+
+  const handleChangeCategory = (nextCategory) => {
+    if (
+      nextCategory === categoryId ||
+      getAvailablePortraitIndices(STYLE_ID, nextCategory).length === 0
+    ) return
+    savePlayerCategory(deviceId, nextCategory)
+    recordSessionEvent(sessionId, 'category_changed', {
+      from: categoryId,
+      to: nextCategory,
+    })
+    const nextPortraitIndex = getRandomPortraitIndex(portraitIndex, nextCategory)
+    viewedPortraitsRef.current = new Set([nextPortraitIndex])
+    setRound({
+      sessionId: createSessionId(),
+      portraitIndex: nextPortraitIndex,
+      categoryId: nextCategory,
+    })
+  }
+
+  const handlePlayAgain = () => {
+    const nextPortraitIndex = getNextUnviewedPortraitIndex(
+      portraitIndex,
+      viewedPortraitsRef.current,
+      categoryId,
+    )
+    setRound({
+      sessionId: createSessionId(),
+      portraitIndex: nextPortraitIndex,
+      categoryId,
+    })
+  }
+
+  // A new session mounts fresh state before rendering, even if the same face
+  // repeats. Results, clues, and pending artwork loads belong to one round only.
+  return (
+    <GameRound
+      key={sessionId}
+      {...round}
+      deviceId={deviceId}
+      onChangeCategory={handleChangeCategory}
+      onPlayAgain={handlePlayAgain}
+    />
+  )
+}
+
+function GameRound({
+  deviceId,
+  categoryId,
+  portraitIndex,
+  sessionId,
+  onChangeCategory,
+  onPlayAgain,
+}) {
+  const portrait = PORTRAITS[portraitIndex]
+  const artwork = portrait.styles[STYLE_ID]
+  const [initialIndices] = useState(() => {
+    const firstIndex = getNextLayerIndex(artwork.layers)
+    return firstIndex === null ? [] : [firstIndex]
+  })
+  const [visibleIndices, setVisibleIndices] = useState(initialIndices)
+  const [elementHistory, setElementHistory] = useState(() => [initialIndices])
   const [refreshCount, setRefreshCount] = useState(0)
   const [drawingState, setDrawingState] = useState(null)
   const [loadAttempt, setLoadAttempt] = useState(0)
@@ -501,8 +562,6 @@ function Game({ deviceId, initialCategoryId }) {
   const [categoriesOpen, setCategoriesOpen] = useState(false)
   const promptRef = useRef(null)
 
-  const portrait = PORTRAITS[portraitIndex]
-  const artwork = portrait.styles[STYLE_ID]
   const drawingRequestId = `${sessionId}:${refreshCount}:${loadAttempt}`
   const currentDrawingState =
     drawingState?.artwork === artwork &&
@@ -562,17 +621,8 @@ function Game({ deviceId, initialCategoryId }) {
   }, [deviceId, portrait.id, sessionId])
 
   useEffect(() => {
-    const firstIndex = getNextLayerIndex(artwork.layers)
-    const initialIndices = firstIndex === null ? [] : [firstIndex]
-    setVisibleIndices(initialIndices)
-    setElementHistory([initialIndices])
     recordInitialElements(sessionId, initialIndices)
-    setRefreshCount(0)
-    setAnswer('')
-    setAnswerError('')
-    setResult(null)
-    setSubmittedAnswer('')
-  }, [artwork, portraitIndex, sessionId])
+  }, [initialIndices, sessionId])
 
   const handleRefresh = () => {
     if (drawingFailed) {
@@ -617,33 +667,6 @@ function Game({ deviceId, initialCategoryId }) {
     setAnswerFocused(false)
   }
 
-  const handleChangeCategory = (nextCategory) => {
-    if (
-      nextCategory === categoryId ||
-      getAvailablePortraitIndices(STYLE_ID, nextCategory).length === 0
-    ) return
-    savePlayerCategory(deviceId, nextCategory)
-    recordSessionEvent(sessionId, 'category_changed', {
-      from: categoryId,
-      to: nextCategory,
-    })
-    const nextPortraitIndex = getRandomPortraitIndex(portraitIndex, nextCategory)
-    viewedPortraitsRef.current = new Set([nextPortraitIndex])
-    setSessionId(createSessionId())
-    setPortraitIndex(nextPortraitIndex)
-    setCategoryId(nextCategory)
-  }
-
-  const handlePlayAgain = () => {
-    const nextPortraitIndex = getNextUnviewedPortraitIndex(
-      portraitIndex,
-      viewedPortraitsRef.current,
-      categoryId,
-    )
-    setSessionId(createSessionId())
-    setPortraitIndex(nextPortraitIndex)
-  }
-
   const handleToggleCategories = () => {
     if (!categoriesOpen) recordSessionEvent(sessionId, 'category_opened')
     setCategoriesOpen((current) => !current)
@@ -661,7 +684,7 @@ function Game({ deviceId, initialCategoryId }) {
         result={result}
         styleId={STYLE_ID}
         submittedAnswer={submittedAnswer}
-        onPlayAgain={handlePlayAgain}
+        onPlayAgain={onPlayAgain}
       />
     )
   }
@@ -683,7 +706,7 @@ function Game({ deviceId, initialCategoryId }) {
             open={categoriesOpen}
             onToggle={handleToggleCategories}
             onClose={handleCloseMenu}
-            onSelect={handleChangeCategory}
+            onSelect={onChangeCategory}
           />
         </div>
         <h1 id="game-prompt" ref={promptRef} tabIndex={-1}>
