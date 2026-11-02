@@ -127,6 +127,7 @@
   text-align: center;
 }
 .session-results .round-stats {
+  grid-template-columns: 1fr;
   margin: 12px 0 0;
   padding: 12px 0;
   border-bottom: 0;

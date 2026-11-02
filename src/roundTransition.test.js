@@ -44,6 +44,91 @@ test('five-face sessions reveal only completed results and reset cleanly', async
     { category: 'all', cached: true, switchFinalCategory: true },
   ]
 
+  for (const dismissal of ['button', 'escape']) {
+    await t.test(`first visit shows instructions before category selection (${dismissal})`, async (t) => {
+      const deviceId = 'new-player'
+      const seenKey = `face-by-pieces-instructions:${deviceId}`
+      const values = new Map([['face-by-pieces-device-id', deviceId]])
+      const requests = []
+      const modalCalls = []
+      t.mock.method(globalThis, 'fetch', async (url, options) => {
+        requests.push({ url, body: JSON.parse(options.body) })
+        return { ok: true }
+      })
+      const globals = {
+        window: { innerHeight: 800, matchMedia: () => ({ matches: false }), addEventListener() {}, removeEventListener() {} },
+        document: { body: { classList: { toggle() {}, remove() {} } }, addEventListener() {}, removeEventListener() {} },
+        localStorage: { getItem: (key) => values.get(key) ?? null, setItem: (key, value) => values.set(key, value) },
+        requestAnimationFrame: () => 1,
+        cancelAnimationFrame() {},
+        Image: class { decode() { return Promise.resolve() } },
+      }
+      const originals = Object.fromEntries(Object.keys(globals).map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]))
+      Object.assign(globalThis, globals)
+      let renderer
+      const mount = () => act(async () => {
+        renderer = create(React.createElement(App), {
+          createNodeMock: () => ({
+            showModal() { modalCalls.push('open') },
+            close() { modalCalls.push('close') },
+            focus() {},
+          }),
+        })
+      })
+      try {
+        await mount()
+        assert.equal(textOf(renderer.root.findByType('h1')), 'How to play')
+        assert.match(textOf(renderer.root.findByType('dialog')), /Guess each face in as few steps as possible/)
+        assert.equal(renderer.root.findAllByType('input').length, 0, 'category selection is not shown behind the instructions')
+        assert.equal(requests.length, 0, 'instructions do not start game telemetry')
+        assert.deepEqual(modalCalls, ['open'])
+        if (dismissal === 'button') {
+          await act(async () => {
+            renderer.root.findAllByType('button').find((button) => textOf(button).trim() === 'Choose a category').props.onClick()
+          })
+        } else {
+          let prevented = false
+          await act(async () => {
+            renderer.root.findByType('dialog').props.onCancel({ preventDefault() { prevented = true } })
+          })
+          assert.ok(prevented, 'Escape advances setup instead of leaving a dismissed dialog')
+        }
+        assert.equal(values.get(seenKey), '1')
+        assert.equal(textOf(renderer.root.findByType('h1')), 'Choose a category')
+        assert.equal(requests.length, 0, 'choosing a category still does not start a game')
+        assert.deepEqual(modalCalls, ['open', 'close', 'open'])
+
+        await act(async () => renderer.unmount())
+        await mount()
+        assert.equal(textOf(renderer.root.findByType('h1')), 'Choose a category', 'reloading midway does not repeat instructions')
+        assert.equal(requests.length, 0)
+        await act(async () => {
+          renderer.root.findAllByType('input').find((input) => input.props.value === 'politics').props.onChange()
+        })
+        assert.equal(requests.length, 0, 'selecting a radio option waits for Start playing')
+        await act(async () => { renderer.root.findByType('form').props.onSubmit({ preventDefault() {} }) })
+        assert.equal(textOf(renderer.root.findByType('h1')), 'Guess Who?')
+        assert.equal(renderer.root.findAllByType('dialog').length, 0)
+        assert.equal(values.get(`face-by-pieces-category:${deviceId}`), 'politics')
+        const sessions = requests.filter(({ url }) => url === '/api/sessions')
+        assert.equal(sessions.length, 1)
+        assert.equal(sessions[0].body.portraitId, '0', 'the first face uses the chosen category')
+
+        await act(async () => renderer.unmount())
+        values.delete(seenKey)
+        await mount()
+        assert.equal(textOf(renderer.root.findByType('h1')), 'Guess Who?', 'an existing category bypasses instructions even without the new seen flag')
+        assert.equal(renderer.root.findAllByType('dialog').length, 0)
+      } finally {
+        await act(async () => renderer?.unmount())
+        for (const [key, descriptor] of Object.entries(originals)) {
+          if (descriptor) Object.defineProperty(globalThis, key, descriptor)
+          else delete globalThis[key]
+        }
+      }
+    })
+  }
+
   for (const { category, cached, switchCategory, switchFinalCategory } of scenarios) {
     await t.test(`${category}, images ${cached ? 'cached' : 'pending'}${switchCategory ? ', change category after two faces' : ''}${switchFinalCategory ? ', preserve last unplayed face on category change' : ''}`, async (t) => {
       if (switchFinalCategory) t.mock.method(Math, 'random', () => 0)
@@ -233,11 +318,11 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         assert.deepEqual(stars.map((node) => node.props.className.split(' ').includes('filled')), [false, true, false, false, true],
           'each star records the corresponding face outcome')
         assert.deepEqual(renderer.root.findAllByType('h3').map(textOf), visited.map(({ name }) => name))
-        const activeRetrace = findButtonByText('Retrace your clues')
+        const activeRetrace = findButtonByText('Retrace your steps')
         assert.equal(activeRetrace.parent.props.className, 'result-details')
         assert.ok(renderer.root.findAllByType('article')[0].findAllByType('button').includes(activeRetrace),
           'retrace belongs to the active face card')
-        assert.equal(renderer.root.findByType('footer').findAllByType('button').some((button) => textOf(button).trim() === 'Retrace your clues'), false,
+        assert.equal(renderer.root.findByType('footer').findAllByType('button').some((button) => textOf(button).trim() === 'Retrace your steps'), false,
           'the persistent footer contains no per-face replay action')
 
         const assertPosition = (number) => {
@@ -264,7 +349,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         window.matchMedia = () => ({ matches: false })
         await act(async () => { findButton('Show face 2').props.onClick() })
         assertPosition(2)
-        await act(async () => { findButtonByText('Retrace your clues').props.onClick() })
+        await act(async () => { findButtonByText('Retrace your steps').props.onClick() })
         const replayArtwork = () => renderer.root.findAll((node) => node.props.className === 'portrait-artwork replay-portrait' && node.props.artwork)[0]
         assert.equal(replayArtwork().props.artwork, savedRounds[1].artwork)
         assert.deepEqual(replayArtwork().props.visibleIndices, savedRounds[1].elementHistory[0])
@@ -279,7 +364,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
           carousel().props.onScroll({ currentTarget: { scrollLeft: 960, clientWidth: 320 } })
         })
         assertPosition(4)
-        await act(async () => { findButtonByText('Retrace your clues').props.onClick() })
+        await act(async () => { findButtonByText('Retrace your steps').props.onClick() })
         assert.equal(replayArtwork().props.artwork, savedRounds[3].artwork)
         assert.deepEqual(replayArtwork().props.visibleIndices, savedRounds[3].elementHistory[0])
         await act(async () => { findButton('Back to the reveal').props.onClick() })

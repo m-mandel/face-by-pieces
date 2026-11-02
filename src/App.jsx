@@ -4,6 +4,7 @@ import { CATEGORIES } from './portraitCategories'
 import { getNextLayerIndex } from './layerOrder'
 import { isCorrectAnswer } from './answerMatching'
 import CategoryWelcome from './CategoryWelcome'
+import GameInstructions from './GameInstructions'
 import PortraitArtwork from './PortraitArtwork'
 import './sessionResults.css'
 import {
@@ -19,6 +20,7 @@ const STYLE_ID = 'line-art'
 const MODE_ID = 'progressive'
 const SESSION_LENGTH = 5
 const CATEGORY_STORAGE_KEY = 'face-by-pieces-category'
+const INSTRUCTIONS_STORAGE_KEY = 'face-by-pieces-instructions'
 
 function getCategoryOptions() {
   return CATEGORIES.map((option) => ({
@@ -461,8 +463,7 @@ function SessionResults({ rounds, onPlayAgain }) {
                 >
                   <div className="result-layout">
                     <div className="result-heading">
-                      <span className="eyebrow">The reveal</span>
-                      <h2>{isCorrect ? 'Correct' : isSkipped ? 'Now you know' : 'Incorrect'}</h2>
+                      <h2>{isCorrect ? 'Correct' : 'Incorrect'}</h2>
                     </div>
                     <figure className="result-figure">
                       <PortraitFrame
@@ -472,7 +473,7 @@ function SessionResults({ rounds, onPlayAgain }) {
                         label={`Portrait of ${round.portrait.name}`}
                       />
                       <figcaption>
-                        <span className="eyebrow">The face behind the lines</span>
+                        <span className="eyebrow">The answer is</span>
                         <h3>{round.portrait.name}</h3>
                       </figcaption>
                     </figure>
@@ -481,18 +482,13 @@ function SessionResults({ rounds, onPlayAgain }) {
                         {isSkipped ? (
                           'You weren’t sure about this one. Now you know!'
                         ) : (
-                          <>You guessed <strong>{round.submittedAnswer}</strong>.{' '}
-                            {isCorrect ? 'Nicely spotted.' : 'Another face to remember.'}</>
+                          <>You guessed <strong>{round.submittedAnswer}</strong></>
                         )}
                       </p>
                       <div className="round-stats" aria-label="Round statistics">
                         <div>
                           <strong>{String(round.refreshCount + 1).padStart(2, '0')}</strong>
                           <span>{round.refreshCount === 0 ? 'clue' : 'clues'} used</span>
-                        </div>
-                        <div>
-                          <strong>{index + 1} / {rounds.length}</strong>
-                          <span>face in this session</span>
                         </div>
                       </div>
                       <button
@@ -501,7 +497,7 @@ function SessionResults({ rounds, onPlayAgain }) {
                         onClick={() => setTimelineOpen(true)}
                       >
                         <Icon name="replay" />
-                        Retrace your clues
+                        Retrace your steps
                       </button>
                     </div>
                   </div>
@@ -545,6 +541,15 @@ export default function App() {
   const [startingCategoryId, setStartingCategoryId] = useState(() =>
     getPlayerCategory(deviceId),
   )
+  const [instructionsSeen, setInstructionsSeen] = useState(() =>
+    startingCategoryId !== null ||
+    localStorage.getItem(`${INSTRUCTIONS_STORAGE_KEY}:${deviceId}`) === '1',
+  )
+
+  const handleInstructionsContinue = () => {
+    localStorage.setItem(`${INSTRUCTIONS_STORAGE_KEY}:${deviceId}`, '1')
+    setInstructionsSeen(true)
+  }
 
   const handleStart = (categoryId) => {
     if (getAvailablePortraitIndices(STYLE_ID, categoryId).length === 0) return
@@ -556,7 +561,11 @@ export default function App() {
     return (
       <main className="ink-app">
         <Masthead />
-        <CategoryWelcome options={getCategoryOptions()} onStart={handleStart} />
+        {instructionsSeen ? (
+          <CategoryWelcome options={getCategoryOptions()} onStart={handleStart} />
+        ) : (
+          <GameInstructions onContinue={handleInstructionsContinue} />
+        )}
       </main>
     )
   }

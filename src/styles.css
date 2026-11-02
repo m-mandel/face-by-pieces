@@ -647,6 +647,23 @@ h1:focus {
   width: 100%;
   justify-content: center;
 }
+.instructions-dialog .instructions-goal {
+  margin-top: 20px;
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 1.4;
+}
+.instructions-steps {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.instructions-steps li {
+  padding-left: 4px;
+}
 
 /* The game dedicates all space between its title and controls to the sketch. */
 .game-shell {
