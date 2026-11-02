@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { PORTRAITS, getAvailablePortraitIndices, getClueIndices } from './portraits'
 import { CATEGORIES } from './portraitCategories'
 import { getNextLayerIndex } from './layerOrder'
 import { isCorrectAnswer } from './answerMatching'
 import CategoryWelcome from './CategoryWelcome'
 import PortraitArtwork from './PortraitArtwork'
+import './sessionResults.css'
 import {
   completeGameSession,
   createSessionId,
@@ -16,6 +17,7 @@ import {
 
 const STYLE_ID = 'line-art'
 const MODE_ID = 'progressive'
+const SESSION_LENGTH = 5
 const CATEGORY_STORAGE_KEY = 'face-by-pieces-category'
 
 function getCategoryOptions() {
@@ -47,29 +49,15 @@ function getRandomPortraitIndex(currentIndex = -1, categoryId = 'all') {
   return availableIndices[Math.floor(Math.random() * availableIndices.length)]
 }
 
-function getNextUnviewedPortraitIndex(
-  currentIndex,
-  viewedPortraits,
-  categoryId,
-) {
-  const stylePortraitIndices = getAvailablePortraitIndices(STYLE_ID, categoryId)
-  let availableIndices = stylePortraitIndices.filter(
-    (index) => !viewedPortraits.has(index),
+function getNextSessionPortraitIndex(currentIndex, completedRounds, categoryId) {
+  const played = new Set(completedRounds.map((round) => round.portraitIndex))
+  const unplayed = getAvailablePortraitIndices(STYLE_ID, categoryId).filter(
+    (index) => !played.has(index),
   )
-
-  if (availableIndices.length === 0) {
-    viewedPortraits.clear()
-    availableIndices = stylePortraitIndices.filter(
-      (index) => index !== currentIndex,
-    )
-  }
-
-  if (availableIndices.length === 0) return currentIndex
-
-  const nextIndex =
-    availableIndices[Math.floor(Math.random() * availableIndices.length)]
-  viewedPortraits.add(nextIndex)
-  return nextIndex
+  const available = unplayed.filter((index) => index !== currentIndex)
+  if (available.length === 0 && unplayed.length > 0) return unplayed[0]
+  if (available.length === 0) return getRandomPortraitIndex(currentIndex, categoryId)
+  return available[Math.floor(Math.random() * available.length)]
 }
 
 function Icon({ name = 'arrow', ...props }) {
@@ -253,7 +241,8 @@ function SettingsDropdown({
   )
 }
 
-function TimelineReplay({ elementHistory, onBack, artwork, styleId }) {
+function TimelineReplay({ elementHistory, onBack, artwork, styleId, embedded = false }) {
+  const Container = embedded ? 'section' : 'main'
   const [currentStep, setCurrentStep] = useState(0)
   const buttonRefs = useRef([])
   const titleRef = useRef(null)
@@ -277,7 +266,7 @@ function TimelineReplay({ elementHistory, onBack, artwork, styleId }) {
   }, [currentStep])
 
   return (
-    <main className="ink-app replay-screen">
+    <Container className="ink-app replay-screen">
       <header className="replay-header">
         <button
           className="replay-icon-button"
@@ -350,104 +339,202 @@ function TimelineReplay({ elementHistory, onBack, artwork, styleId }) {
           </button>
         </div>
       </div>
-    </main>
+    </Container>
   )
 }
 
-function ResultScreen({
-  elementHistory,
-  portrait,
-  artwork,
-  refreshCount,
-  result,
-  styleId,
-  submittedAnswer,
-  onPlayAgain,
-}) {
+function SessionResults({ rounds, onPlayAgain }) {
+  const [activeIndex, setActiveIndex] = useState(0)
   const [timelineOpen, setTimelineOpen] = useState(false)
-  const isCorrect = result === 'correct'
-  const isRevealed = result === 'revealed'
-  const titleRef = useRef(null)
+  const carouselRef = useRef(null)
+  const headingRef = useRef(null)
+  const navigationTargetRef = useRef(null)
+  const activeIndexRef = useRef(activeIndex)
+  activeIndexRef.current = activeIndex
+  const activeRound = rounds[activeIndex]
+  const correctCount = rounds.filter((round) => round.result === 'correct').length
+
   useEffect(() => {
-    if (!timelineOpen) titleRef.current?.focus()
+    headingRef.current?.focus({ preventScroll: true })
+  }, [])
+
+  useLayoutEffect(() => {
+    const alignSlide = () => {
+      const carousel = carouselRef.current
+      if (carousel && !timelineOpen) {
+        navigationTargetRef.current = null
+        carousel.scrollTo({ left: carousel.clientWidth * activeIndexRef.current, behavior: 'instant' })
+      }
+    }
+    alignSlide()
+    window.addEventListener('resize', alignSlide)
+    return () => window.removeEventListener('resize', alignSlide)
   }, [timelineOpen])
 
-  if (timelineOpen)
-    return (
-      <TimelineReplay
-        elementHistory={elementHistory}
-        onBack={() => setTimelineOpen(false)}
-        artwork={artwork}
-        styleId={styleId}
-      />
-    )
+  const showFace = (index) => {
+    const nextIndex = Math.max(0, Math.min(rounds.length - 1, index))
+    const carousel = carouselRef.current
+    navigationTargetRef.current = nextIndex
+    carousel?.scrollTo({
+      left: carousel.clientWidth * nextIndex,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    })
+    setActiveIndex(nextIndex)
+  }
 
   return (
-    <main
-      className={`ink-app result-screen ${result}`}
-    >
-      <Masthead caption="The whole picture, at last." />
-      <div className="result-layout">
-        <div className="result-heading">
-          <span className="eyebrow">The reveal</span>
-          <h1 ref={titleRef} tabIndex={-1}>
-            {isCorrect ? 'Correct' : isRevealed ? 'Now you know' : 'Incorrect'}
-          </h1>
-        </div>
-        <figure className="result-figure">
-          <PortraitFrame
-            className="result-portrait"
-            artwork={artwork}
-            styleId={styleId}
-            label={`Portrait of ${portrait.name}`}
-          />
-          <figcaption>
-            <span className="eyebrow">The face behind the lines</span>
-            <h2>{portrait.name}</h2>
-          </figcaption>
-        </figure>
-        <div className="result-details">
-          <p className="result-message">
-            {isCorrect ? (
-              'A few pieces were all you needed. Nicely spotted.'
-            ) : isRevealed ? (
-              'There’s always another face to discover. Try the next one!'
-            ) : (
-              <>
-                You guessed <strong>{submittedAnswer}</strong>. There’s always
-                another face to discover.
-              </>
-            )}
-          </p>
-          <div className="round-stats" aria-label="Round statistics">
-            <div>
-              <strong>{String(refreshCount + 1).padStart(2, '0')}</strong>
-              <span>
-                {refreshCount + 1 === 1 ? 'step' : 'steps'} to{' '}
-                {isRevealed ? 'the reveal' : 'your guess'}
-              </span>
+    <main className="ink-app result-screen session-results">
+      <Masthead caption="Five faces. The whole picture." />
+      <h1 className="visually-hidden" ref={headingRef} tabIndex={-1}>Your session results</h1>
+      <div className="session-body">
+        <section
+          className="session-gallery"
+          hidden={timelineOpen}
+          aria-label="Face results gallery"
+          aria-roledescription="carousel"
+          onKeyDown={(event) => {
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+              event.preventDefault()
+              showFace(activeIndex + (event.key === 'ArrowRight' ? 1 : -1))
+            }
+          }}
+        >
+          <nav className="results-navigation" aria-label="Browse face results">
+            <button
+              className="replay-icon-button"
+              aria-label="Previous face"
+              disabled={activeIndex === 0}
+              onClick={() => showFace(activeIndex - 1)}
+            ><Icon name="back" /></button>
+            <div className="results-position-group">
+              <p className="result-position" role="status" aria-live="polite" aria-atomic="true">
+                Face {activeIndex + 1} of {rounds.length}
+              </p>
+              <div className="results-dots" role="group" aria-label="Choose a face">
+                {rounds.map((round, index) => (
+                  <button
+                    key={round.sessionId}
+                    type="button"
+                    aria-label={`Show face ${index + 1}`}
+                    aria-current={index === activeIndex ? 'true' : undefined}
+                    onClick={() => showFace(index)}
+                  ><span /></button>
+                ))}
+              </div>
             </div>
-            <div>
-              <strong>Sequence</strong>
-              <span>reveal mode</span>
-            </div>
-          </div>
-          <button className="primary-button" onClick={onPlayAgain}>
-            Play another face
-            <Icon />
-          </button>
-          <button
-            className="text-button replay-button"
-            onClick={() => setTimelineOpen(true)}
+            <button
+              className="replay-icon-button"
+              aria-label="Next face"
+              disabled={activeIndex === rounds.length - 1}
+              onClick={() => showFace(activeIndex + 1)}
+            ><Icon /></button>
+          </nav>
+          <div
+            ref={carouselRef}
+            className="results-carousel"
+            tabIndex={0}
+            aria-label="Swipe left or right to review your faces"
+            onPointerDown={() => { navigationTargetRef.current = null }}
+            onWheel={() => { navigationTargetRef.current = null }}
+            onScroll={(event) => {
+              const { scrollLeft, clientWidth } = event.currentTarget
+              if (clientWidth > 0) {
+                const target = navigationTargetRef.current
+                if (target !== null && Math.abs(scrollLeft - clientWidth * target) > 2) return
+                navigationTargetRef.current = null
+                const index = Math.round(scrollLeft / clientWidth)
+                setActiveIndex(Math.max(0, Math.min(rounds.length - 1, index)))
+              }
+            }}
           >
-            <Icon name="replay" />
-            Retrace your clues
-          </button>
-        </div>
+            {rounds.map((round, index) => {
+              const isCorrect = round.result === 'correct'
+              const isSkipped = round.result === 'revealed'
+              return (
+                <article
+                  key={round.sessionId}
+                  className={`result-slide ${round.result}`}
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`Face ${index + 1} of ${rounds.length}`}
+                  aria-hidden={index !== activeIndex}
+                >
+                  <div className="result-layout">
+                    <div className="result-heading">
+                      <span className="eyebrow">The reveal</span>
+                      <h2>{isCorrect ? 'Correct' : isSkipped ? 'Now you know' : 'Incorrect'}</h2>
+                    </div>
+                    <figure className="result-figure">
+                      <PortraitFrame
+                        className="result-portrait"
+                        artwork={round.artwork}
+                        styleId={round.styleId}
+                        label={`Portrait of ${round.portrait.name}`}
+                      />
+                      <figcaption>
+                        <span className="eyebrow">The face behind the lines</span>
+                        <h3>{round.portrait.name}</h3>
+                      </figcaption>
+                    </figure>
+                    <div className="result-details">
+                      <p className="result-message">
+                        {isSkipped ? (
+                          'You weren’t sure about this one. Now you know!'
+                        ) : (
+                          <>You guessed <strong>{round.submittedAnswer}</strong>.{' '}
+                            {isCorrect ? 'Nicely spotted.' : 'Another face to remember.'}</>
+                        )}
+                      </p>
+                      <div className="round-stats" aria-label="Round statistics">
+                        <div>
+                          <strong>{String(round.refreshCount + 1).padStart(2, '0')}</strong>
+                          <span>{round.refreshCount === 0 ? 'clue' : 'clues'} used</span>
+                        </div>
+                        <div>
+                          <strong>{index + 1} / {rounds.length}</strong>
+                          <span>face in this session</span>
+                        </div>
+                      </div>
+                      <button
+                        className="text-button replay-button"
+                        disabled={index !== activeIndex}
+                        onClick={() => setTimelineOpen(true)}
+                      >
+                        <Icon name="replay" />
+                        Retrace your clues
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+        </section>
+        {timelineOpen && (
+          <TimelineReplay
+            key={activeRound.sessionId}
+            elementHistory={activeRound.elementHistory}
+            artwork={activeRound.artwork}
+            styleId={activeRound.styleId}
+            onBack={() => setTimelineOpen(false)}
+            embedded
+          />
+        )}
       </div>
-      <footer className="page-footer">
-        <span>One face. Many little discoveries.</span>
-        <span>Face by Pieces</span>
+      <footer className="session-actions">
+        <div className="session-score" role="img" aria-label={`${correctCount} out of ${SESSION_LENGTH} correct`}>
+          <div className="session-stars" aria-hidden="true">
+            {rounds.map((round) => (
+              <svg key={round.sessionId} className={`session-star ${round.result === 'correct' ? 'filled' : ''}`} viewBox="0 0 24 24">
+                <path d="m12 2.5 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.4l6.5-1Z" />
+              </svg>
+            ))}
+          </div>
+          <p aria-hidden="true">{correctCount} of {SESSION_LENGTH} correct</p>
+        </div>
+        <button className="primary-button" onClick={onPlayAgain}>
+          Play again <Icon />
+        </button>
       </footer>
     </main>
   )
@@ -482,9 +569,9 @@ function Game({ deviceId, initialCategoryId }) {
     categoryId: initialCategoryId,
     portraitIndex: getRandomPortraitIndex(-1, initialCategoryId),
     sessionId: createSessionId(),
+    completedRounds: [],
   }))
-  const { categoryId, portraitIndex, sessionId } = round
-  const viewedPortraitsRef = useRef(new Set([portraitIndex]))
+  const { categoryId, portraitIndex, sessionId, completedRounds } = round
 
   const handleChangeCategory = (nextCategory) => {
     if (
@@ -496,37 +583,58 @@ function Game({ deviceId, initialCategoryId }) {
       from: categoryId,
       to: nextCategory,
     })
-    const nextPortraitIndex = getRandomPortraitIndex(portraitIndex, nextCategory)
-    viewedPortraitsRef.current = new Set([nextPortraitIndex])
     setRound({
       sessionId: createSessionId(),
-      portraitIndex: nextPortraitIndex,
+      portraitIndex: getNextSessionPortraitIndex(portraitIndex, completedRounds, nextCategory),
       categoryId: nextCategory,
+      completedRounds,
     })
+  }
+
+  const handleComplete = (completedRound) => {
+    const completed = [...completedRounds, completedRound]
+    const nextRound = {
+      ...round,
+      completedRounds: completed,
+      ...(completed.length < SESSION_LENGTH && {
+        sessionId: createSessionId(),
+        portraitIndex: getNextSessionPortraitIndex(portraitIndex, completed, categoryId),
+      }),
+    }
+    // Ignore a repeated submission or a callback from a face already replaced.
+    setRound((current) =>
+      current.sessionId !== completedRound.sessionId ||
+      current.completedRounds.length >= SESSION_LENGTH
+        ? current
+        : nextRound,
+    )
   }
 
   const handlePlayAgain = () => {
-    const nextPortraitIndex = getNextUnviewedPortraitIndex(
-      portraitIndex,
-      viewedPortraitsRef.current,
-      categoryId,
-    )
     setRound({
       sessionId: createSessionId(),
-      portraitIndex: nextPortraitIndex,
+      portraitIndex: getRandomPortraitIndex(portraitIndex, categoryId),
       categoryId,
+      completedRounds: [],
     })
   }
 
-  // A new session mounts fresh state before rendering, even if the same face
-  // repeats. Results, clues, and pending artwork loads belong to one round only.
+  if (completedRounds.length === SESSION_LENGTH) {
+    return <SessionResults rounds={completedRounds} onPlayAgain={handlePlayAgain} />
+  }
+
+  // Every face mounts fresh state before rendering. Completed answers stay in
+  // the parent until all five faces are finished and the gallery can be shown.
   return (
     <GameRound
       key={sessionId}
-      {...round}
+      categoryId={categoryId}
+      portraitIndex={portraitIndex}
+      sessionId={sessionId}
+      roundNumber={completedRounds.length + 1}
       deviceId={deviceId}
       onChangeCategory={handleChangeCategory}
-      onPlayAgain={handlePlayAgain}
+      onComplete={handleComplete}
     />
   )
 }
@@ -537,7 +645,8 @@ function GameRound({
   portraitIndex,
   sessionId,
   onChangeCategory,
-  onPlayAgain,
+  roundNumber,
+  onComplete,
 }) {
   const portrait = PORTRAITS[portraitIndex]
   const artwork = portrait.styles[STYLE_ID]
@@ -559,8 +668,7 @@ function GameRound({
   const [viewportOffset, setViewportOffset] = useState(() =>
     Math.round(window.visualViewport?.offsetTop || 0),
   )
-  const [result, setResult] = useState(null)
-  const [submittedAnswer, setSubmittedAnswer] = useState('')
+  const finishedRef = useRef(false)
   const [categoriesOpen, setCategoriesOpen] = useState(false)
   const promptRef = useRef(null)
 
@@ -579,6 +687,8 @@ function GameRound({
     [artwork],
   )
   const sequenceComplete = visibleIndices.length >= clueIndices.length
+  const allCluesRevealed = sequenceComplete && drawingReady
+  const showSkip = allCluesRevealed && !answerFocused
   const usesOnScreenKeyboard = window.matchMedia(
     '(hover: none) and (pointer: coarse)',
   ).matches
@@ -648,15 +758,25 @@ function GameRound({
   }
 
   const finishRound = (outcome, submittedAnswer) => {
+    if (finishedRef.current) return
+    finishedRef.current = true
     completeGameSession(sessionId, {
       outcome: outcome === 'revealed' ? 'incorrect' : outcome,
       submittedAnswer,
       visibleElements: visibleIndices.length,
     })
-    setSubmittedAnswer(submittedAnswer)
-    setResult(outcome)
-    setAnswerError('')
-    setAnswerFocused(false)
+    onComplete({
+      sessionId,
+      portraitIndex,
+      categoryId,
+      portrait,
+      artwork,
+      styleId: STYLE_ID,
+      elementHistory,
+      refreshCount,
+      result: outcome,
+      submittedAnswer,
+    })
   }
 
   const handleSubmit = (event) => {
@@ -672,6 +792,7 @@ function GameRound({
   }
 
   const handleRevealAnswer = () => {
+    if (!allCluesRevealed || finishedRef.current) return
     recordSessionEvent(sessionId, 'answer_revealed', { reason: 'unknown' })
     finishRound('revealed', '')
   }
@@ -683,20 +804,6 @@ function GameRound({
 
   const handleCloseMenu = useCallback(() => setCategoriesOpen(false), [])
 
-  if (result) {
-    return (
-      <ResultScreen
-        elementHistory={elementHistory}
-        portrait={portrait}
-        artwork={artwork}
-        refreshCount={refreshCount}
-        result={result}
-        styleId={STYLE_ID}
-        submittedAnswer={submittedAnswer}
-        onPlayAgain={onPlayAgain}
-      />
-    )
-  }
 
   return (
     <main
@@ -718,9 +825,14 @@ function GameRound({
             onSelect={onChangeCategory}
           />
         </div>
-        <h1 id="game-prompt" ref={promptRef} tabIndex={-1}>
-          Guess Who?
-        </h1>
+        <div className="guess-title">
+          <p className="guess-face-counter" role="status">
+            Face {roundNumber} of {SESSION_LENGTH}
+          </p>
+          <h1 id="game-prompt" ref={promptRef} tabIndex={-1}>
+            Guess Who?
+          </h1>
+        </div>
         <p className="guess-step-counter" role="status" aria-atomic="true">
           <span>Step</span> {refreshCount + 1}
         </p>
@@ -769,14 +881,14 @@ function GameRound({
             name={
               drawingFailed
                 ? 'refresh'
-                : sequenceComplete
+                : allCluesRevealed
                   ? 'check'
                   : 'arrow'
             }
           />
         </button>
         <form
-          className={`guess-form ${answerFocused ? 'is-editing' : ''}`}
+          className={`guess-form ${answerFocused ? 'is-editing' : ''} ${showSkip ? 'has-skip' : ''}`}
           onSubmit={handleSubmit}
           noValidate
         >
@@ -821,7 +933,7 @@ function GameRound({
                 </button>
               )}
             </div>
-            {!answerFocused && (
+            {showSkip && (
               <button
                 type="button"
                 className="reveal-answer-button"

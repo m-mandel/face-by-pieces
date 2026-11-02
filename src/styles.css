@@ -677,8 +677,10 @@ h1:focus {
   align-items: center;
   gap: 6px;
 }
-.guess-header h1 {
+.guess-title {
   grid-area: title;
+}
+.guess-header h1 {
   font-size: clamp(25px, 7vw, 31px);
   line-height: 1.2;
   letter-spacing: -0.04em;
@@ -851,11 +853,11 @@ h1:focus {
 }
 .guess-answer-row {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 8px;
 }
-.guess-form.is-editing .guess-answer-row {
-  grid-template-columns: minmax(0, 1fr);
+.guess-form.has-skip .guess-answer-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .guess-input {
   display: flex;
