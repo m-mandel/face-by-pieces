@@ -38,7 +38,11 @@ test('new rounds never commit a result or inherited clues', async (t) => {
           ['face-by-pieces-device-id', 'test-device'],
           ['face-by-pieces-category:test-device', category],
         ])
-        t.mock.method(globalThis, 'fetch', async () => ({ ok: true }))
+        const requests = []
+        t.mock.method(globalThis, 'fetch', async (url, options) => {
+          requests.push({ url, body: JSON.parse(options.body) })
+          return { ok: true }
+        })
         const globals = {
           window: { innerHeight: 800, matchMedia: () => ({ matches: false }), addEventListener() {}, removeEventListener() {} },
           document: { body: { classList: { toggle() {}, remove() {} } } },
@@ -53,6 +57,11 @@ test('new rounds never commit a result or inherited clues', async (t) => {
         Object.assign(globalThis, globals)
         let renderer
         const commits = []
+        const findButton = (label) => renderer.root.findAllByType('button').find((button) => button.props['aria-label'] === label)
+        const assertIdleControls = () => {
+          assert.equal(findButton('Submit guess'), undefined, 'submit is hidden until editing starts')
+          assert.ok(findButton("I don't know :("), 'reveal is available outside editing')
+        }
         try {
           await act(async () => {
             renderer = create(React.createElement(React.Profiler, {
@@ -61,14 +70,72 @@ test('new rounds never commit a result or inherited clues', async (t) => {
               },
             }, React.createElement(App)))
           })
-          for (let round = 0; round < 3; round++) {
-            await act(async () => {
-              renderer.root.findByType('input').props.onChange({ target: { value: 'wrong answer' } })
+          for (const action of ['incorrect', 'correct', 'reveal-empty', 'reveal-typed']) {
+            const round = renderer.root.findAll((node) => node.props.portraitIndex != null && node.props.sessionId)[0]
+            const name = ['First Person', 'Second Person'][round.props.portraitIndex]
+            const revealsAnswer = action.startsWith('reveal-')
+            const answer = action === 'correct' ? name : action === 'reveal-empty' ? '' : 'wrong answer'
+            assertIdleControls()
+            if (action !== 'reveal-empty') {
+              await act(async () => {
+                renderer.root.findByType('input').parent.props.onFocus()
+              })
+              assert.ok(findButton('Submit guess'), 'focusing the input exposes submit')
+              assert.equal(findButton("I don't know :("), undefined, 'reveal is hidden during editing')
+              await act(async () => {
+                renderer.root.findByType('input').props.onChange({ target: { value: answer } })
+              })
+              const submitTarget = {}
+              await act(async () => {
+                renderer.root.findByType('input').parent.props.onBlur({
+                  currentTarget: { contains: (target) => target === submitTarget },
+                  relatedTarget: submitTarget,
+                })
+              })
+              assert.ok(findButton('Submit guess'), 'moving focus to submit keeps editing open')
+              assert.equal(findButton("I don't know :("), undefined)
+              let preventedPointerBlur = false
+              findButton('Submit guess').props.onPointerDown({ preventDefault() { preventedPointerBlur = true } })
+              assert.ok(preventedPointerBlur, 'pressing submit preserves focus until submission')
+              if (revealsAnswer) {
+                await act(async () => {
+                  renderer.root.findByType('input').parent.props.onBlur({
+                    currentTarget: { contains: () => false },
+                    relatedTarget: null,
+                  })
+                })
+                assertIdleControls()
+                assert.equal(renderer.root.findByType('input').props.value, answer, 'leaving editing preserves the typed answer')
+              }
+            }
+            if (revealsAnswer) {
+              const revealButton = findButton("I don't know :(")
+              assert.ok(revealButton, 'the reveal action is available without a guess')
+              assert.equal(revealButton.props.type, 'button')
+              await act(async () => { revealButton.props.onClick() })
+            } else {
+              await act(async () => {
+                renderer.root.findByType('form').props.onSubmit({ preventDefault() {} })
+              })
+            }
+            const result = JSON.stringify(renderer.toJSON())
+            assert.match(result, /result-screen/)
+            assert.deepEqual(renderer.root.findByType('h2').children, [name])
+            assert.ok(renderer.root.findAll((node) => node.props.fitToInk && node.props.visibleIndices === null && node.props.label === `Portrait of ${name}`).length > 0,
+              'the result requests the complete portrait')
+            if (revealsAnswer) {
+              assert.deepEqual(renderer.root.findByType('h1').children, ['Now you know'])
+              assert.doesNotMatch(result, /You guessed|wrong answer|Type a name before you guess/)
+            } else {
+              assert.deepEqual(renderer.root.findByType('h1').children, [action === 'correct' ? 'Correct' : 'Incorrect'])
+            }
+            const completion = requests.filter(({ url }) => url.endsWith('/complete')).at(-1)
+            assert.equal(completion.url, `/api/sessions/${round.props.sessionId}/complete`)
+            assert.deepEqual(completion.body, {
+              outcome: action === 'correct' ? 'correct' : 'incorrect',
+              submittedAnswer: revealsAnswer ? '' : answer,
+              visibleElements: 1,
             })
-            await act(async () => {
-              renderer.root.findByType('form').props.onSubmit({ preventDefault() {} })
-            })
-            assert.match(JSON.stringify(renderer.toJSON()), /result-screen/)
             commits.length = 0
             await act(async () => {
               renderer.root.findAllByType('button').find((button) => button.props.className === 'primary-button').props.onClick()
@@ -81,6 +148,7 @@ test('new rounds never commit a result or inherited clues', async (t) => {
               assert.match(snapshot, /Guess Who\?/)
             }
             assert.equal(renderer.root.findByType('input').props.value, '')
+            assertIdleControls()
             const artwork = renderer.root.findAll((node) => node.props.roundId != null && node.props.artwork)[0]
             assert.equal(artwork.props.visibleIndices.length, 1)
           }

@@ -674,6 +674,7 @@ h1:focus {
   display: flex;
   grid-area: settings;
   justify-self: start;
+  align-items: center;
   gap: 6px;
 }
 .guess-header h1 {
@@ -807,13 +808,13 @@ h1:focus {
   flex-direction: column;
   align-items: center;
   flex: 0 0 auto;
-  gap: 9px;
+  gap: 16px;
   padding: 7px 10px calc(10px + env(safe-area-inset-bottom));
 }
 .next-clue-button {
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   padding: 0;
   place-items: center;
   color: var(--ink);
@@ -842,14 +843,23 @@ h1:focus {
   text-align: center;
 }
 .next-clue-button svg {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
 }
 .guess-form {
-  width: min(100%, 480px);
+  width: 100%;
+}
+.guess-answer-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.guess-form.is-editing .guess-answer-row {
+  grid-template-columns: minmax(0, 1fr);
 }
 .guess-input {
   display: flex;
+  min-width: 0;
   align-items: center;
   gap: 8px;
   height: 52px;
@@ -901,6 +911,23 @@ h1:focus {
 .guess-error:empty {
   display: none;
 }
+.reveal-answer-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 10px 9px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  background: #eeeeec;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+}
+.reveal-answer-button:hover:not(:disabled) {
+  color: var(--ink);
+  background: #e2e2df;
+}
 .guess-input.has-error {
   border-style: dashed;
 }
@@ -926,11 +953,11 @@ h1:focus {
   font-size: 25px;
 }
 .answer-focused .guess-controls {
-  gap: 6px;
+  gap: 14px;
   padding-top: 4px;
   padding-bottom: max(6px, env(safe-area-inset-bottom));
 }
 .answer-focused .next-clue-button {
-  width: 42px;
-  height: 42px;
+  width: 50px;
+  height: 50px;
 }

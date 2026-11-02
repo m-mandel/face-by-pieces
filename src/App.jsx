@@ -366,6 +366,7 @@ function ResultScreen({
 }) {
   const [timelineOpen, setTimelineOpen] = useState(false)
   const isCorrect = result === 'correct'
+  const isRevealed = result === 'revealed'
   const titleRef = useRef(null)
   useEffect(() => {
     if (!timelineOpen) titleRef.current?.focus()
@@ -383,14 +384,14 @@ function ResultScreen({
 
   return (
     <main
-      className={`ink-app result-screen ${isCorrect ? 'correct' : 'incorrect'}`}
+      className={`ink-app result-screen ${result}`}
     >
       <Masthead caption="The whole picture, at last." />
       <div className="result-layout">
         <div className="result-heading">
           <span className="eyebrow">The reveal</span>
           <h1 ref={titleRef} tabIndex={-1}>
-            {isCorrect ? 'Correct' : 'Incorrect'}
+            {isCorrect ? 'Correct' : isRevealed ? 'Now you know' : 'Incorrect'}
           </h1>
         </div>
         <figure className="result-figure">
@@ -409,6 +410,8 @@ function ResultScreen({
           <p className="result-message">
             {isCorrect ? (
               'A few pieces were all you needed. Nicely spotted.'
+            ) : isRevealed ? (
+              'There’s always another face to discover. Try the next one!'
             ) : (
               <>
                 You guessed <strong>{submittedAnswer}</strong>. There’s always
@@ -420,9 +423,8 @@ function ResultScreen({
             <div>
               <strong>{String(refreshCount + 1).padStart(2, '0')}</strong>
               <span>
-                {refreshCount + 1 === 1
-                  ? 'step to your guess'
-                  : 'steps to your guess'}
+                {refreshCount + 1 === 1 ? 'step' : 'steps'} to{' '}
+                {isRevealed ? 'the reveal' : 'your guess'}
               </span>
             </div>
             <div>
@@ -645,6 +647,18 @@ function GameRound({
     setRefreshCount((count) => count + 1)
   }
 
+  const finishRound = (outcome, submittedAnswer) => {
+    completeGameSession(sessionId, {
+      outcome: outcome === 'revealed' ? 'incorrect' : outcome,
+      submittedAnswer,
+      visibleElements: visibleIndices.length,
+    })
+    setSubmittedAnswer(submittedAnswer)
+    setResult(outcome)
+    setAnswerError('')
+    setAnswerFocused(false)
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const trimmedAnswer = answer.trim()
@@ -654,17 +668,12 @@ function GameRound({
     }
 
     const correct = isCorrectAnswer(trimmedAnswer, portrait.aliases)
-    const outcome = correct ? 'correct' : 'incorrect'
+    finishRound(correct ? 'correct' : 'incorrect', trimmedAnswer)
+  }
 
-    completeGameSession(sessionId, {
-      outcome,
-      submittedAnswer: trimmedAnswer,
-      visibleElements: visibleIndices.length,
-    })
-    setSubmittedAnswer(trimmedAnswer)
-    setResult(outcome)
-    setAnswerError('')
-    setAnswerFocused(false)
+  const handleRevealAnswer = () => {
+    recordSessionEvent(sessionId, 'answer_revealed', { reason: 'unknown' })
+    finishRound('revealed', '')
   }
 
   const handleToggleCategories = () => {
@@ -766,35 +775,62 @@ function GameRound({
             }
           />
         </button>
-        <form className="guess-form" onSubmit={handleSubmit} noValidate>
+        <form
+          className={`guess-form ${answerFocused ? 'is-editing' : ''}`}
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <label className="visually-hidden" htmlFor="famous-person">
             Enter their name
           </label>
-          <div className={`guess-input ${answerError ? 'has-error' : ''}`}>
-            <input
-              id="famous-person"
-              type="text"
-              value={answer}
+          <div className="guess-answer-row">
+            <div
+              className={`guess-input ${answerError ? 'has-error' : ''}`}
               onFocus={() => {
                 setAnswerFocused(true)
                 if (usesOnScreenKeyboard)
                   requestAnimationFrame(() => window.scrollTo(0, 0))
               }}
-              onBlur={() => setAnswerFocused(false)}
-              onChange={(event) => {
-                setAnswer(event.target.value)
-                if (answerError) setAnswerError('')
+              onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget))
+                  setAnswerFocused(false)
               }}
-              placeholder="Their name…"
-              autoComplete="off"
-              autoCapitalize="words"
-              enterKeyHint="go"
-              aria-invalid={Boolean(answerError)}
-              aria-describedby={answerError ? 'answer-error' : undefined}
-            />
-            <button type="submit" aria-label="Submit guess">
-              <Icon />
-            </button>
+            >
+              <input
+                id="famous-person"
+                type="text"
+                value={answer}
+                onChange={(event) => {
+                  setAnswer(event.target.value)
+                  if (answerError) setAnswerError('')
+                }}
+                placeholder="Their name…"
+                autoComplete="off"
+                autoCapitalize="words"
+                enterKeyHint="go"
+                aria-invalid={Boolean(answerError)}
+                aria-describedby={answerError ? 'answer-error' : undefined}
+              />
+              {answerFocused && (
+                <button
+                  type="submit"
+                  aria-label="Submit guess"
+                  onPointerDown={(event) => event.preventDefault()}
+                >
+                  <Icon />
+                </button>
+              )}
+            </div>
+            {!answerFocused && (
+              <button
+                type="button"
+                className="reveal-answer-button"
+                aria-label="I don't know :("
+                onClick={handleRevealAnswer}
+              >
+                I don't know :(
+              </button>
+            )}
           </div>
           <p id="answer-error" className="guess-error" aria-live="polite">
             {answerError}
