@@ -40,6 +40,8 @@ test('five-face sessions reveal only completed results and reset cleanly', async
     { category: 'all', cached: false },
     { category: 'politics', cached: true },
     { category: 'politics', cached: false },
+    { category: 'all', cached: true, partial: true },
+    { category: 'all', cached: false, partial: true },
     { category: 'all', cached: true, switchCategory: true },
     { category: 'all', cached: true, switchFinalCategory: true },
   ]
@@ -129,8 +131,8 @@ test('five-face sessions reveal only completed results and reset cleanly', async
     })
   }
 
-  for (const { category, cached, switchCategory, switchFinalCategory } of scenarios) {
-    await t.test(`${category}, images ${cached ? 'cached' : 'pending'}${switchCategory ? ', change category after two faces' : ''}${switchFinalCategory ? ', preserve last unplayed face on category change' : ''}`, async (t) => {
+  for (const { category, cached, switchCategory, switchFinalCategory, partial } of scenarios) {
+    await t.test(`${category}, images ${cached ? 'cached' : 'pending'}${partial ? ', partly correct guess' : ''}${switchCategory ? ', change category after two faces' : ''}${switchFinalCategory ? ', preserve last unplayed face on category change' : ''}`, async (t) => {
       if (switchFinalCategory) t.mock.method(Math, 'random', () => 0)
       const pending = []
       const values = new Map([
@@ -185,7 +187,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
       const completions = () => requests.filter(({ url }) => url.endsWith('/complete'))
       const resolveImages = () => act(async () => { pending.splice(0).forEach((resolve) => resolve()) })
       const visited = []
-      const actions = ['incorrect', 'correct', 'reveal-empty', 'reveal-typed', 'correct']
+      const actions = [partial ? 'partial' : 'incorrect', 'correct', 'reveal-empty', 'reveal-typed', 'correct']
       try {
         await act(async () => {
           renderer = create(React.createElement(React.Profiler, {
@@ -226,7 +228,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
           const name = names[round.portraitIndex]
           visited.push({ name, sessionId: round.sessionId })
           const revealsAnswer = action.startsWith('reveal-')
-          const answer = action === 'correct' ? name : action === 'reveal-empty' ? '' : 'wrong answer'
+          const answer = action === 'correct' ? name : action === 'partial' ? `${name}x` : action === 'reveal-empty' ? '' : 'wrong answer'
           const usesAllClues = index === 1 || revealsAnswer
           if (usesAllClues) {
             await resolveImages()
@@ -290,7 +292,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
           assert.deepEqual(completions().at(-1), {
             url: `/api/sessions/${round.sessionId}/complete`,
             body: {
-              outcome: action === 'correct' ? 'correct' : 'incorrect',
+              outcome: ['correct', 'partial'].includes(action) ? action : 'incorrect',
               submittedAnswer: revealsAnswer ? '' : answer,
               visibleElements: usesAllClues ? 2 : 1,
             },
@@ -307,16 +309,24 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         const gallery = renderer.root.findAll((node) => node.props.rounds && node.props.onPlayAgain)[0]
         const savedRounds = gallery.props.rounds
         assert.equal(savedRounds.length, 5)
-        assert.deepEqual(savedRounds.map(({ result }) => result), ['incorrect', 'correct', 'revealed', 'revealed', 'correct'])
+        assert.deepEqual(savedRounds.map(({ result }) => result), [partial ? 'partial' : 'incorrect', 'correct', 'revealed', 'revealed', 'correct'])
         assert.deepEqual(savedRounds.map(({ portrait }) => portrait.name), visited.map(({ name }) => name))
         assert.equal(savedRounds[1].elementHistory.length, 2)
         assert.equal(savedRounds[1].refreshCount, 1)
         assert.match(JSON.stringify(renderer.toJSON()), /result-screen/)
-        assert.equal(renderer.root.findAll((node) => node.props.role === 'img' && node.props['aria-label'] === '2 out of 5 correct').length, 1)
+        const scoreLabel = `2 out of 5 correct${partial ? '; 1 partly correct' : ''}`
+        assert.equal(renderer.root.findAll((node) => node.props.role === 'img' && node.props['aria-label'] === scoreLabel).length, 1)
         const stars = renderer.root.findAll((node) => typeof node.type === 'string' && typeof node.props.className === 'string' && node.props.className.split(' ').includes('session-star'))
         assert.equal(stars.length, 5)
         assert.deepEqual(stars.map((node) => node.props.className.split(' ').includes('filled')), [false, true, false, false, true],
           'each star records the corresponding face outcome')
+        assert.deepEqual(stars.map((node) => node.props.className.split(' ').includes('partial')), [Boolean(partial), false, false, false, false])
+        if (partial) {
+          const firstResult = renderer.root.findAllByType('article')[0]
+          assert.equal(textOf(firstResult.findByType('h2')), 'Partly correct')
+          assert.equal(textOf(firstResult.findByProps({ className: 'result-message' })),
+            `Did you mean ${visited[0].name}?You guessed ${visited[0].name}x`)
+        }
         assert.deepEqual(renderer.root.findAllByType('h3').map(textOf), visited.map(({ name }) => name))
         const activeRetrace = findButtonByText('Retrace your steps')
         assert.equal(activeRetrace.parent.props.className, 'result-details')

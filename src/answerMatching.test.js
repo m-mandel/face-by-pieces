@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync, readdirSync } from 'node:fs'
 import { test } from 'node:test'
-import { getSubjectAliases, isCorrectAnswer, normalizeAnswer } from './answerMatching.js'
+import { getAnswerOutcome, getSimilarityTargets, getSubjectAliases, isCorrectAnswer, normalizeAnswer } from './answerMatching.js'
 import subjectAliases from './config/subject-aliases.json' with { type: 'json' }
 
 const directory = new URL('../data/line-art/', import.meta.url)
@@ -13,6 +13,37 @@ const legacyIds = [...legacySource.matchAll(/id: '([^']+)'/g)].map(match => matc
 const catalogIds = [...new Set([...lineArtIds, ...legacyIds])]
 
 const aliasesFor = id => getSubjectAliases({ id, name: id.replaceAll('-', ' ') })
+
+const makePortrait = (id, name, aliases) => {
+  const portrait = { id, name, aliases }
+  return { ...portrait, similarityTargets: getSimilarityTargets(portrait), aliases: getSubjectAliases(portrait) }
+}
+
+test('gives close new spellings partial credit while preserving accepted aliases as correct', () => {
+  const portrait = makePortrait('novak-djokovic', 'Novak Djokovic', ['Djokovic'])
+  assert.equal(getAnswerOutcome('Jokoviz', portrait), 'partial')
+  assert.equal(getAnswerOutcome('  JOKOVIZ! ', portrait), 'partial')
+  for (const alias of portrait.aliases) assert.equal(getAnswerOutcome(alias, portrait), 'correct', alias)
+  for (const guess of ['', '!!!', 'Jok', 'Joker', 'Roger Federer', 'x'.repeat(201)]) {
+    assert.equal(getAnswerOutcome(guess, portrait), 'incorrect', guess)
+  }
+  const einstein = makePortrait('albert-einstein', 'Albert Einstein', ['Einstein'])
+  assert.equal(getAnswerOutcome('Einstien', einstein), 'correct', 'existing typo aliases still receive full credit')
+})
+
+test('only compares to trusted names and rejects ambiguous names within the catalog', () => {
+  const portrait = makePortrait('new-example', 'Example', ['Example'])
+  portrait.aliases.push('Exampzz')
+  assert.equal(getAnswerOutcome('Examzzz', portrait), 'incorrect', 'do not fuzzy match a typo alias')
+  const miley = makePortrait('miley-cyrus', 'Miley Cyrus', ['Cyrus'])
+  const billy = makePortrait('billy-cyrus', 'Billy Cyrus', ['Cyrus'])
+  assert.equal(getAnswerOutcome('Billy Cyrus', miley, [miley, billy]), 'incorrect')
+  assert.equal(getAnswerOutcome('Cyruz', miley, [miley, billy]), 'incorrect', 'shared surname typo is ambiguous')
+  assert.equal(getAnswerOutcome('Cyrus', miley, [miley, billy]), 'correct', 'an accepted surname is still correct')
+  const downey = makePortrait('robert-downey-jr', 'Robert Downey Jr', ['Jr'])
+  assert.deepEqual(downey.similarityTargets, ['Robert Downey Jr', 'Robert Downey', 'Downey'])
+  assert.equal(getAnswerOutcome('Jr', downey), 'incorrect')
+})
 
 test('every subject has a curated list with distinct, nonempty spelling variants', () => {
   assert.deepEqual(Object.keys(subjectAliases).sort(), catalogIds.toSorted())

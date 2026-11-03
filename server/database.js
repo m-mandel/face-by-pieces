@@ -54,6 +54,11 @@ if (!sessionColumns.some((column) => column.name === 'initial_elements_json')) {
 if (!sessionColumns.some((column) => column.name === 'style')) {
   database.exec("ALTER TABLE sessions ADD COLUMN style TEXT NOT NULL DEFAULT 'vector-lines'")
 }
+// Keep the original binary outcome constraint and all historical rows intact.
+// A separate flag distinguishes partial credit from an incorrect answer.
+if (!sessionColumns.some((column) => column.name === 'partial_match')) {
+  database.exec('ALTER TABLE sessions ADD COLUMN partial_match INTEGER NOT NULL DEFAULT 0 CHECK (partial_match IN (0, 1))')
+}
 
 const now = () => new Date().toISOString()
 
@@ -98,7 +103,8 @@ const finishSession = database.prepare(`
   UPDATE sessions
   SET
     completed_at = @timestamp,
-    outcome = @outcome,
+    outcome = @storedOutcome,
+    partial_match = @partialMatch,
     submitted_answer = @submittedAnswer,
     step_count = refresh_count + 1
   WHERE session_id = @sessionId AND completed_at IS NULL
@@ -153,7 +159,11 @@ export function setInitialElements(sessionId, elementIndices) {
 
 export const completeSession = database.transaction(({ sessionId, outcome, submittedAnswer, metadata }) => {
   const timestamp = now()
-  const result = finishSession.run({ sessionId, outcome, submittedAnswer, timestamp })
+  const result = finishSession.run({
+    sessionId, submittedAnswer, timestamp,
+    storedOutcome: outcome === 'partial' ? 'incorrect' : outcome,
+    partialMatch: outcome === 'partial' ? 1 : 0,
+  })
   if (result.changes === 0) return false
 
   insertEvent.run({
@@ -176,7 +186,7 @@ export function getSession(sessionId) {
       style,
       started_at AS startedAt,
       completed_at AS completedAt,
-      outcome,
+      CASE WHEN partial_match = 1 THEN 'partial' ELSE outcome END AS outcome,
       submitted_answer AS submittedAnswer,
       refresh_count AS refreshCount,
       step_count AS stepCount
@@ -193,7 +203,8 @@ export function getSummary() {
       COUNT(DISTINCT device_id) AS distinctDevices,
       COALESCE(ROUND(AVG(CASE WHEN completed_at IS NOT NULL THEN step_count END), 2), 0) AS averageSteps,
       COALESCE(SUM(CASE WHEN outcome = 'correct' THEN 1 ELSE 0 END), 0) AS correctSessions,
-      COALESCE(SUM(CASE WHEN outcome = 'incorrect' THEN 1 ELSE 0 END), 0) AS incorrectSessions
+      COALESCE(SUM(CASE WHEN partial_match = 1 THEN 1 ELSE 0 END), 0) AS partlyCorrectSessions,
+      COALESCE(SUM(CASE WHEN outcome = 'incorrect' AND partial_match = 0 THEN 1 ELSE 0 END), 0) AS incorrectSessions
     FROM sessions
   `).get()
 }
@@ -208,7 +219,7 @@ export function listSessions(limit = 100) {
       s.style,
       s.started_at AS startedAt,
       s.completed_at AS completedAt,
-      s.outcome,
+      CASE WHEN s.partial_match = 1 THEN 'partial' ELSE s.outcome END AS outcome,
       s.submitted_answer AS submittedAnswer,
       s.refresh_count AS refreshCount,
       s.step_count AS stepCount,

@@ -142,7 +142,7 @@ app.put('/api/sessions/:sessionId/initial-elements', (request, response) => {
 app.post('/api/sessions/:sessionId/complete', (request, response) => {
   const { sessionId } = request.params
   const { outcome, submittedAnswer, visibleElements } = request.body || {}
-  if (!isValidId(sessionId) || !['correct', 'incorrect'].includes(outcome)) {
+  if (!isValidId(sessionId) || !['correct', 'partial', 'incorrect'].includes(outcome)) {
     return response.status(400).json({ error: 'Invalid session ID or outcome.' })
   }
   if (typeof submittedAnswer !== 'string' || submittedAnswer.length > 200) {

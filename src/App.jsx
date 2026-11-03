@@ -2,7 +2,7 @@ import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useSta
 import { PORTRAITS, getAvailablePortraitIndices, getClueIndices } from './portraits'
 import { CATEGORIES } from './portraitCategories'
 import { getNextLayerIndex } from './layerOrder'
-import { isCorrectAnswer } from './answerMatching'
+import { getAnswerOutcome } from './answerMatching'
 import CategoryWelcome from './CategoryWelcome'
 import GameInstructions from './GameInstructions'
 import PortraitArtwork from './PortraitArtwork'
@@ -355,6 +355,8 @@ function SessionResults({ rounds, onPlayAgain }) {
   activeIndexRef.current = activeIndex
   const activeRound = rounds[activeIndex]
   const correctCount = rounds.filter((round) => round.result === 'correct').length
+  const partialCount = rounds.filter((round) => round.result === 'partial').length
+  const scoreLabel = `${correctCount} out of ${SESSION_LENGTH} correct${partialCount ? `; ${partialCount} partly correct` : ''}`
 
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true })
@@ -451,6 +453,7 @@ function SessionResults({ rounds, onPlayAgain }) {
           >
             {rounds.map((round, index) => {
               const isCorrect = round.result === 'correct'
+              const isPartial = round.result === 'partial'
               const isSkipped = round.result === 'revealed'
               return (
                 <article
@@ -463,7 +466,7 @@ function SessionResults({ rounds, onPlayAgain }) {
                 >
                   <div className="result-layout">
                     <div className="result-heading">
-                      <h2>{isCorrect ? 'Correct' : 'Incorrect'}</h2>
+                      <h2>{isCorrect ? 'Correct' : isPartial ? 'Partly correct' : 'Incorrect'}</h2>
                     </div>
                     <figure className="result-figure">
                       <PortraitFrame
@@ -479,7 +482,13 @@ function SessionResults({ rounds, onPlayAgain }) {
                     </figure>
                     <div className="result-details">
                       <p className="result-message">
-                        {isSkipped ? (
+                        {isPartial ? (
+                          <>
+                            Did you mean <strong>{round.portrait.name}</strong>?
+                            <br />
+                            You guessed <strong>{round.submittedAnswer}</strong>
+                          </>
+                        ) : isSkipped ? (
                           'You weren’t sure about this one. Now you know!'
                         ) : (
                           <>You guessed <strong>{round.submittedAnswer}</strong></>
@@ -518,15 +527,18 @@ function SessionResults({ rounds, onPlayAgain }) {
         )}
       </div>
       <footer className="session-actions">
-        <div className="session-score" role="img" aria-label={`${correctCount} out of ${SESSION_LENGTH} correct`}>
+        <div className="session-score" role="img" aria-label={scoreLabel}>
           <div className="session-stars" aria-hidden="true">
             {rounds.map((round) => (
-              <svg key={round.sessionId} className={`session-star ${round.result === 'correct' ? 'filled' : ''}`} viewBox="0 0 24 24">
+              <svg key={round.sessionId} className={`session-star ${round.result === 'correct' ? 'filled' : round.result === 'partial' ? 'partial' : ''}`} viewBox="0 0 24 24">
                 <path d="m12 2.5 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.4l6.5-1Z" />
               </svg>
             ))}
           </div>
-          <p aria-hidden="true">{correctCount} of {SESSION_LENGTH} correct</p>
+          <p aria-hidden="true">
+            {correctCount} of {SESSION_LENGTH} correct
+            {partialCount > 0 && <> · <span className="partial-score">{partialCount} partly correct</span></>}
+          </p>
         </div>
         <button className="primary-button" onClick={onPlayAgain}>
           Play again <Icon />
@@ -795,9 +807,12 @@ function GameRound({
       setAnswerError('Type a name before you guess.')
       return
     }
+    if (trimmedAnswer.length > 200) {
+      setAnswerError('Keep your guess to 200 characters or fewer.')
+      return
+    }
 
-    const correct = isCorrectAnswer(trimmedAnswer, portrait.aliases)
-    finishRound(correct ? 'correct' : 'incorrect', trimmedAnswer)
+    finishRound(getAnswerOutcome(trimmedAnswer, portrait, PORTRAITS), trimmedAnswer)
   }
 
   const handleRevealAnswer = () => {
@@ -920,6 +935,7 @@ function GameRound({
               <input
                 id="famous-person"
                 type="text"
+                maxLength={200}
                 value={answer}
                 onChange={(event) => {
                   setAnswer(event.target.value)

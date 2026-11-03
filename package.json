@@ -8,7 +8,7 @@
     "npm": "11.6.2"
   },
   "scripts": {
-    "test": "node --test src/*.test.js",
+    "test": "node --test src/*.test.js server/*.test.js",
     "prepare:portraits": "node scripts/generate-portrait-bounds.mjs",
     "dev": "concurrently -k -n client,server -c cyan,magenta \"npm:dev:client\" \"npm:dev:server\"",
     "predev:client": "npm run prepare:portraits",
@@ -18,7 +18,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node --env-file-if-exists=.env server/index.js",
-    "report": "node --env-file-if-exists=.env server/report.js"
+    "report": "node --env-file-if-exists=.env server/report.js",
+    "compare:names": "node scripts/compare-names.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^12.11.1",

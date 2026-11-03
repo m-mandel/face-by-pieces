@@ -73,7 +73,15 @@ After a round, **Retrace your clues** opens **Round Replay**, with a large portr
 
 Additional accepted spellings are listed by subject ID in [`src/config/subject-aliases.json`](src/config/subject-aliases.json). Every catalog subject has a curated list, including the 88 playable line-art subjects. These variants are added to the subject's canonical name and existing aliases. For example, Serena Williams accepts both `Wiliams` and `Serena Wiliams`; Albert Einstein accepts `Einstien` and `Albert Einstien`.
 
-Matching ignores capitalization, accents, spaces, and punctuation, then checks the explicit alias list. Other spelling errors are only accepted when added to the JSON. Surnames already accepted by the game remain accepted, including shared surnames, but suffixes such as `Jr` are not valid answers by themselves. The original submitted text is retained in activity records.
+Matching ignores capitalization, accents, spaces, and punctuation, then checks the explicit alias list. Accepted aliases, including existing typo variants, receive full credit. Surnames already accepted by the game remain accepted, including shared surnames, but suffixes such as `Jr` are not valid answers by themselves. The original submitted text is retained in activity records.
+
+Other close spellings receive **Partly correct**, a blue star in that face's position, and **Did you mean Novak Djokovic? You guessed Jokoviz**. Correct answers keep gold stars; incorrect or skipped answers keep outline stars. The five-face summary counts correct and partly correct answers separately. All feedback stays hidden until the fifth face is complete.
+
+Similarity uses Damerau–Levenshtein distance: at most two edits and a distance of at most 25% of the longer normalized name, with at least five characters in both names. Only canonical names and original aliases are fuzzy-matched, never the generated typo list. A guess that matches another catalog subject as well or better receives no partial credit. These rules estimate spelling similarity, not a player's intent. Adjust defaults in `src/nameSimilarity.js`; the CLI uses the same rules:
+
+```bash
+npm run compare:names -- "Jokoviz" "Novak Djokovic" "Djokovic"
+```
 
 To add a spelling, append it to the subject's JSON array and rebuild. Add full-name and surname variants separately when both should count. `npm test` checks catalog coverage, accepted typos, normalization, and rejection of unrelated names.
 
@@ -85,6 +93,8 @@ The browser creates two pseudonymous identifiers:
 - A new session ID identifies each game round.
 
 The server records the portrait, mode, exact elements shown initially and after every refresh, submitted response, outcome, and canonical step count. A step is one refresh or the final submitted guess. Data is stored in `storage/game-activity.sqlite` by default.
+
+Reports list **partly correct** separately, and the API uses outcome `partial` plus a `partlyCorrectSessions` summary count. Deploy both the rebuilt frontend and updated server. Server startup automatically adds a `partial_match` flag to existing databases without changing old results; raw SQL must check this flag because the original binary `outcome` column stores partial matches as `incorrect`.
 
 `npm run report` displays element history in chronological form:
 

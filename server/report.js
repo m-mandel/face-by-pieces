@@ -29,7 +29,7 @@ const sessions = listSessions(50).map((session) => ({
   style: session.style,
   mode: session.mode,
   response: session.submittedAnswer || '—',
-  result: session.outcome || 'in progress',
+  result: session.outcome === 'partial' ? 'partly correct' : session.outcome || 'in progress',
   refreshes: session.refreshCount,
   steps: session.stepCount || '—',
   displayedElements: formatSequence(session.sessionId, session.style),

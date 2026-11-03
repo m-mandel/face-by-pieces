@@ -168,6 +168,14 @@
   color: #a87512;
   fill: #e9bb56;
 }
+.session-star.partial {
+  color: #28628e;
+  fill: #8dbbdc;
+}
+.session-results .partial .result-heading h2,
+.partial-score {
+  color: #28628e;
+}
 .session-score p {
   font-size: 12px;
   color: var(--muted);
