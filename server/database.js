@@ -55,9 +55,12 @@ if (!sessionColumns.some((column) => column.name === 'style')) {
   database.exec("ALTER TABLE sessions ADD COLUMN style TEXT NOT NULL DEFAULT 'vector-lines'")
 }
 // Keep the original binary outcome constraint and all historical rows intact.
-// A separate flag distinguishes partial credit from an incorrect answer.
+// The historical partial_match flag now represents inaccurate answers.
 if (!sessionColumns.some((column) => column.name === 'partial_match')) {
   database.exec('ALTER TABLE sessions ADD COLUMN partial_match INTEGER NOT NULL DEFAULT 0 CHECK (partial_match IN (0, 1))')
+}
+if (!sessionColumns.some((column) => column.name === 'photo_recognized')) {
+  database.exec('ALTER TABLE sessions ADD COLUMN photo_recognized INTEGER CHECK (photo_recognized IN (0, 1))')
 }
 
 const now = () => new Date().toISOString()
@@ -105,6 +108,7 @@ const finishSession = database.prepare(`
     completed_at = @timestamp,
     outcome = @storedOutcome,
     partial_match = @partialMatch,
+    photo_recognized = @photoRecognized,
     submitted_answer = @submittedAnswer,
     step_count = refresh_count + 1
   WHERE session_id = @sessionId AND completed_at IS NULL
@@ -157,12 +161,13 @@ export function setInitialElements(sessionId, elementIndices) {
   }).changes > 0
 }
 
-export const completeSession = database.transaction(({ sessionId, outcome, submittedAnswer, metadata }) => {
+export const completeSession = database.transaction(({ sessionId, outcome, submittedAnswer, metadata, photoRecognized = null }) => {
   const timestamp = now()
   const result = finishSession.run({
     sessionId, submittedAnswer, timestamp,
-    storedOutcome: outcome === 'partial' ? 'incorrect' : outcome,
-    partialMatch: outcome === 'partial' ? 1 : 0,
+    storedOutcome: outcome === 'inaccurate' ? 'incorrect' : outcome,
+    partialMatch: outcome === 'inaccurate' ? 1 : 0,
+    photoRecognized: photoRecognized === null ? null : Number(photoRecognized),
   })
   if (result.changes === 0) return false
 
@@ -170,14 +175,14 @@ export const completeSession = database.transaction(({ sessionId, outcome, submi
     sessionId,
     eventType: 'guess_submitted',
     timestamp,
-    metadataJson: JSON.stringify({ ...metadata, outcome }),
+    metadataJson: JSON.stringify({ ...metadata, outcome, photoRecognized }),
   })
   touchSessionDevice.run({ sessionId, timestamp })
   return true
 })
 
 export function getSession(sessionId) {
-  return database.prepare(`
+  const session = database.prepare(`
     SELECT
       session_id AS sessionId,
       device_id AS deviceId,
@@ -186,13 +191,23 @@ export function getSession(sessionId) {
       style,
       started_at AS startedAt,
       completed_at AS completedAt,
-      CASE WHEN partial_match = 1 THEN 'partial' ELSE outcome END AS outcome,
+      CASE WHEN partial_match = 1 THEN 'inaccurate' ELSE outcome END AS outcome,
+      photo_recognized AS photoRecognized,
       submitted_answer AS submittedAnswer,
       refresh_count AS refreshCount,
       step_count AS stepCount
     FROM sessions
     WHERE session_id = ?
   `).get(sessionId)
+  return formatSession(session)
+}
+
+function formatSession(session) {
+  return session && {
+    ...session,
+    photoRecognized: session.photoRecognized === null ? null : Boolean(session.photoRecognized),
+    answeredFromPhoto: session.photoRecognized === 1 && Boolean(session.submittedAnswer),
+  }
 }
 
 export function getSummary() {
@@ -203,7 +218,7 @@ export function getSummary() {
       COUNT(DISTINCT device_id) AS distinctDevices,
       COALESCE(ROUND(AVG(CASE WHEN completed_at IS NOT NULL THEN step_count END), 2), 0) AS averageSteps,
       COALESCE(SUM(CASE WHEN outcome = 'correct' THEN 1 ELSE 0 END), 0) AS correctSessions,
-      COALESCE(SUM(CASE WHEN partial_match = 1 THEN 1 ELSE 0 END), 0) AS partlyCorrectSessions,
+      COALESCE(SUM(CASE WHEN partial_match = 1 THEN 1 ELSE 0 END), 0) AS inaccurateSessions,
       COALESCE(SUM(CASE WHEN outcome = 'incorrect' AND partial_match = 0 THEN 1 ELSE 0 END), 0) AS incorrectSessions
     FROM sessions
   `).get()
@@ -219,7 +234,8 @@ export function listSessions(limit = 100) {
       s.style,
       s.started_at AS startedAt,
       s.completed_at AS completedAt,
-      CASE WHEN s.partial_match = 1 THEN 'partial' ELSE s.outcome END AS outcome,
+      CASE WHEN s.partial_match = 1 THEN 'inaccurate' ELSE s.outcome END AS outcome,
+      s.photo_recognized AS photoRecognized,
       s.submitted_answer AS submittedAnswer,
       s.refresh_count AS refreshCount,
       s.step_count AS stepCount,
@@ -231,7 +247,7 @@ export function listSessions(limit = 100) {
     JOIN devices d ON d.device_id = s.device_id
     ORDER BY s.started_at DESC
     LIMIT ?
-  `).all(limit)
+  `).all(limit).map(formatSession)
 }
 
 export function listSessionEvents(sessionId) {

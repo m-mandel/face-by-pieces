@@ -5,6 +5,7 @@ import { getNextLayerIndex } from './layerOrder'
 import { getAnswerOutcome } from './answerMatching'
 import CategoryWelcome from './CategoryWelcome'
 import GameInstructions from './GameInstructions'
+import PhotoRecognition from './PhotoRecognition'
 import PortraitArtwork from './PortraitArtwork'
 import './sessionResults.css'
 import {
@@ -355,8 +356,8 @@ function SessionResults({ rounds, onPlayAgain }) {
   activeIndexRef.current = activeIndex
   const activeRound = rounds[activeIndex]
   const correctCount = rounds.filter((round) => round.result === 'correct').length
-  const partialCount = rounds.filter((round) => round.result === 'partial').length
-  const scoreLabel = `${correctCount} out of ${SESSION_LENGTH} correct${partialCount ? `; ${partialCount} partly correct` : ''}`
+  const inaccurateCount = rounds.filter((round) => round.result === 'inaccurate').length
+  const scoreLabel = `${correctCount} out of ${SESSION_LENGTH} correct${inaccurateCount ? `; ${inaccurateCount} inaccurate` : ''}`
 
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true })
@@ -453,8 +454,8 @@ function SessionResults({ rounds, onPlayAgain }) {
           >
             {rounds.map((round, index) => {
               const isCorrect = round.result === 'correct'
-              const isPartial = round.result === 'partial'
-              const isSkipped = round.result === 'revealed'
+              const isInaccurate = round.result === 'inaccurate'
+              const isSkipped = round.skipped
               return (
                 <article
                   key={round.sessionId}
@@ -466,7 +467,7 @@ function SessionResults({ rounds, onPlayAgain }) {
                 >
                   <div className="result-layout">
                     <div className="result-heading">
-                      <h2>{isCorrect ? 'Correct' : isPartial ? 'Partly correct' : 'Incorrect'}</h2>
+                      <h2>{isCorrect ? 'Correct' : isInaccurate ? 'Inaccurate' : 'Incorrect'}</h2>
                     </div>
                     <figure className="result-figure">
                       <PortraitFrame
@@ -482,16 +483,17 @@ function SessionResults({ rounds, onPlayAgain }) {
                     </figure>
                     <div className="result-details">
                       <p className="result-message">
-                        {isPartial ? (
+                        {isInaccurate ? (
                           <>
                             Did you mean <strong>{round.portrait.name}</strong>?
                             <br />
                             You guessed <strong>{round.submittedAnswer}</strong>
+                            {round.answeredFromPhoto && ' from the photo'}
                           </>
                         ) : isSkipped ? (
-                          'You weren’t sure about this one. Now you know!'
+                          'You didn’t know this one.'
                         ) : (
-                          <>You guessed <strong>{round.submittedAnswer}</strong></>
+                          <>You guessed <strong>{round.submittedAnswer}</strong>{round.answeredFromPhoto && ' from the photo'}</>
                         )}
                       </p>
                       <div className="round-stats" aria-label="Round statistics">
@@ -530,14 +532,14 @@ function SessionResults({ rounds, onPlayAgain }) {
         <div className="session-score" role="img" aria-label={scoreLabel}>
           <div className="session-stars" aria-hidden="true">
             {rounds.map((round) => (
-              <svg key={round.sessionId} className={`session-star ${round.result === 'correct' ? 'filled' : round.result === 'partial' ? 'partial' : ''}`} viewBox="0 0 24 24">
+              <svg key={round.sessionId} className={`session-star ${round.result === 'correct' ? 'filled' : round.result === 'inaccurate' ? 'inaccurate' : ''}`} viewBox="0 0 24 24">
                 <path d="m12 2.5 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.4l6.5-1Z" />
               </svg>
             ))}
           </div>
           <p aria-hidden="true">
             {correctCount} of {SESSION_LENGTH} correct
-            {partialCount > 0 && <> · <span className="partial-score">{partialCount} partly correct</span></>}
+            {inaccurateCount > 0 && <> · <span className="inaccurate-score">{inaccurateCount} inaccurate</span></>}
           </p>
         </div>
         <button className="primary-button" onClick={onPlayAgain}>
@@ -690,6 +692,8 @@ function GameRound({
     Math.round(window.visualViewport?.offsetTop || 0),
   )
   const finishedRef = useRef(false)
+  const photoRequestedRef = useRef(false)
+  const [photoOpen, setPhotoOpen] = useState(false)
   const [categoriesOpen, setCategoriesOpen] = useState(false)
   const promptRef = useRef(null)
 
@@ -758,6 +762,7 @@ function GameRound({
   }, [initialIndices, sessionId])
 
   const handleRefresh = () => {
+    if (photoRequestedRef.current || finishedRef.current) return
     if (drawingFailed) {
       setLoadAttempt((attempt) => attempt + 1)
       return
@@ -778,13 +783,14 @@ function GameRound({
     setRefreshCount((count) => count + 1)
   }
 
-  const finishRound = (outcome, submittedAnswer) => {
+  const finishRound = (outcome, submittedAnswer, { skipped = false, photoRecognized = null } = {}) => {
     if (finishedRef.current) return
     finishedRef.current = true
     completeGameSession(sessionId, {
-      outcome: outcome === 'revealed' ? 'incorrect' : outcome,
+      outcome,
       submittedAnswer,
       visibleElements: visibleIndices.length,
+      ...(photoRequestedRef.current && { photoRecognized }),
     })
     onComplete({
       sessionId,
@@ -797,11 +803,15 @@ function GameRound({
       refreshCount,
       result: outcome,
       submittedAnswer,
+      skipped,
+      photoRecognized,
+      answeredFromPhoto: photoRecognized === true && Boolean(submittedAnswer),
     })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    if (photoRequestedRef.current || finishedRef.current) return
     const trimmedAnswer = answer.trim()
     if (!trimmedAnswer) {
       setAnswerError('Type a name before you guess.')
@@ -816,9 +826,17 @@ function GameRound({
   }
 
   const handleRevealAnswer = () => {
-    if (!allCluesRevealed || finishedRef.current) return
-    recordSessionEvent(sessionId, 'answer_revealed', { reason: 'unknown' })
-    finishRound('revealed', '')
+    if (!allCluesRevealed || finishedRef.current || photoRequestedRef.current) return
+    photoRequestedRef.current = true
+    setAnswerFocused(false)
+    recordSessionEvent(sessionId, 'photo_requested', { available: Boolean(portrait.photoSrc) })
+    setPhotoOpen(true)
+  }
+
+  const handlePhotoRecognition = (recognized, guess) => {
+    if (!photoRequestedRef.current || finishedRef.current) return
+    const outcome = guess ? getAnswerOutcome(guess, portrait, PORTRAITS) : 'incorrect'
+    finishRound(outcome, guess || '', { skipped: !guess, photoRecognized: recognized })
   }
 
   const handleToggleCategories = () => {
@@ -828,6 +846,9 @@ function GameRound({
 
   const handleCloseMenu = useCallback(() => setCategoriesOpen(false), [])
 
+  if (photoOpen) {
+    return <PhotoRecognition photoSrc={portrait.photoSrc} roundNumber={roundNumber} viewportHeight={viewportHeight} onAnswer={handlePhotoRecognition} />
+  }
 
   return (
     <main

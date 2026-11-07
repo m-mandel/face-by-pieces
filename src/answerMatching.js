@@ -3,7 +3,7 @@ import { compareNames } from './nameSimilarity.js'
 export { normalizeAnswer } from './normalizeAnswer.js'
 
 import subjectAliases from './config/subject-aliases.json' with { type: 'json' }
-
+import correctAliases from './config/subject-correct-aliases.json' with { type: 'json' }
 
 export function getSubjectAliases({ id, name, aliases = [] }) {
   const seen = new Set()
@@ -19,21 +19,29 @@ export function getSubjectAliases({ id, name, aliases = [] }) {
   })
 }
 
-export function isCorrectAnswer(guess, aliases) {
-  const normalized = normalizeAnswer(guess)
-  return normalized !== '' && aliases.some(alias => normalizeAnswer(alias) === normalized)
+function normalizedNameWords(value) {
+  // Compare whole words in any order, keeping repeated words distinct.
+  return value.split(/[\s.,;:\-–—/]+/).map(normalizeAnswer).filter(Boolean).sort().join(' ')
 }
 
-// Capture these BEFORE getSubjectAliases adds generated typo variants. Fuzzy
-// matching a typo alias would compound the amount of error we allow.
-export function getSimilarityTargets({ name, aliases = [] }) {
+export function isCorrectAnswer(guess, aliases) {
+  const normalized = normalizeAnswer(guess)
+  if (normalized === '') return false
+  const words = normalizedNameWords(guess)
+  return aliases.some(alias => normalizeAnswer(alias) === normalized || normalizedNameWords(alias) === words)
+}
+
+// Call before expanding the typo list: only real names and correctly spelled
+// nicknames belong here. These are also the targets for similarity matching.
+export function getCorrectAliases({ id, name, aliases = [] }) {
   const withoutSuffix = name.replace(/\s+(?:jr\.?|junior|sr\.?|ii|iii|iv)$/i, '')
-  const candidates = [name, ...aliases]
-  if (withoutSuffix !== name) candidates.push(withoutSuffix, withoutSuffix.split(' ').at(-1))
+  const surname = id === 'diana-princess-of-wales' ? 'Spencer' : withoutSuffix.split(' ').at(-1)
+  const candidates = [name, ...aliases, ...(correctAliases[id] || []), withoutSuffix, surname]
+  if (/\s+jr\.?$/i.test(name)) candidates.push(name.replace(/jr\.?$/i, 'Junior'), name.replace(/jr\.?$/i, 'Jnr'))
   const seen = new Set()
   return candidates.filter((candidate) => {
     const normalized = normalizeAnswer(candidate)
-    if (!normalized || /^(jr|sr|ii|iii|iv)$/.test(normalized) || seen.has(normalized)) return false
+    if (!normalized || /^(jr|junior|sr|senior|ii|iii|iv)$/.test(normalized) || seen.has(normalized)) return false
     seen.add(normalized)
     return true
   })
@@ -41,20 +49,22 @@ export function getSimilarityTargets({ name, aliases = [] }) {
 
 export function getAnswerOutcome(guess, portrait, catalog = []) {
   if (!guess || guess.length > 200) return 'incorrect'
-  if (isCorrectAnswer(guess, portrait.aliases)) return 'correct'
+  const targets = portrait.correctAliases ?? getCorrectAliases({ id: portrait.id, name: portrait.name })
+  if (isCorrectAnswer(guess, targets)) return 'correct'
+  // A known misspelling identifies the intended person, but is not accurate.
+  if (isCorrectAnswer(guess, portrait.aliases)) return 'inaccurate'
 
-  const targets = portrait.similarityTargets ?? [portrait.name]
   const match = compareNames(guess, targets)
   if (match.classification === 'no_match') return 'incorrect'
   if (match.classification === 'exact') return 'correct'
 
   // A suggestion must be unambiguous within our catalog. In particular, do
-  // not give partial credit for another person's correctly spelled name.
+  // not accept another person's correctly spelled name as a close answer.
   for (const other of catalog) {
     if (other.id === portrait.id) continue
-    const alternative = compareNames(guess, other.similarityTargets ?? [other.name])
+    const alternative = compareNames(guess, other.correctAliases ?? getCorrectAliases({ id: other.id, name: other.name }))
     if (alternative.classification !== 'no_match' &&
         alternative.normalizedDistance <= match.normalizedDistance) return 'incorrect'
   }
-  return 'partial'
+  return 'inaccurate'
 }

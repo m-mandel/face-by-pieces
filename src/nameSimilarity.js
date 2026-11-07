@@ -39,7 +39,7 @@ export function editDistance(a, b, { transpositions = false } = {}) {
 export function compareNames(guess, targets, {
   maxErrorRate = 0.25,
   maxEdits = 2,
-  minLength = 5,
+  minLength = 4,
 } = {}) {
   if (typeof guess !== 'string' || !Array.isArray(targets) || targets.length === 0 ||
       targets.some((target) => typeof target !== 'string')) {

@@ -9,7 +9,7 @@ import { promisify } from 'node:util'
 import test from 'node:test'
 import Database from 'better-sqlite3'
 
-test('partial results survive migration, API recording, reporting and server restart', { timeout: 30000 }, async (t) => {
+test('inaccurate results and photo recognition survive migration, reporting and restart', { timeout: 30000 }, async (t) => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'face-partial-test-'))
   let server
   const stopServer = async () => {
@@ -89,11 +89,11 @@ test('partial results survive migration, API recording, reporting and server res
   }
   await startServer()
 
-  for (const outcome of ['correct', 'partial', 'incorrect']) {
+  for (const outcome of ['correct', 'inaccurate', 'incorrect']) {
     const sessionId = `new-${outcome}-session`
     await api('sessions', { sessionId, deviceId: 'new-device', portraitId: 'novak-djokovic', mode: 'progressive', style: 'line-art' }, 201)
     await api(`sessions/${sessionId}/events`, { eventType: 'clue_refreshed', metadata: { visibleElementIndices: [0, 1] } }, 201)
-    const submittedAnswer = outcome === 'partial' ? 'Jokoviz' : outcome === 'correct' ? 'Djokovic' : 'wrong answer'
+    const submittedAnswer = outcome === 'inaccurate' ? 'Jokoviz' : outcome === 'correct' ? 'Djokovic' : 'wrong answer'
     const { session } = await api(`sessions/${sessionId}/complete`, { outcome, submittedAnswer, visibleElements: 2 })
     assert.equal(session.outcome, outcome)
     assert.equal(session.submittedAnswer, submittedAnswer)
@@ -103,26 +103,50 @@ test('partial results survive migration, API recording, reporting and server res
     assert.equal(events.filter(({ eventType }) => eventType === 'guess_submitted').length, 1)
     assert.equal(events.at(-1).metadata.outcome, outcome)
   }
-  await api('sessions/new-partial-session/complete', { outcome: 'unsupported', submittedAnswer: 'Jokoviz' }, 400)
+  for (const recognized of [true, false, null]) {
+    const sessionId = `photo-${recognized}-session`
+    await api('sessions', { sessionId, deviceId: 'new-device', portraitId: 'novak-djokovic', mode: 'progressive', style: 'line-art' }, 201)
+    await api(`sessions/${sessionId}/events`, { eventType: 'photo_requested', metadata: { available: true } }, 201)
+    await api(`sessions/${sessionId}/complete`, { outcome: 'incorrect', submittedAnswer: '', photoRecognized: 'yes' }, 400)
+    const { session } = await api(`sessions/${sessionId}/complete`, { outcome: 'incorrect', submittedAnswer: '', photoRecognized: recognized })
+    assert.equal(session.photoRecognized, recognized)
+    assert.equal(session.outcome, 'incorrect', 'recognizing the photo does not change the skipped answer')
+    const { events } = await api(`admin/sessions/${sessionId}/events`)
+    assert.equal(events.at(-1).metadata.photoRecognized, recognized)
+  }
+  for (const [outcome, submittedAnswer] of [['correct', 'Djokovic'], ['inaccurate', 'Jokoviz'], ['incorrect', 'someone else']]) {
+    const sessionId = `photo-guess-${outcome}`
+    await api('sessions', { sessionId, deviceId: 'new-device', portraitId: 'novak-djokovic', mode: 'progressive', style: 'line-art' }, 201)
+    const { session } = await api(`sessions/${sessionId}/complete`, { outcome, submittedAnswer, photoRecognized: true })
+    assert.equal(session.outcome, outcome)
+    assert.equal(session.answeredFromPhoto, true)
+    assert.equal(session.submittedAnswer, submittedAnswer)
+  }
+  // A browser with the previous bundle may still send the old outcome name.
+  await api('sessions', { sessionId: 'cached-client-session', deviceId: 'new-device', portraitId: 'novak-djokovic', mode: 'progressive', style: 'line-art' }, 201)
+  assert.equal((await api('sessions/cached-client-session/complete', { outcome: 'partial', submittedAnswer: 'Jokoviz' })).session.outcome, 'inaccurate')
+  await api('sessions/new-inaccurate-session/complete', { outcome: 'unsupported', submittedAnswer: 'Jokoviz' }, 400)
   const { summary } = await api('admin/summary')
   assert.deepEqual(summary, {
-    totalSessions: 6, completedSessions: 5, distinctDevices: 2,
-    averageSteps: 1.6, correctSessions: 2, partlyCorrectSessions: 1, incorrectSessions: 2,
+    totalSessions: 13, completedSessions: 12, distinctDevices: 2,
+    averageSteps: 1.25, correctSessions: 3, inaccurateSessions: 3, incorrectSessions: 6,
   })
   const { sessions } = await api('admin/sessions')
   assert.equal(sessions.find(({ sessionId }) => sessionId === 'old-pending').outcome, null)
-  assert.equal(sessions.find(({ sessionId }) => sessionId === 'new-partial-session').outcome, 'partial')
+  assert.equal(sessions.find(({ sessionId }) => sessionId === 'new-inaccurate-session').outcome, 'inaccurate')
   const { stdout } = await promisify(execFile)(process.execPath, ['server/report.js'], { env })
-  assert.match(stdout, /partly correct/)
-  assert.match(stdout, /partlyCorrectSessions/)
+  assert.match(stdout, /inaccurate/)
+  assert.match(stdout, /inaccurateSessions/)
   assert.match(stdout, /Jokoviz/)
+  assert.match(stdout, /recognizedPhoto/)
   await stopServer()
 
   const migrated = new Database(filename)
   try {
     const oldRows = migrated.prepare("SELECT * FROM sessions WHERE session_id LIKE 'old-%' ORDER BY session_id").all()
-    assert.deepEqual(oldRows.map(({ partial_match, ...row }) => {
+    assert.deepEqual(oldRows.map(({ partial_match, photo_recognized, ...row }) => {
       assert.equal(partial_match, 0)
+      assert.equal(photo_recognized, null)
       return row
     }), originalRows, 'historical results are untouched')
     assert.deepEqual(migrated.prepare("SELECT * FROM events WHERE session_id LIKE 'old-%'").all(), originalEvents)
@@ -132,4 +156,8 @@ test('partial results survive migration, API recording, reporting and server res
   }
   await startServer()
   assert.deepEqual((await api('admin/summary')).summary, summary, 'migration is safe to run again and partial results persist')
+  const persisted = (await api('admin/sessions')).sessions
+  for (const recognized of [true, false, null]) {
+    assert.equal(persisted.find(({ sessionId }) => sessionId === `photo-${recognized}-session`).photoRecognized, recognized)
+  }
 })

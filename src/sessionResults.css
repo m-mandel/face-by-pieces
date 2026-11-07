@@ -168,12 +168,12 @@
   color: #a87512;
   fill: #e9bb56;
 }
-.session-star.partial {
+.session-star.inaccurate {
   color: #28628e;
   fill: #8dbbdc;
 }
-.session-results .partial .result-heading h2,
-.partial-score {
+.session-results .inaccurate .result-heading h2,
+.inaccurate-score {
   color: #28628e;
 }
 .session-score p {

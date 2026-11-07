@@ -52,7 +52,7 @@ export const LEGACY_PORTRAITS = [
   {
     id: 'cristiano-ronaldo',
     name: 'Cristiano Ronaldo',
-    aliases: ['Cristiano Ronaldo', 'Christiano Ronaldo', 'Ronaldo', 'CR7'],
+    aliases: ['Cristiano Ronaldo', 'Ronaldo', 'CR7'],
     styles: {
       'vector-lines': cristianoRonaldoSvg,
       abstract: abstractCristianoRonaldoSvg,

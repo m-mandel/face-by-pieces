@@ -52,7 +52,7 @@ for (const folder of fs.readdirSync(lineArtDirectory, { withFileTypes: true })) 
   portraitStyles.get(portraitId).add('line-art')
 }
 const modes = new Set(['one', 'two', 'four', 'progressive'])
-const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed', 'category_opened', 'category_changed', 'answer_revealed'])
+const activityEvents = new Set(['clue_refreshed', 'settings_opened', 'mode_changed', 'style_opened', 'style_changed', 'category_opened', 'category_changed', 'answer_revealed', 'photo_requested'])
 
 app.disable('x-powered-by')
 app.use(express.json({ limit: '16kb' }))
@@ -141,18 +141,24 @@ app.put('/api/sessions/:sessionId/initial-elements', (request, response) => {
 
 app.post('/api/sessions/:sessionId/complete', (request, response) => {
   const { sessionId } = request.params
-  const { outcome, submittedAnswer, visibleElements } = request.body || {}
-  if (!isValidId(sessionId) || !['correct', 'partial', 'incorrect'].includes(outcome)) {
+  const { submittedAnswer, visibleElements, photoRecognized = null } = request.body || {}
+  // Older cached clients may still submit the previous name for this result.
+  const outcome = request.body?.outcome === 'partial' ? 'inaccurate' : request.body?.outcome
+  if (!isValidId(sessionId) || !['correct', 'inaccurate', 'incorrect'].includes(outcome)) {
     return response.status(400).json({ error: 'Invalid session ID or outcome.' })
   }
   if (typeof submittedAnswer !== 'string' || submittedAnswer.length > 200) {
     return response.status(400).json({ error: 'Invalid submitted answer.' })
+  }
+  if (photoRecognized !== null && typeof photoRecognized !== 'boolean') {
+    return response.status(400).json({ error: 'Photo recognition must be true, false, or null.' })
   }
 
   const completed = completeSession({
     sessionId,
     outcome,
     submittedAnswer: submittedAnswer.trim(),
+    photoRecognized,
     metadata: {
       visibleElements: Number.isInteger(visibleElements) ? visibleElements : null,
     },

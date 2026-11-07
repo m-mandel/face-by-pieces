@@ -1,10 +1,15 @@
 import { LEGACY_PORTRAITS, getLegacyElementCount } from './legacyPortraits'
 import { matchesCategory } from './portraitCategories'
-import { getSubjectAliases, getSimilarityTargets } from './answerMatching'
+import { getSubjectAliases, getCorrectAliases } from './answerMatching'
 import lineArtBounds from './generated/line-art-bounds.json'
 
 // Import URLs instead of embedding PNG contents in the JavaScript bundle.
 const pngFiles = import.meta.glob('../data/line-art/*/transparent/*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+const sourcePhotos = import.meta.glob('../data/sources/*/source.{png,jpg,jpeg,webp}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -34,6 +39,7 @@ const nameOverrides = {
     name: 'Diana, Princess of Wales',
     aliases: ['Princess Diana', 'Diana', 'Lady Diana', 'Diana Spencer'],
   },
+  'shaquille-o-neal': { name: "Shaquille O'Neal", aliases: ["O'Neal", 'Shaq'] },
 }
 
 const portraitsById = new Map(
@@ -107,8 +113,14 @@ for (const [file, metadata] of [
 
 for (const portrait of portraitsById.values()) {
   portrait.labels ??= []
-  portrait.similarityTargets = getSimilarityTargets(portrait)
+  portrait.correctAliases = getCorrectAliases(portrait)
   portrait.aliases = getSubjectAliases(portrait)
+}
+
+for (const [file, url] of Object.entries(sourcePhotos)) {
+  const id = file.split('/').at(-2).replaceAll('_', '-').toLowerCase()
+  const portrait = portraitsById.get(id)
+  if (portrait) portrait.photoSrc = url
 }
 
 export const PORTRAITS = [...portraitsById.values()]

@@ -65,25 +65,29 @@ The game automatically discovers portraits in `data/line-art/`. Each PNG in a po
 
 Add new line-art portraits as `data/line-art/<person-name>/transparent/*.png`, alongside their `report.json` pixel counts. All layers for a portrait should share the same canvas dimensions. Both hyphens and underscores in folder names are supported. The catalog is discovered at build time; rebuild the app and restart the server after adding portraits. If a report or a layer's pixel count is missing, that PNG remains eligible.
 
-Steps are counted during the round and displayed on the result screen. Each refresh is a step, and the submitted guess is the final step. Submitting an incorrect name ends the round and reveals the answer; the next portrait can then be started with **Play another face**.
+Each game has five faces. Submitting a name ends that face and advances to the next; scores and names are shown in the results gallery after the fifth face. Steps count the drawing clues used.
 
-After a round, **Retrace your clues** opens **Round Replay**, with a large portrait between a compact header and the playback controls. Every frame uses **Step 1**, **Step 2**, and so on, matching the in-game counter. The caption shows the current step, total steps, and cumulative number of unique clues shown through the selected step. Moving backward excludes clues first shown at later steps. The portrait displays the original layer set for that step. Players can select a numbered step or move backward or forward. The back button returns to the reveal screen, where **Play another face** starts the next round.
+In the results gallery, **Retrace your steps** replays the selected face's drawing clues. The stars remain in face order, and **Play again** starts a new five-face game.
+
+At the last drawing clue, **I don't know :(** immediately opens the current face's source photo and asks whether the player recognizes the person. **Yes** keeps the photo visible and opens another name input; that answer receives the same Correct / Inaccurate / Incorrect grading. **No**, or **I still don't know**, ends the face as Incorrect. Names and scores stay hidden until the final gallery. Photo guesses are identified in result text and activity records; the clue count still reflects drawing clues.
+
+Photos are discovered from `data/sources/<subject-id>/source.png` (also `.jpg`, `.jpeg`, or `.webp`). Rebuild after adding photos and include the source-photo directory when deploying. Missing or failed photos allow the player to continue, with an unavailable recognition response rather than a false No; failed downloads can also be retried. A pending download offers **Continue without photo**.
 
 ## Answer aliases
 
 Additional accepted spellings are listed by subject ID in [`src/config/subject-aliases.json`](src/config/subject-aliases.json). Every catalog subject has a curated list, including the 88 playable line-art subjects. These variants are added to the subject's canonical name and existing aliases. For example, Serena Williams accepts both `Wiliams` and `Serena Wiliams`; Albert Einstein accepts `Einstien` and `Albert Einstien`.
 
-Matching ignores capitalization, accents, spaces, and punctuation, then checks the explicit alias list. Accepted aliases, including existing typo variants, receive full credit. Surnames already accepted by the game remain accepted, including shared surnames, but suffixes such as `Jr` are not valid answers by themselves. The original submitted text is retained in activity records.
+Matching ignores capitalization, accents, spaces, and punctuation. Name words can appear in any order: **Pitt Brad** is Correct for **Brad Pitt**. Canonical names, correctly spelled surnames, original correctly spelled aliases, and the nicknames in [`src/config/subject-correct-aliases.json`](src/config/subject-correct-aliases.json) receive **Correct**. For example, **The Rock**, **Johnson**, and **J.Lo** are valid aliases. Reordered misspellings in the typo list remain Inaccurate. Suffixes such as `Jr` are not valid answers by themselves. The original submitted text is retained in activity records.
 
-Other close spellings receive **Partly correct**, a blue star in that face's position, and **Did you mean Novak Djokovic? You guessed Jokoviz**. Correct answers keep gold stars; incorrect or skipped answers keep outline stars. The five-face summary counts correct and partly correct answers separately. All feedback stays hidden until the fifth face is complete.
+Misspellings listed in `subject-aliases.json` and new close spellings receive **Inaccurate**, a blue star in that face's position, and **Did you mean Novak Djokovic? You guessed Jokoviz**. For example, `Einstien` is now Inaccurate rather than Correct. Correct answers keep gold stars; incorrect or skipped answers keep outline stars. The five-face summary counts correct and inaccurate answers separately.
 
-Similarity uses Damerau–Levenshtein distance: at most two edits and a distance of at most 25% of the longer normalized name, with at least five characters in both names. Only canonical names and original aliases are fuzzy-matched, never the generated typo list. A guess that matches another catalog subject as well or better receives no partial credit. These rules estimate spelling similarity, not a player's intent. Adjust defaults in `src/nameSimilarity.js`; the CLI uses the same rules:
+Similarity uses Damerau–Levenshtein distance: at most two edits and a distance of at most 25% of the longer normalized name, with at least four characters in both names (so `bolts` can match `Bolt`). Only correctly spelled aliases are fuzzy-matched, never the generated typo list. A new fuzzy guess that matches another catalog subject as well or better is Incorrect. These rules estimate spelling similarity, not a player's intent. Adjust defaults in `src/nameSimilarity.js`; the CLI uses the same rules:
 
 ```bash
 npm run compare:names -- "Jokoviz" "Novak Djokovic" "Djokovic"
 ```
 
-To add a spelling, append it to the subject's JSON array and rebuild. Add full-name and surname variants separately when both should count. `npm test` checks catalog coverage, accepted typos, normalization, and rejection of unrelated names.
+Add legitimate nicknames to `subject-correct-aliases.json` and known misspellings to `subject-aliases.json`, then rebuild. Add full-name and surname variants separately when both should count. `npm test` checks spelling classification, catalog coverage, normalization, photo recognition and round transitions.
 
 ## Activity recording
 
@@ -94,7 +98,9 @@ The browser creates two pseudonymous identifiers:
 
 The server records the portrait, mode, exact elements shown initially and after every refresh, submitted response, outcome, and canonical step count. A step is one refresh or the final submitted guess. Data is stored in `storage/game-activity.sqlite` by default.
 
-Reports list **partly correct** separately, and the API uses outcome `partial` plus a `partlyCorrectSessions` summary count. Deploy both the rebuilt frontend and updated server. Server startup automatically adds a `partial_match` flag to existing databases without changing old results; raw SQL must check this flag because the original binary `outcome` column stores partial matches as `incorrect`.
+The API returns only `correct`, `inaccurate`, and `incorrect`, with an `inaccurateSessions` summary count. Old clients submitting `partial` are accepted as `inaccurate`. Existing `partial_match` flags are presented as inaccurate without rewriting historical rows; raw SQL must check this flag because the original binary `outcome` column stores these answers as `incorrect`.
+
+`photoRecognized` is true, false, or null (not answered/unavailable). `answeredFromPhoto` identifies a name entered after recognizing the photo. `npm run report` includes both the recognition response and answer source. Deploy the rebuilt frontend and restart the updated server; startup adds the nullable `photo_recognized` column automatically.
 
 `npm run report` displays element history in chronological form:
 
