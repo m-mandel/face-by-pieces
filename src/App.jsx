@@ -483,7 +483,13 @@ function SessionResults({ rounds, onPlayAgain }) {
                     </figure>
                     <div className="result-details">
                       <p className="result-message">
-                        {isInaccurate ? (
+                        {round.photoOutcome ? (
+                          <>
+                            Photo answer: {round.photoOutcome === 'correct' ? 'Correct' : 'Incorrect'}.
+                            {round.submittedAnswer && <><br />You guessed <strong>{round.submittedAnswer}</strong></>}
+                            {round.photoOutcome === 'inaccurate' && <><br />Did you mean <strong>{round.portrait.name}</strong>?</>}
+                          </>
+                        ) : isInaccurate ? (
                           <>
                             Did you mean <strong>{round.portrait.name}</strong>?
                             <br />
@@ -783,14 +789,14 @@ function GameRound({
     setRefreshCount((count) => count + 1)
   }
 
-  const finishRound = (outcome, submittedAnswer, { skipped = false, photoRecognized = null } = {}) => {
+  const finishRound = (outcome, submittedAnswer, { skipped = false, photoRecognized = null, photoOutcome = null } = {}) => {
     if (finishedRef.current) return
     finishedRef.current = true
     completeGameSession(sessionId, {
       outcome,
       submittedAnswer,
       visibleElements: visibleIndices.length,
-      ...(photoRequestedRef.current && { photoRecognized }),
+      ...(photoRequestedRef.current && { photoRecognized, photoOutcome }),
     })
     onComplete({
       sessionId,
@@ -805,6 +811,7 @@ function GameRound({
       submittedAnswer,
       skipped,
       photoRecognized,
+      photoOutcome,
       answeredFromPhoto: photoRecognized === true && Boolean(submittedAnswer),
     })
   }
@@ -835,8 +842,8 @@ function GameRound({
 
   const handlePhotoRecognition = (recognized, guess) => {
     if (!photoRequestedRef.current || finishedRef.current) return
-    const outcome = guess ? getAnswerOutcome(guess, portrait, PORTRAITS) : 'incorrect'
-    finishRound(outcome, guess || '', { skipped: !guess, photoRecognized: recognized })
+    const photoOutcome = recognized === null ? null : guess ? getAnswerOutcome(guess, portrait, PORTRAITS) : 'incorrect'
+    finishRound('incorrect', guess || '', { skipped: !guess, photoRecognized: recognized, photoOutcome })
   }
 
   const handleToggleCategories = () => {

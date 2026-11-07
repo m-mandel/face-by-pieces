@@ -42,6 +42,9 @@ test('five-face sessions reveal only completed results and reset cleanly', async
     { category: 'politics', cached: false },
     { category: 'all', cached: true, inaccurate: true },
     { category: 'all', cached: false, inaccurate: true },
+    { category: 'all', cached: true, photoGuess: 'correct' },
+    { category: 'all', cached: false, photoGuess: 'inaccurate' },
+    { category: 'all', cached: true, photoGuess: 'incorrect' },
     { category: 'all', cached: true, skipLast: true },
     { category: 'all', cached: true, switchCategory: true },
     { category: 'all', cached: true, switchFinalCategory: true },
@@ -132,8 +135,8 @@ test('five-face sessions reveal only completed results and reset cleanly', async
     })
   }
 
-  for (const { category, cached, switchCategory, switchFinalCategory, inaccurate, skipLast } of scenarios) {
-    await t.test(`${category}, images ${cached ? 'cached' : 'pending'}${inaccurate ? ', inaccurate guess' : ''}${skipLast ? ', photo recognition on the fifth face' : ''}${switchCategory ? ', change category after two faces' : ''}${switchFinalCategory ? ', preserve last unplayed face on category change' : ''}`, async (t) => {
+  for (const { category, cached, switchCategory, switchFinalCategory, inaccurate, skipLast, photoGuess } of scenarios) {
+    await t.test(`${category}, images ${cached ? 'cached' : 'pending'}${inaccurate ? ', inaccurate guess' : ''}${photoGuess ? `, ${photoGuess} photo guess` : ''}${skipLast ? ', photo recognition on the fifth face' : ''}${switchCategory ? ', change category after two faces' : ''}${switchFinalCategory ? ', preserve last unplayed face on category change' : ''}`, async (t) => {
       if (switchFinalCategory) t.mock.method(Math, 'random', () => 0)
       const pending = []
       const values = new Map([
@@ -230,6 +233,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
           visited.push({ name, sessionId: round.sessionId })
           const revealsAnswer = action.startsWith('reveal-')
           const answer = action === 'correct' ? name : action === 'inaccurate' ? `${name}x` : action === 'reveal-empty' ? '' : 'wrong answer'
+          const photoAnswer = index === 2 && photoGuess ? photoGuess === 'correct' ? name : photoGuess === 'inaccurate' ? `${name}x` : 'wrong answer' : ''
           const usesAllClues = index === 1 || revealsAnswer
           if (usesAllClues) {
             await resolveImages()
@@ -304,9 +308,16 @@ test('five-face sessions reveal only completed results and reset cleanly', async
             if (index === 2) {
               assert.equal(completions().length, index, 'Yes opens a second guess')
               assert.equal(textOf(renderer.root.findByType('h1')), 'Who is it?')
-              const stillUnknown = findButtonByText('I still don’t know').props.onClick
-              commits.length = 0
-              await act(async () => { stillUnknown(); stillUnknown() })
+              if (photoGuess) {
+                await act(async () => renderer.root.findByType('input').props.onChange({ target: { value: photoAnswer } }))
+                const submitPhoto = renderer.root.findByType('form').props.onSubmit
+                commits.length = 0
+                await act(async () => { submitPhoto({ preventDefault() {} }); submitPhoto({ preventDefault() {} }) })
+              } else {
+                const stillUnknown = findButtonByText('I still don’t know').props.onClick
+                commits.length = 0
+                await act(async () => { stillUnknown(); stillUnknown() })
+              }
             }
             await act(async () => { respond(); finishOnce() })
           }
@@ -316,9 +327,9 @@ test('five-face sessions reveal only completed results and reset cleanly', async
             url: `/api/sessions/${round.sessionId}/complete`,
             body: {
               outcome: ['correct', 'inaccurate'].includes(action) ? action : 'incorrect',
-              submittedAnswer: revealsAnswer ? '' : answer,
+              submittedAnswer: revealsAnswer ? photoAnswer : answer,
               visibleElements: usesAllClues ? 2 : 1,
-              ...(revealsAnswer && { photoRecognized: index === 2 }),
+              ...(revealsAnswer && { photoRecognized: index === 2, photoOutcome: index === 2 && photoGuess ? photoGuess : 'incorrect' }),
             },
           })
           if (index < 4) {
@@ -336,6 +347,10 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         assert.deepEqual(savedRounds.map(({ result }) => result), [inaccurate ? 'inaccurate' : 'incorrect', 'correct', 'incorrect', 'incorrect', skipLast ? 'incorrect' : 'correct'])
         assert.deepEqual(savedRounds.map(({ portrait }) => portrait.name), visited.map(({ name }) => name))
         assert.deepEqual(savedRounds.map(({ photoRecognized }) => photoRecognized), [null, null, true, false, skipLast ? false : null])
+        assert.deepEqual(savedRounds.map(({ photoOutcome }) => photoOutcome), [null, null, photoGuess || 'incorrect', 'incorrect', skipLast ? 'incorrect' : null])
+        const photoResult = renderer.root.findAllByType('article')[2]
+        assert.equal(textOf(photoResult.findByType('h2')), 'Incorrect', 'the sketch is incorrect even when the photo guess is correct')
+        assert.ok(textOf(photoResult.findByProps({ className: 'result-message' })).startsWith(`Photo answer: ${photoGuess === 'correct' ? 'Correct' : 'Incorrect'}.`))
         assert.equal(savedRounds[1].elementHistory.length, 2)
         assert.equal(savedRounds[1].refreshCount, 1)
         assert.match(JSON.stringify(renderer.toJSON()), /result-screen/)

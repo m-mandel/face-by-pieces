@@ -69,7 +69,7 @@ Each game has five faces. Submitting a name ends that face and advances to the n
 
 In the results gallery, **Retrace your steps** replays the selected face's drawing clues. The stars remain in face order, and **Play again** starts a new five-face game.
 
-At the last drawing clue, **I don't know :(** immediately opens the current face's source photo and asks whether the player recognizes the person. **Yes** keeps the photo visible and opens another name input; that answer receives the same Correct / Inaccurate / Incorrect grading. **No**, or **I still don't know**, ends the face as Incorrect. Names and scores stay hidden until the final gallery. Photo guesses are identified in result text and activity records; the clue count still reflects drawing clues.
+At the last drawing clue, **I don't know :(** immediately opens the current face's source photo and asks whether the player recognizes the person. **Yes** keeps the photo visible and opens another name input. The round stays **Incorrect** even if the photo answer is correct: stars and scores reflect identification from the sketch. The result subtitle reports **Photo answer: Correct** or **Photo answer: Incorrect**. **No**, or **I still don't know**, also counts as an incorrect photo answer. Names and scores stay hidden until the final gallery, and the clue count still reflects drawing clues.
 
 Photos are discovered from `data/sources/<subject-id>/source.png` (also `.jpg`, `.jpeg`, or `.webp`). Rebuild after adding photos and include the source-photo directory when deploying. Missing or failed photos allow the player to continue, with an unavailable recognition response rather than a false No; failed downloads can also be retried. A pending download offers **Continue without photo**.
 
@@ -100,7 +100,9 @@ The server records the portrait, mode, exact elements shown initially and after 
 
 The API returns only `correct`, `inaccurate`, and `incorrect`, with an `inaccurateSessions` summary count. Old clients submitting `partial` are accepted as `inaccurate`. Existing `partial_match` flags are presented as inaccurate without rewriting historical rows; raw SQL must check this flag because the original binary `outcome` column stores these answers as `incorrect`.
 
-`photoRecognized` is true, false, or null (not answered/unavailable). `answeredFromPhoto` identifies a name entered after recognizing the photo. `npm run report` includes both the recognition response and answer source. Deploy the rebuilt frontend and restart the updated server; startup adds the nullable `photo_recognized` column automatically.
+`photoRecognized` records the player's Yes/No response, separately from whether their photo guess was right. `photoOutcome` preserves the photo grade (`correct`, `inaccurate`, `incorrect`, or null if unavailable/unanswered). `answeredFromPhoto` identifies a name entered after recognizing the photo. `resultCategory` is stored as **incorrect sketch-correct photo** or **incorrect sketch-incorrect photo**; inaccurate photo guesses go in the second category while retaining their detailed spelling grade. Missing/unavailable photos have no photo category. Both categories count toward `incorrectSessions`, with their own counts in the summary.
+
+`npm run report` includes the result category and photo grade. Deploy the rebuilt frontend and restart the updated server. Startup adds `photo_outcome` and `result_category`, preserves the photo grade of identifiable historical photo rounds, and corrects those rounds' sketch scores to Incorrect. Historical sketch-only rows and raw events remain unchanged. The server also enforces this scoring for cached clients using the previous format.
 
 `npm run report` displays element history in chronological form:
 

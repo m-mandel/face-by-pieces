@@ -111,16 +111,31 @@ test('inaccurate results and photo recognition survive migration, reporting and 
     const { session } = await api(`sessions/${sessionId}/complete`, { outcome: 'incorrect', submittedAnswer: '', photoRecognized: recognized })
     assert.equal(session.photoRecognized, recognized)
     assert.equal(session.outcome, 'incorrect', 'recognizing the photo does not change the skipped answer')
+    assert.equal(session.photoOutcome, recognized === null ? null : 'incorrect')
+    assert.equal(session.resultCategory, recognized === null ? null : 'incorrect sketch-incorrect photo')
     const { events } = await api(`admin/sessions/${sessionId}/events`)
     assert.equal(events.at(-1).metadata.photoRecognized, recognized)
   }
-  for (const [outcome, submittedAnswer] of [['correct', 'Djokovic'], ['inaccurate', 'Jokoviz'], ['incorrect', 'someone else']]) {
-    const sessionId = `photo-guess-${outcome}`
-    await api('sessions', { sessionId, deviceId: 'new-device', portraitId: 'novak-djokovic', mode: 'progressive', style: 'line-art' }, 201)
-    const { session } = await api(`sessions/${sessionId}/complete`, { outcome, submittedAnswer, photoRecognized: true })
-    assert.equal(session.outcome, outcome)
-    assert.equal(session.answeredFromPhoto, true)
-    assert.equal(session.submittedAnswer, submittedAnswer)
+  for (const version of ['old', 'new']) {
+    for (const [photoOutcome, submittedAnswer] of [['correct', 'Djokovic'], ['inaccurate', 'Jokoviz'], ['incorrect', 'someone else']]) {
+      const sessionId = `photo-guess-${version}-${photoOutcome}`
+      await api('sessions', { sessionId, deviceId: 'new-device', portraitId: 'novak-djokovic', mode: 'progressive', style: 'line-art' }, 201)
+      await api(`sessions/${sessionId}/complete`, { outcome: 'incorrect', submittedAnswer, photoRecognized: true, photoOutcome: 'unknown' }, 400)
+      const { session } = await api(`sessions/${sessionId}/complete`, {
+        outcome: version === 'old' ? photoOutcome : 'incorrect', submittedAnswer, photoRecognized: true,
+        ...(version === 'new' && { photoOutcome }),
+      })
+      assert.equal(session.outcome, 'incorrect')
+      assert.equal(session.photoOutcome, photoOutcome)
+      assert.equal(session.resultCategory, photoOutcome === 'correct' ? 'incorrect sketch-correct photo' : 'incorrect sketch-incorrect photo')
+      assert.equal(session.answeredFromPhoto, true)
+      assert.equal(session.submittedAnswer, submittedAnswer)
+      const { events } = await api(`admin/sessions/${sessionId}/events`)
+      assert.equal(events.at(-1).metadata.outcome, 'incorrect')
+      assert.equal(events.at(-1).metadata.photoOutcome, photoOutcome)
+      assert.equal(events.at(-1).metadata.resultCategory, session.resultCategory)
+      await api(`sessions/${sessionId}/complete`, { outcome: 'correct', submittedAnswer: 'Djokovic' }, 404)
+    }
   }
   // A browser with the previous bundle may still send the old outcome name.
   await api('sessions', { sessionId: 'cached-client-session', deviceId: 'new-device', portraitId: 'novak-djokovic', mode: 'progressive', style: 'line-art' }, 201)
@@ -128,8 +143,9 @@ test('inaccurate results and photo recognition survive migration, reporting and 
   await api('sessions/new-inaccurate-session/complete', { outcome: 'unsupported', submittedAnswer: 'Jokoviz' }, 400)
   const { summary } = await api('admin/summary')
   assert.deepEqual(summary, {
-    totalSessions: 13, completedSessions: 12, distinctDevices: 2,
-    averageSteps: 1.25, correctSessions: 3, inaccurateSessions: 3, incorrectSessions: 6,
+    totalSessions: 16, completedSessions: 15, distinctDevices: 2,
+    averageSteps: 1.2, correctSessions: 2, inaccurateSessions: 2, incorrectSessions: 11,
+    incorrectSketchCorrectPhotoSessions: 2, incorrectSketchIncorrectPhotoSessions: 6,
   })
   const { sessions } = await api('admin/sessions')
   assert.equal(sessions.find(({ sessionId }) => sessionId === 'old-pending').outcome, null)
@@ -139,18 +155,30 @@ test('inaccurate results and photo recognition survive migration, reporting and 
   assert.match(stdout, /inaccurateSessions/)
   assert.match(stdout, /Jokoviz/)
   assert.match(stdout, /recognizedPhoto/)
+  assert.match(stdout, /incorrect sketch-correct photo/)
+  assert.match(stdout, /incorrect sketch-incorrect photo/)
   await stopServer()
 
   const migrated = new Database(filename)
   try {
     const oldRows = migrated.prepare("SELECT * FROM sessions WHERE session_id LIKE 'old-%' ORDER BY session_id").all()
-    assert.deepEqual(oldRows.map(({ partial_match, photo_recognized, ...row }) => {
+    assert.deepEqual(oldRows.map(({ partial_match, photo_recognized, photo_outcome, result_category, ...row }) => {
       assert.equal(partial_match, 0)
       assert.equal(photo_recognized, null)
+      assert.equal(photo_outcome, null)
+      assert.equal(result_category, null)
       return row
     }), originalRows, 'historical results are untouched')
     assert.deepEqual(migrated.prepare("SELECT * FROM events WHERE session_id LIKE 'old-%'").all(), originalEvents)
     assert.deepEqual(migrated.pragma('foreign_key_check'), [])
+    // Simulate already recorded photo rounds from the previous release.
+    // Startup must preserve the original photo grade while fixing the sketch score.
+    migrated.exec(`
+      UPDATE sessions SET photo_outcome = NULL, result_category = NULL,
+        outcome = CASE WHEN session_id = 'photo-guess-old-correct' THEN 'correct' ELSE 'incorrect' END,
+        partial_match = CASE WHEN session_id = 'photo-guess-old-inaccurate' THEN 1 ELSE 0 END
+      WHERE session_id LIKE 'photo-guess-old-%' OR session_id = 'photo-false-session';
+    `)
   } finally {
     migrated.close()
   }
@@ -160,4 +188,13 @@ test('inaccurate results and photo recognition survive migration, reporting and 
   for (const recognized of [true, false, null]) {
     assert.equal(persisted.find(({ sessionId }) => sessionId === `photo-${recognized}-session`).photoRecognized, recognized)
   }
+  for (const photoOutcome of ['correct', 'inaccurate', 'incorrect']) {
+    const session = persisted.find(({ sessionId }) => sessionId === `photo-guess-old-${photoOutcome}`)
+    assert.equal(session.outcome, 'incorrect')
+    assert.equal(session.photoOutcome, photoOutcome)
+    assert.equal(session.resultCategory, photoOutcome === 'correct' ? 'incorrect sketch-correct photo' : 'incorrect sketch-incorrect photo')
+  }
+  await stopServer()
+  await startServer()
+  assert.deepEqual((await api('admin/summary')).summary, summary, 'restarting again does not overwrite photo grades')
 })

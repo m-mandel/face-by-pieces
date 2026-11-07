@@ -62,6 +62,30 @@ if (!sessionColumns.some((column) => column.name === 'partial_match')) {
 if (!sessionColumns.some((column) => column.name === 'photo_recognized')) {
   database.exec('ALTER TABLE sessions ADD COLUMN photo_recognized INTEGER CHECK (photo_recognized IN (0, 1))')
 }
+database.transaction(() => {
+  if (!sessionColumns.some((column) => column.name === 'photo_outcome')) {
+    database.exec("ALTER TABLE sessions ADD COLUMN photo_outcome TEXT CHECK (photo_outcome IN ('correct', 'inaccurate', 'incorrect'))")
+  }
+  if (!sessionColumns.some((column) => column.name === 'result_category')) {
+    database.exec("ALTER TABLE sessions ADD COLUMN result_category TEXT CHECK (result_category IN ('incorrect sketch-correct photo', 'incorrect sketch-incorrect photo'))")
+  }
+  // Older versions scored the photo guess as the round result. Preserve that
+  // grade separately, then correct the sketch score for identifiable photo rounds.
+  database.exec(`
+    UPDATE sessions SET
+      photo_outcome = CASE
+        WHEN photo_recognized = 1 AND COALESCE(submitted_answer, '') != ''
+          THEN CASE WHEN partial_match = 1 THEN 'inaccurate' ELSE outcome END
+        ELSE 'incorrect' END,
+      result_category = CASE
+        WHEN photo_recognized = 1 AND COALESCE(submitted_answer, '') != '' AND outcome = 'correct' AND partial_match = 0
+          THEN 'incorrect sketch-correct photo'
+        ELSE 'incorrect sketch-incorrect photo' END,
+      outcome = 'incorrect',
+      partial_match = 0
+    WHERE completed_at IS NOT NULL AND photo_recognized IS NOT NULL AND photo_outcome IS NULL
+  `)
+})()
 
 const now = () => new Date().toISOString()
 
@@ -109,6 +133,8 @@ const finishSession = database.prepare(`
     outcome = @storedOutcome,
     partial_match = @partialMatch,
     photo_recognized = @photoRecognized,
+    photo_outcome = @photoOutcome,
+    result_category = @resultCategory,
     submitted_answer = @submittedAnswer,
     step_count = refresh_count + 1
   WHERE session_id = @sessionId AND completed_at IS NULL
@@ -161,13 +187,21 @@ export function setInitialElements(sessionId, elementIndices) {
   }).changes > 0
 }
 
-export const completeSession = database.transaction(({ sessionId, outcome, submittedAnswer, metadata, photoRecognized = null }) => {
+export const completeSession = database.transaction(({ sessionId, outcome, submittedAnswer, metadata, photoRecognized = null, photoOutcome = null }) => {
   const timestamp = now()
+  // Cached clients still send the photo grade in outcome. Enforce sketch-only
+  // scoring on the server too, while retaining the separate photo result.
+  const finalPhotoOutcome = photoOutcome ?? (photoRecognized === null ? null : photoRecognized && submittedAnswer ? outcome : 'incorrect')
+  const scoredOutcome = finalPhotoOutcome === null ? outcome : 'incorrect'
+  const resultCategory = finalPhotoOutcome === null ? null : finalPhotoOutcome === 'correct'
+    ? 'incorrect sketch-correct photo' : 'incorrect sketch-incorrect photo'
   const result = finishSession.run({
     sessionId, submittedAnswer, timestamp,
-    storedOutcome: outcome === 'inaccurate' ? 'incorrect' : outcome,
-    partialMatch: outcome === 'inaccurate' ? 1 : 0,
+    storedOutcome: scoredOutcome === 'inaccurate' ? 'incorrect' : scoredOutcome,
+    partialMatch: scoredOutcome === 'inaccurate' ? 1 : 0,
     photoRecognized: photoRecognized === null ? null : Number(photoRecognized),
+    photoOutcome: finalPhotoOutcome,
+    resultCategory,
   })
   if (result.changes === 0) return false
 
@@ -175,7 +209,7 @@ export const completeSession = database.transaction(({ sessionId, outcome, submi
     sessionId,
     eventType: 'guess_submitted',
     timestamp,
-    metadataJson: JSON.stringify({ ...metadata, outcome, photoRecognized }),
+    metadataJson: JSON.stringify({ ...metadata, outcome: scoredOutcome, photoRecognized, photoOutcome: finalPhotoOutcome, resultCategory }),
   })
   touchSessionDevice.run({ sessionId, timestamp })
   return true
@@ -193,6 +227,8 @@ export function getSession(sessionId) {
       completed_at AS completedAt,
       CASE WHEN partial_match = 1 THEN 'inaccurate' ELSE outcome END AS outcome,
       photo_recognized AS photoRecognized,
+      photo_outcome AS photoOutcome,
+      result_category AS resultCategory,
       submitted_answer AS submittedAnswer,
       refresh_count AS refreshCount,
       step_count AS stepCount
@@ -219,7 +255,9 @@ export function getSummary() {
       COALESCE(ROUND(AVG(CASE WHEN completed_at IS NOT NULL THEN step_count END), 2), 0) AS averageSteps,
       COALESCE(SUM(CASE WHEN outcome = 'correct' THEN 1 ELSE 0 END), 0) AS correctSessions,
       COALESCE(SUM(CASE WHEN partial_match = 1 THEN 1 ELSE 0 END), 0) AS inaccurateSessions,
-      COALESCE(SUM(CASE WHEN outcome = 'incorrect' AND partial_match = 0 THEN 1 ELSE 0 END), 0) AS incorrectSessions
+      COALESCE(SUM(CASE WHEN outcome = 'incorrect' AND partial_match = 0 THEN 1 ELSE 0 END), 0) AS incorrectSessions,
+      COALESCE(SUM(CASE WHEN result_category = 'incorrect sketch-correct photo' THEN 1 ELSE 0 END), 0) AS incorrectSketchCorrectPhotoSessions,
+      COALESCE(SUM(CASE WHEN result_category = 'incorrect sketch-incorrect photo' THEN 1 ELSE 0 END), 0) AS incorrectSketchIncorrectPhotoSessions
     FROM sessions
   `).get()
 }
@@ -236,6 +274,8 @@ export function listSessions(limit = 100) {
       s.completed_at AS completedAt,
       CASE WHEN s.partial_match = 1 THEN 'inaccurate' ELSE s.outcome END AS outcome,
       s.photo_recognized AS photoRecognized,
+      s.photo_outcome AS photoOutcome,
+      s.result_category AS resultCategory,
       s.submitted_answer AS submittedAnswer,
       s.refresh_count AS refreshCount,
       s.step_count AS stepCount,

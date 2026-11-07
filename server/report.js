@@ -30,6 +30,8 @@ const sessions = listSessions(50).map((session) => ({
   mode: session.mode,
   response: session.submittedAnswer || '—',
   result: session.outcome || 'in progress',
+  resultCategory: session.resultCategory || '—',
+  photoResult: session.photoOutcome || '—',
   recognizedPhoto: session.photoRecognized === null ? '—' : session.photoRecognized ? 'yes' : 'no',
   answerSource: session.answeredFromPhoto ? 'photo' : 'drawing',
   refreshes: session.refreshCount,

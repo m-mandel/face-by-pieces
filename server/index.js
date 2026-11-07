@@ -141,7 +141,7 @@ app.put('/api/sessions/:sessionId/initial-elements', (request, response) => {
 
 app.post('/api/sessions/:sessionId/complete', (request, response) => {
   const { sessionId } = request.params
-  const { submittedAnswer, visibleElements, photoRecognized = null } = request.body || {}
+  const { submittedAnswer, visibleElements, photoRecognized = null, photoOutcome = null } = request.body || {}
   // Older cached clients may still submit the previous name for this result.
   const outcome = request.body?.outcome === 'partial' ? 'inaccurate' : request.body?.outcome
   if (!isValidId(sessionId) || !['correct', 'inaccurate', 'incorrect'].includes(outcome)) {
@@ -153,12 +153,17 @@ app.post('/api/sessions/:sessionId/complete', (request, response) => {
   if (photoRecognized !== null && typeof photoRecognized !== 'boolean') {
     return response.status(400).json({ error: 'Photo recognition must be true, false, or null.' })
   }
+  if (photoOutcome !== null && (!['correct', 'inaccurate', 'incorrect'].includes(photoOutcome) ||
+      photoRecognized === null || (photoOutcome !== 'incorrect' && (photoRecognized !== true || !submittedAnswer.trim())))) {
+    return response.status(400).json({ error: 'Invalid photo outcome.' })
+  }
 
   const completed = completeSession({
     sessionId,
     outcome,
     submittedAnswer: submittedAnswer.trim(),
     photoRecognized,
+    photoOutcome,
     metadata: {
       visibleElements: Number.isInteger(visibleElements) ? visibleElements : null,
     },
