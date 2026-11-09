@@ -929,15 +929,7 @@ function GameRound({
                   : 'Reveal the next portrait clue'
           }
         >
-          <Icon
-            name={
-              drawingFailed
-                ? 'refresh'
-                : allCluesRevealed
-                  ? 'check'
-                  : 'arrow'
-            }
-          />
+          next clue
         </button>
         <form
           className={`guess-form ${answerFocused ? 'is-editing' : ''} ${showSkip ? 'has-skip' : ''}`}
@@ -982,7 +974,7 @@ function GameRound({
                   aria-label="Submit guess"
                   onPointerDown={(event) => event.preventDefault()}
                 >
-                  <Icon />
+                  Submit
                 </button>
               )}
             </div>

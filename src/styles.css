@@ -827,22 +827,25 @@ h1:focus {
   flex-direction: column;
   align-items: center;
   flex: 0 0 auto;
-  gap: 16px;
+  gap: 28px;
   padding: 7px 10px calc(10px + env(safe-area-inset-bottom));
 }
 .next-clue-button {
   display: grid;
-  width: 56px;
+  min-width: 136px;
   height: 56px;
-  padding: 0;
+  padding: 0 24px;
   place-items: center;
-  color: var(--ink);
-  background: #fff;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
+  color: #24543b;
+  background: #dceee1;
+  border: 1px solid #85b294;
+  border-radius: 28px;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 .next-clue-button:hover:not(:disabled) {
-  background: var(--wash);
+  background: #c7e3d0;
 }
 .next-clue-button:disabled {
   color: var(--muted);
@@ -860,10 +863,6 @@ h1:focus {
   background: rgb(255 255 255 / 95%);
   font-size: 13px;
   text-align: center;
-}
-.next-clue-button svg {
-  width: 26px;
-  height: 26px;
 }
 .guess-form {
   width: 100%;
@@ -909,18 +908,20 @@ h1:focus {
 }
 .guess-input button {
   display: grid;
-  width: 42px;
+  min-width: 84px;
   height: 40px;
-  padding: 0;
+  padding: 0 14px;
   flex-shrink: 0;
   place-items: center;
   color: #fff;
-  background: var(--ink);
+  background: #2563eb;
+  font-size: 16px;
+  font-weight: 600;
   border: 0;
   border-radius: 6px;
 }
 .guess-input button:hover {
-  background: #494942;
+  background: #1d4ed8;
 }
 .guess-error {
   margin-top: 7px;
@@ -972,11 +973,19 @@ h1:focus {
   font-size: 25px;
 }
 .answer-focused .guess-controls {
-  gap: 14px;
+  gap: 24px;
   padding-top: 4px;
   padding-bottom: max(6px, env(safe-area-inset-bottom));
 }
 .answer-focused .next-clue-button {
-  width: 50px;
   height: 50px;
+}
+
+@media (min-width: 800px) and (hover: hover) and (pointer: fine) {
+  .guess-controls {
+    padding-bottom: clamp(56px, 10vh, 112px);
+  }
+  .guess-form {
+    max-width: 520px;
+  }
 }
