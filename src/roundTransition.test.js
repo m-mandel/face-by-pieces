@@ -160,7 +160,6 @@ test('five-face sessions reveal only completed results and reset cleanly', async
       const findButton = (label) => renderer.root.findAllByType('button').find((button) => button.props['aria-label'] === label)
       const findButtonByText = (label) => renderer.root.findAllByType('button').find((button) => !button.props.disabled && textOf(button).trim() === label)
       const clueButton = () => renderer.root.findByProps({ className: 'next-clue-button' })
-      const clueIcon = () => clueButton().findAll((node) => node.props.name)[0].props.name
       const assertIdleControls = (canSkip = false) => {
         assert.equal(findButton('Submit guess'), undefined, 'submit is hidden until editing starts')
         assert.equal(Boolean(findButton("I don't know :(")), canSkip,
@@ -173,7 +172,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         assertIdleControls()
         const artwork = renderer.root.findAll((node) => node.props.roundId != null && node.props.artwork)[0]
         assert.equal(artwork.props.visibleIndices.length, 1)
-        assert.notEqual(clueIcon(), 'check')
+        assert.notEqual(clueButton().props['aria-label'], 'All portrait elements revealed')
       }
       const assertNoReveal = () => {
         assert.ok(commits.length > 0)
@@ -215,17 +214,18 @@ test('five-face sessions reveal only completed results and reset cleanly', async
               const artwork = renderer.root.findAll((node) => node.props.roundId != null && node.props.artwork)[0]
               assert.equal(artwork.props.visibleIndices.length, 2, 'the final clue is requested')
               assertIdleControls(false)
-              assert.equal(clueIcon(), 'arrow', 'the check must wait for the final drawing decode')
+              assert.equal(clueButton().props['aria-label'], 'Loading drawing', 'the final clue must finish decoding before skipping is available')
               assert.equal(clueButton().props.disabled, true)
             }
             await resolveImages()
             assertIdleControls(true)
-            assert.equal(clueIcon(), 'check', 'skip appears at the same point as the check')
+            assert.equal(clueButton().props.disabled, true, 'no more clues can be requested once skipping is available')
             assert.equal(clueButton().props['aria-label'], 'All portrait elements revealed')
           }
           if (action !== 'reveal-empty') {
             await act(async () => { renderer.root.findByType('input').parent.props.onFocus() })
             assert.ok(findButton('Submit guess'), 'focusing the input exposes submit')
+            assert.equal(textOf(findButton('Submit guess')), 'Submit')
             assert.equal(findButton("I don't know :("), undefined)
             await act(async () => {
               renderer.root.findByType('input').props.onChange({ target: { value: answer } })

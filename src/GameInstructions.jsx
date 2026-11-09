@@ -29,7 +29,7 @@ export default function GameInstructions({ onContinue }) {
       </p>
       <ol className="instructions-steps">
         <li>Type a name whenever you’re ready to guess.</li>
-        <li>Tap the arrow for another clue. Each clue adds a step.</li>
+        <li>Tap “next clue” for another clue. Each clue adds a step.</li>
         <li>After the final clue, you can choose “I don’t know.”</li>
       </ol>
       <button className="primary-button" type="button" onClick={onContinue} autoFocus>

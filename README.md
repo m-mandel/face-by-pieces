@@ -30,7 +30,7 @@ The server hosts the production build from `dist/` and listens on `PORT` (8080 b
 
 ## Interface designs
 
-The **Ink** interface shows **Face x of 5** above the centered **Guess Who?** title, with a step counter at the top right. Every round uses **Sequence** mode and **Line art**, drawing from all available faces. The counter starts at **Step 1**, increases with each clue reveal, and resets for a new round. On narrow screens, the centered title sits just below the step counter. The sketch fills the space between the header and the bottom controls: a round clue button and a name field with a submit button.
+The **Ink** interface shows **Face x of 5** above the centered **Guess Who?** title, with a step counter at the top right. Every round uses **Sequence** mode and **Line art**, drawing from all available faces. The counter starts at **Step 1**, increases with each clue reveal, and resets for a new round. On narrow screens, the centered title sits just below the step counter. The sketch fills the space between the header and the bottom controls: a green **next clue** button and a name field that reveals a blue **Submit** button while editing. On desktop, the centered name field is at most 520px wide with more space below it; mobile keeps the full-width layout.
 
 New players first see a **How to play** popup explaining that the goal is to guess each face in as few steps as possible and that each game has **5 faces**. **Start playing** (or Escape) opens the first face directly. No portrait loads or game session starts while the instructions are open. Instructions appear once per browser player ID; a new ID or cleared browser storage shows them again. The modal keeps keyboard focus inside until the player starts.
 
