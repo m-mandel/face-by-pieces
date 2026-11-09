@@ -110,6 +110,8 @@ test('inaccurate results and photo recognition survive migration, reporting and 
     await api(`sessions/${sessionId}/complete`, { outcome: 'incorrect', submittedAnswer: '', photoRecognized: 'yes' }, 400)
     const { session } = await api(`sessions/${sessionId}/complete`, { outcome: 'incorrect', submittedAnswer: '', photoRecognized: recognized })
     assert.equal(session.photoRecognized, recognized)
+    assert.equal(session.submittedAnswer, '', 'skipped photos retain an empty answer, distinct from a submitted wrong name')
+    assert.equal(session.answeredFromPhoto, false)
     assert.equal(session.outcome, 'incorrect', 'recognizing the photo does not change the skipped answer')
     assert.equal(session.photoOutcome, recognized === null ? null : 'incorrect')
     assert.equal(session.resultCategory, recognized === null ? null : 'incorrect sketch-incorrect photo')

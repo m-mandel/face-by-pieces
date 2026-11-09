@@ -347,7 +347,9 @@ function SessionResults({ rounds, onPlayAgain }) {
                       <p className="result-message">
                         {round.photoOutcome ? (
                           <>
-                            Photo answer: {round.photoOutcome === 'correct' ? 'Correct' : 'Incorrect'}.
+                            Photo answer: {round.photoRecognized === false || !round.submittedAnswer?.trim()
+                              ? 'did not know'
+                              : round.photoOutcome === 'correct' ? 'Correct' : 'Incorrect'}.
                             {round.submittedAnswer && <><br />You guessed <strong>{round.submittedAnswer}</strong></>}
                             {round.photoOutcome === 'inaccurate' && <><br />Did you mean <strong>{round.portrait.name}</strong>?</>}
                           </>

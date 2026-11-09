@@ -319,7 +319,9 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         assert.deepEqual(savedRounds.map(({ photoOutcome }) => photoOutcome), [null, null, photoGuess || 'incorrect', 'incorrect', skipLast ? 'incorrect' : null])
         const photoResult = renderer.root.findAllByType('article')[2]
         assert.equal(textOf(photoResult.findByType('h2')), 'Incorrect', 'the sketch is incorrect even when the photo guess is correct')
-        assert.ok(textOf(photoResult.findByProps({ className: 'result-message' })).startsWith(`Photo answer: ${photoGuess === 'correct' ? 'Correct' : 'Incorrect'}.`))
+        assert.ok(textOf(photoResult.findByProps({ className: 'result-message' })).startsWith(`Photo answer: ${!photoGuess ? 'did not know' : photoGuess === 'correct' ? 'Correct' : 'Incorrect'}.`))
+        const unknownPhotoResult = renderer.root.findAllByType('article')[3]
+        assert.ok(textOf(unknownPhotoResult.findByProps({ className: 'result-message' })).startsWith('Photo answer: did not know.'))
         assert.equal(savedRounds[1].elementHistory.length, 2)
         assert.equal(savedRounds[1].refreshCount, 1)
         assert.match(JSON.stringify(renderer.toJSON()), /result-screen/)
