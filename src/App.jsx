@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { PORTRAITS, getAvailablePortraitIndices, getClueIndices } from './portraits'
-import { CATEGORIES } from './portraitCategories'
 import { getNextLayerIndex } from './layerOrder'
 import { getAnswerOutcome } from './answerMatching'
-import CategoryWelcome from './CategoryWelcome'
 import GameInstructions from './GameInstructions'
 import PhotoRecognition from './PhotoRecognition'
 import PortraitArtwork from './PortraitArtwork'
@@ -20,31 +18,11 @@ import {
 const STYLE_ID = 'line-art'
 const MODE_ID = 'progressive'
 const SESSION_LENGTH = 5
-const CATEGORY_STORAGE_KEY = 'face-by-pieces-category'
+const LEGACY_CATEGORY_STORAGE_KEY = 'face-by-pieces-category'
 const INSTRUCTIONS_STORAGE_KEY = 'face-by-pieces-instructions'
 
-function getCategoryOptions() {
-  return CATEGORIES.map((option) => ({
-    ...option,
-    disabled: getAvailablePortraitIndices(STYLE_ID, option.id).length === 0,
-  }))
-}
-
-function getPlayerCategory(deviceId) {
-  const savedCategory = localStorage.getItem(`${CATEGORY_STORAGE_KEY}:${deviceId}`)
-  return CATEGORIES.some((category) => category.id === savedCategory) &&
-    getAvailablePortraitIndices(STYLE_ID, savedCategory).length > 0
-    ? savedCategory
-    : null
-}
-
-function savePlayerCategory(deviceId, categoryId) {
-  localStorage.setItem(`${CATEGORY_STORAGE_KEY}:${deviceId}`, categoryId)
-  localStorage.setItem(CATEGORY_STORAGE_KEY, categoryId)
-}
-
-function getRandomPortraitIndex(currentIndex = -1, categoryId = 'all') {
-  const eligibleIndices = getAvailablePortraitIndices(STYLE_ID, categoryId)
+function getRandomPortraitIndex(currentIndex = -1) {
+  const eligibleIndices = getAvailablePortraitIndices(STYLE_ID)
   const availableIndices = eligibleIndices.filter(
     (index) => index !== currentIndex,
   )
@@ -52,14 +30,14 @@ function getRandomPortraitIndex(currentIndex = -1, categoryId = 'all') {
   return availableIndices[Math.floor(Math.random() * availableIndices.length)]
 }
 
-function getNextSessionPortraitIndex(currentIndex, completedRounds, categoryId) {
+function getNextSessionPortraitIndex(currentIndex, completedRounds) {
   const played = new Set(completedRounds.map((round) => round.portraitIndex))
-  const unplayed = getAvailablePortraitIndices(STYLE_ID, categoryId).filter(
+  const unplayed = getAvailablePortraitIndices(STYLE_ID).filter(
     (index) => !played.has(index),
   )
   const available = unplayed.filter((index) => index !== currentIndex)
   if (available.length === 0 && unplayed.length > 0) return unplayed[0]
-  if (available.length === 0) return getRandomPortraitIndex(currentIndex, categoryId)
+  if (available.length === 0) return getRandomPortraitIndex(currentIndex)
   return available[Math.floor(Math.random() * available.length)]
 }
 
@@ -69,7 +47,6 @@ function Icon({ name = 'arrow', ...props }) {
     refresh: 'M20 8a8 8 0 1 0 .1 7M20 3v5h-5',
     close: 'm6 6 12 12M18 6 6 18',
     back: 'm14 5-7 7 7 7',
-    chevron: 'm7 10 5 5 5-5',
     check: 'm5 12 4 4L19 6',
     replay: 'M5 5v14l14-7Z',
   }
@@ -125,121 +102,6 @@ function PortraitFrame({
         label={label}
         fitToInk
       />
-    </div>
-  )
-}
-
-function SettingsDropdown({
-  label,
-  options,
-  value,
-  open,
-  onToggle,
-  onClose,
-  onSelect,
-}) {
-  const id = useId()
-  const rootRef = useRef(null)
-  const buttonRef = useRef(null)
-  const menuRef = useRef(null)
-  const selected = options.find((option) => option.id === value)
-
-  useEffect(() => {
-    if (!open) return
-    menuRef.current.querySelector('[aria-checked="true"]')?.focus()
-    const handleOutsideClick = (event) => {
-      if (!rootRef.current.contains(event.target)) onClose()
-    }
-    document.addEventListener('pointerdown', handleOutsideClick)
-    return () => document.removeEventListener('pointerdown', handleOutsideClick)
-  }, [open, onClose])
-
-  const closeAndFocus = () => {
-    onClose()
-    buttonRef.current.focus({ preventScroll: true })
-  }
-
-  const handleMenuKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      event.preventDefault()
-      closeAndFocus()
-      return
-    }
-    if (event.key === 'Tab') {
-      // Continue the page's normal tab order from the menu's trigger.
-      closeAndFocus()
-      return
-    }
-    const items = [
-      ...menuRef.current.querySelectorAll('[role^="menuitem"]:not(:disabled)'),
-    ]
-    const index = items.indexOf(document.activeElement)
-    let nextIndex
-    if (event.key === 'ArrowDown') nextIndex = (index + 1) % items.length
-    if (event.key === 'ArrowUp')
-      nextIndex = (index - 1 + items.length) % items.length
-    if (event.key === 'Home') nextIndex = 0
-    if (event.key === 'End') nextIndex = items.length - 1
-    if (nextIndex !== undefined) {
-      event.preventDefault()
-      items[nextIndex].focus()
-    }
-  }
-
-  return (
-    <div
-      ref={rootRef}
-      className="settings-dropdown"
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) onClose()
-      }}
-    >
-      <button
-        ref={buttonRef}
-        id={`${id}-button`}
-        className="settings-dropdown-button"
-        aria-label={`${label}: ${selected.label}`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-controls={open ? `${id}-menu` : undefined}
-        onClick={onToggle}
-        onKeyDown={(event) => {
-          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-            event.preventDefault()
-            if (!open) onToggle()
-          }
-        }}
-      >
-        {label}
-        <Icon name="chevron" />
-      </button>
-      {open && (
-        <div
-          ref={menuRef}
-          id={`${id}-menu`}
-          className="settings-dropdown-menu"
-          role="menu"
-          aria-labelledby={`${id}-button`}
-          onKeyDown={handleMenuKeyDown}
-        >
-          {options.map((option) => (
-            <button
-              key={option.id}
-              role="menuitemradio"
-              aria-checked={value === option.id}
-              disabled={option.disabled}
-              tabIndex={-1}
-              onClick={() => {
-                onSelect(option.id)
-                closeAndFocus()
-              }}
-            >
-              <span>{option.label}</span>
-              {value === option.id && <Icon name="check" />}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   )
 }
@@ -558,12 +420,11 @@ function SessionResults({ rounds, onPlayAgain }) {
 
 export default function App() {
   const [deviceId] = useState(getOrCreateDeviceId)
-  const [startingCategoryId, setStartingCategoryId] = useState(() =>
-    getPlayerCategory(deviceId),
-  )
   const [instructionsSeen, setInstructionsSeen] = useState(() =>
-    startingCategoryId !== null ||
-    localStorage.getItem(`${INSTRUCTIONS_STORAGE_KEY}:${deviceId}`) === '1',
+    localStorage.getItem(`${INSTRUCTIONS_STORAGE_KEY}:${deviceId}`) === '1' ||
+    // A saved category identifies someone who already completed the old setup.
+    // It no longer filters which faces they play.
+    localStorage.getItem(`${LEGACY_CATEGORY_STORAGE_KEY}:${deviceId}`) !== null,
   )
 
   const handleInstructionsContinue = () => {
@@ -571,54 +432,25 @@ export default function App() {
     setInstructionsSeen(true)
   }
 
-  const handleStart = (categoryId) => {
-    if (getAvailablePortraitIndices(STYLE_ID, categoryId).length === 0) return
-    savePlayerCategory(deviceId, categoryId)
-    setStartingCategoryId(categoryId)
-  }
-
-  if (startingCategoryId === null) {
+  if (!instructionsSeen) {
     return (
       <main className="ink-app">
         <Masthead />
-        {instructionsSeen ? (
-          <CategoryWelcome options={getCategoryOptions()} onStart={handleStart} />
-        ) : (
-          <GameInstructions onContinue={handleInstructionsContinue} />
-        )}
+        <GameInstructions onContinue={handleInstructionsContinue} />
       </main>
     )
   }
 
-  return <Game deviceId={deviceId} initialCategoryId={startingCategoryId} />
+  return <Game deviceId={deviceId} />
 }
 
-function Game({ deviceId, initialCategoryId }) {
+function Game({ deviceId }) {
   const [round, setRound] = useState(() => ({
-    categoryId: initialCategoryId,
-    portraitIndex: getRandomPortraitIndex(-1, initialCategoryId),
+    portraitIndex: getRandomPortraitIndex(),
     sessionId: createSessionId(),
     completedRounds: [],
   }))
-  const { categoryId, portraitIndex, sessionId, completedRounds } = round
-
-  const handleChangeCategory = (nextCategory) => {
-    if (
-      nextCategory === categoryId ||
-      getAvailablePortraitIndices(STYLE_ID, nextCategory).length === 0
-    ) return
-    savePlayerCategory(deviceId, nextCategory)
-    recordSessionEvent(sessionId, 'category_changed', {
-      from: categoryId,
-      to: nextCategory,
-    })
-    setRound({
-      sessionId: createSessionId(),
-      portraitIndex: getNextSessionPortraitIndex(portraitIndex, completedRounds, nextCategory),
-      categoryId: nextCategory,
-      completedRounds,
-    })
-  }
+  const { portraitIndex, sessionId, completedRounds } = round
 
   const handleComplete = (completedRound) => {
     const completed = [...completedRounds, completedRound]
@@ -627,7 +459,7 @@ function Game({ deviceId, initialCategoryId }) {
       completedRounds: completed,
       ...(completed.length < SESSION_LENGTH && {
         sessionId: createSessionId(),
-        portraitIndex: getNextSessionPortraitIndex(portraitIndex, completed, categoryId),
+        portraitIndex: getNextSessionPortraitIndex(portraitIndex, completed),
       }),
     }
     // Ignore a repeated submission or a callback from a face already replaced.
@@ -642,8 +474,7 @@ function Game({ deviceId, initialCategoryId }) {
   const handlePlayAgain = () => {
     setRound({
       sessionId: createSessionId(),
-      portraitIndex: getRandomPortraitIndex(portraitIndex, categoryId),
-      categoryId,
+      portraitIndex: getRandomPortraitIndex(portraitIndex),
       completedRounds: [],
     })
   }
@@ -657,12 +488,10 @@ function Game({ deviceId, initialCategoryId }) {
   return (
     <GameRound
       key={sessionId}
-      categoryId={categoryId}
       portraitIndex={portraitIndex}
       sessionId={sessionId}
       roundNumber={completedRounds.length + 1}
       deviceId={deviceId}
-      onChangeCategory={handleChangeCategory}
       onComplete={handleComplete}
     />
   )
@@ -670,10 +499,8 @@ function Game({ deviceId, initialCategoryId }) {
 
 function GameRound({
   deviceId,
-  categoryId,
   portraitIndex,
   sessionId,
-  onChangeCategory,
   roundNumber,
   onComplete,
 }) {
@@ -700,7 +527,6 @@ function GameRound({
   const finishedRef = useRef(false)
   const photoRequestedRef = useRef(false)
   const [photoOpen, setPhotoOpen] = useState(false)
-  const [categoriesOpen, setCategoriesOpen] = useState(false)
   const promptRef = useRef(null)
 
   const drawingRequestId = `${sessionId}:${refreshCount}:${loadAttempt}`
@@ -801,7 +627,6 @@ function GameRound({
     onComplete({
       sessionId,
       portraitIndex,
-      categoryId,
       portrait,
       artwork,
       styleId: STYLE_ID,
@@ -846,13 +671,6 @@ function GameRound({
     finishRound('incorrect', guess || '', { skipped: !guess, photoRecognized: recognized, photoOutcome })
   }
 
-  const handleToggleCategories = () => {
-    if (!categoriesOpen) recordSessionEvent(sessionId, 'category_opened')
-    setCategoriesOpen((current) => !current)
-  }
-
-  const handleCloseMenu = useCallback(() => setCategoriesOpen(false), [])
-
   if (photoOpen) {
     return <PhotoRecognition photoSrc={portrait.photoSrc} roundNumber={roundNumber} viewportHeight={viewportHeight} onAnswer={handlePhotoRecognition} />
   }
@@ -866,17 +684,6 @@ function GameRound({
       }}
     >
       <header className="guess-header">
-        <div className="guess-settings">
-          <SettingsDropdown
-            label="Categories"
-            options={getCategoryOptions()}
-            value={categoryId}
-            open={categoriesOpen}
-            onToggle={handleToggleCategories}
-            onClose={handleCloseMenu}
-            onSelect={onChangeCategory}
-          />
-        </div>
         <div className="guess-title">
           <p className="guess-face-counter" role="status">
             Face {roundNumber} of {SESSION_LENGTH}

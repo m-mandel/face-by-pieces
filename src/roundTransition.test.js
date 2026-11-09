@@ -6,7 +6,7 @@ import { createServer } from 'vite'
 
 const names = ['First Person', 'Second Person', 'Third Person', 'Fourth Person', 'Fifth Person', 'Sixth Person']
 // Keep the real game, gallery, artwork, effects, and telemetry; use six faces
-// to exercise no-repeat selection and a one-face category for exhausted pools.
+// to exercise no-repeat selection and verify old saved categories are ignored.
 const catalog = `
 export const PORTRAITS = ${JSON.stringify(names)}.map((name, index) => ({
   id: String(index), name, aliases: [name], correctAliases: [name], photoSrc: '/photo-' + index + '.png',
@@ -15,7 +15,7 @@ export const PORTRAITS = ${JSON.stringify(names)}.map((name, index) => ({
     { id: 'two', src: '/portrait-' + index + '-two.png' },
   ] } },
 }));
-export const getAvailablePortraitIndices = (_, category) => category === 'politics' ? [0] : category === 'film-art-music' ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5];
+export const getAvailablePortraitIndices = (_, category) => category === 'politics' ? [0] : [0, 1, 2, 3, 4, 5];
 export const getClueIndices = () => [0, 1];
 `
 const textOf = (node) => typeof node === 'string' ? node : node.children.map(textOf).join('')
@@ -46,12 +46,10 @@ test('five-face sessions reveal only completed results and reset cleanly', async
     { category: 'all', cached: false, photoGuess: 'inaccurate' },
     { category: 'all', cached: true, photoGuess: 'incorrect' },
     { category: 'all', cached: true, skipLast: true },
-    { category: 'all', cached: true, switchCategory: true },
-    { category: 'all', cached: true, switchFinalCategory: true },
   ]
 
   for (const dismissal of ['button', 'escape']) {
-    await t.test(`first visit shows instructions before category selection (${dismissal})`, async (t) => {
+    await t.test(`first visit shows instructions then starts playing directly (${dismissal})`, async (t) => {
       const deviceId = 'new-player'
       const seenKey = `face-by-pieces-instructions:${deviceId}`
       const values = new Map([['face-by-pieces-device-id', deviceId]])
@@ -85,46 +83,43 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         await mount()
         assert.equal(textOf(renderer.root.findByType('h1')), 'How to play')
         assert.match(textOf(renderer.root.findByType('dialog')), /Guess each face in as few steps as possible/)
-        assert.equal(renderer.root.findAllByType('input').length, 0, 'category selection is not shown behind the instructions')
+        assert.equal(renderer.root.findAllByType('input').length, 0, 'the game is not mounted behind the instructions')
         assert.equal(requests.length, 0, 'instructions do not start game telemetry')
         assert.deepEqual(modalCalls, ['open'])
         if (dismissal === 'button') {
           await act(async () => {
-            renderer.root.findAllByType('button').find((button) => textOf(button).trim() === 'Choose a category').props.onClick()
+            renderer.root.findAllByType('button').find((button) => textOf(button).trim() === 'Start playing').props.onClick()
           })
         } else {
           let prevented = false
           await act(async () => {
             renderer.root.findByType('dialog').props.onCancel({ preventDefault() { prevented = true } })
           })
-          assert.ok(prevented, 'Escape advances setup instead of leaving a dismissed dialog')
+          assert.ok(prevented, 'Escape starts playing instead of leaving a dismissed dialog')
         }
         assert.equal(values.get(seenKey), '1')
-        assert.equal(textOf(renderer.root.findByType('h1')), 'Choose a category')
-        assert.equal(requests.length, 0, 'choosing a category still does not start a game')
-        assert.deepEqual(modalCalls, ['open', 'close', 'open'])
+        assert.equal(textOf(renderer.root.findByType('h1')), 'Guess Who?')
+        assert.equal(renderer.root.findAllByType('dialog').length, 0)
+        assert.equal(renderer.root.findAllByType('input').length, 1)
+        assert.equal(values.has(`face-by-pieces-category:${deviceId}`), false, 'starting does not save a category')
+        assert.deepEqual(modalCalls, ['open', 'close'])
+        const sessions = requests.filter(({ url }) => url === '/api/sessions')
+        assert.equal(sessions.length, 1)
 
         await act(async () => renderer.unmount())
         await mount()
-        assert.equal(textOf(renderer.root.findByType('h1')), 'Choose a category', 'reloading midway does not repeat instructions')
-        assert.equal(requests.length, 0)
-        await act(async () => {
-          renderer.root.findAllByType('input').find((input) => input.props.value === 'politics').props.onChange()
-        })
-        assert.equal(requests.length, 0, 'selecting a radio option waits for Start playing')
-        await act(async () => { renderer.root.findByType('form').props.onSubmit({ preventDefault() {} }) })
-        assert.equal(textOf(renderer.root.findByType('h1')), 'Guess Who?')
+        assert.equal(textOf(renderer.root.findByType('h1')), 'Guess Who?', 'reloading does not repeat instructions')
         assert.equal(renderer.root.findAllByType('dialog').length, 0)
-        assert.equal(values.get(`face-by-pieces-category:${deviceId}`), 'politics')
-        const sessions = requests.filter(({ url }) => url === '/api/sessions')
-        assert.equal(sessions.length, 1)
-        assert.equal(sessions[0].body.portraitId, '0', 'the first face uses the chosen category')
+        assert.deepEqual(modalCalls, ['open', 'close'])
 
         await act(async () => renderer.unmount())
         values.delete(seenKey)
+        values.set(`face-by-pieces-category:${deviceId}`, 'politics')
+        t.mock.method(Math, 'random', () => 0.99)
         await mount()
         assert.equal(textOf(renderer.root.findByType('h1')), 'Guess Who?', 'an existing category bypasses instructions even without the new seen flag')
         assert.equal(renderer.root.findAllByType('dialog').length, 0)
+        assert.equal(requests.filter(({ url }) => url === '/api/sessions').at(-1).body.portraitId, '5', 'a legacy category does not filter the first face')
       } finally {
         await act(async () => renderer?.unmount())
         for (const [key, descriptor] of Object.entries(originals)) {
@@ -135,9 +130,8 @@ test('five-face sessions reveal only completed results and reset cleanly', async
     })
   }
 
-  for (const { category, cached, switchCategory, switchFinalCategory, inaccurate, skipLast, photoGuess } of scenarios) {
-    await t.test(`${category}, images ${cached ? 'cached' : 'pending'}${inaccurate ? ', inaccurate guess' : ''}${photoGuess ? `, ${photoGuess} photo guess` : ''}${skipLast ? ', photo recognition on the fifth face' : ''}${switchCategory ? ', change category after two faces' : ''}${switchFinalCategory ? ', preserve last unplayed face on category change' : ''}`, async (t) => {
-      if (switchFinalCategory) t.mock.method(Math, 'random', () => 0)
+  for (const { category, cached, inaccurate, skipLast, photoGuess } of scenarios) {
+    await t.test(`stored category ${category}, images ${cached ? 'cached' : 'pending'}${inaccurate ? ', inaccurate guess' : ''}${photoGuess ? `, ${photoGuess} photo guess` : ''}${skipLast ? ', photo recognition on the fifth face' : ''}`, async (t) => {
       const pending = []
       const values = new Map([
         ['face-by-pieces-device-id', 'test-device'],
@@ -175,6 +169,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
       const assertFreshRound = (number) => {
         assert.equal(textOf(renderer.root.findByProps({ className: 'guess-face-counter' })), `Face ${number} of 5`)
         assert.equal(renderer.root.findByType('input').props.value, '')
+        assert.equal(renderer.root.findAllByType('button').some((button) => /categor/i.test(textOf(button))), false, 'category controls are absent')
         assertIdleControls()
         const artwork = renderer.root.findAll((node) => node.props.roundId != null && node.props.artwork)[0]
         assert.equal(artwork.props.visibleIndices.length, 1)
@@ -204,30 +199,6 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         })
         for (const [index, action] of actions.entries()) {
           assertFreshRound(index + 1)
-          const nextCategoryLabel = switchCategory && index === 2
-            ? 'Politics'
-            : switchFinalCategory && index === 4 ? 'Film, Art & Music' : null
-          if (nextCategoryLabel) {
-            if (switchFinalCategory) {
-              assert.deepEqual(visited.map(({ name }) => name), names.slice(0, 4))
-              const currentRound = renderer.root.findAll((node) => node.props.roundNumber != null && node.props.portraitIndex != null)[0]
-              assert.equal(currentRound.props.portraitIndex, 4, 'the current face is the only unplayed option in the next category')
-            }
-            commits.length = 0
-            await act(async () => { findButton('Categories: All').props.onClick() })
-            await act(async () => {
-              renderer.root.findAllByType('button').find((button) => button.props.role === 'menuitemradio' && textOf(button) === nextCategoryLabel).props.onClick()
-            })
-            await resolveImages()
-            assertNoReveal()
-            assertFreshRound(index + 1)
-            assert.equal(completions().length, index, 'changing category does not complete or discard faces')
-            if (switchFinalCategory) {
-              const currentRound = renderer.root.findAll((node) => node.props.roundNumber != null && node.props.portraitIndex != null)[0]
-              assert.equal(currentRound.props.portraitIndex, 4, 'keep the unplayed current face instead of repeating a completed one')
-              assert.equal(currentRound.props.categoryId, 'film-art-music')
-            }
-          }
           const round = renderer.root.findAll((node) => node.props.roundNumber != null && node.props.sessionId && node.props.portraitIndex != null)[0].props
           const name = names[round.portraitIndex]
           visited.push({ name, sessionId: round.sessionId })
@@ -338,9 +309,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
           }
         }
         assert.equal(new Set(visited.map(({ sessionId }) => sessionId)).size, 5)
-        if (category === 'all' && !switchCategory) {
-          assert.equal(new Set(visited.map(({ name }) => name)).size, 5, 'five available faces are not repeated')
-        }
+        assert.equal(new Set(visited.map(({ name }) => name)).size, 5, 'all faces are available without repeats, regardless of the old saved category')
         const gallery = renderer.root.findAll((node) => node.props.rounds && node.props.onPlayAgain)[0]
         const savedRounds = gallery.props.rounds
         assert.equal(savedRounds.length, 5)

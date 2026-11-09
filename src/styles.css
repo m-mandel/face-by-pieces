@@ -580,8 +580,8 @@ h1:focus {
   border-color: var(--ink);
   color: #fff;
 }
-/* First-time players choose their category before a game is mounted. */
-.category-welcome-dialog {
+/* First-time players read the instructions before a game is mounted. */
+.instructions-dialog {
   width: min(440px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
   margin: auto;
@@ -593,57 +593,20 @@ h1:focus {
   border-radius: 16px;
   box-shadow: 0 16px 64px rgb(37 37 32 / 16%);
 }
-.category-welcome-dialog::backdrop {
+.instructions-dialog::backdrop {
   background: rgb(37 37 32 / 30%);
 }
-.category-welcome-dialog h1 {
+.instructions-dialog h1 {
   font-size: clamp(29px, 7vw, 36px);
   line-height: 1.15;
 }
-.category-welcome-dialog p {
+.instructions-dialog p {
   margin-top: 10px;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.5;
 }
-.welcome-category-options {
-  display: grid;
-  gap: 8px;
-  min-width: 0;
-  margin: 24px 0;
-  padding: 0;
-  border: 0;
-}
-.welcome-category-option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 48px;
-  padding: 12px;
-  font-size: 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  cursor: pointer;
-}
-.welcome-category-option:hover,
-.welcome-category-option.selected {
-  background: var(--wash);
-  border-color: var(--ink);
-}
-.welcome-category-option input {
-  width: 18px;
-  height: 18px;
-  margin: 0;
-  flex: 0 0 auto;
-  accent-color: var(--ink);
-}
-.welcome-category-option:has(input:disabled) {
-  color: var(--muted);
-  background: transparent;
-  border-color: var(--line);
-  cursor: default;
-}
-.category-welcome-dialog .primary-button {
+.instructions-dialog .primary-button {
   width: 100%;
   justify-content: center;
 }
@@ -680,19 +643,12 @@ h1:focus {
 .guess-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  grid-template-areas: 'settings title steps';
+  grid-template-areas: '. title steps';
   align-items: center;
   gap: 6px;
   flex: 0 0 auto;
   padding: calc(6px + env(safe-area-inset-top)) 0 5px;
   text-align: center;
-}
-.guess-settings {
-  display: flex;
-  grid-area: settings;
-  justify-self: start;
-  align-items: center;
-  gap: 6px;
 }
 .guess-title {
   grid-area: title;
@@ -721,92 +677,10 @@ h1:focus {
   .guess-header {
     grid-template-columns: 1fr auto;
     grid-template-areas:
-      'settings steps'
+      '. steps'
       'title title';
     row-gap: 0;
   }
-}
-.settings-dropdown {
-  position: relative;
-  z-index: 2;
-}
-.settings-dropdown-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  min-height: 44px;
-  padding: 0 9px;
-  font-size: 12px;
-  color: var(--ink);
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-}
-.settings-dropdown-button svg {
-  width: 14px;
-  height: 14px;
-}
-.settings-dropdown-button:hover,
-.settings-dropdown-button[aria-expanded='true'] {
-  background: var(--wash);
-  border-color: var(--ink);
-}
-.settings-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 5px);
-  left: 0;
-  width: max-content;
-  min-width: 174px;
-  max-width: calc(100vw - 12px);
-  max-height: calc(
-    var(--viewport-height, 100dvh) - 70px - env(safe-area-inset-top)
-  );
-  padding: 4px;
-  overflow-y: auto;
-  color: var(--ink);
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgb(37 37 32 / 10%);
-  text-align: left;
-}
-.settings-dropdown-menu button,
-.settings-dropdown-menu a {
-  display: flex;
-  width: 100%;
-  min-height: 44px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 8px 10px;
-  font-size: 13px;
-  text-align: left;
-  text-decoration: none;
-  background: transparent;
-  border: 0;
-  border-radius: 4px;
-}
-.settings-dropdown-menu button:hover,
-.settings-dropdown-menu a:hover,
-.settings-dropdown-menu [aria-checked='true'] {
-  background: var(--wash);
-}
-.settings-dropdown-menu :focus-visible {
-  outline-offset: -2px;
-}
-.settings-dropdown-menu button:disabled {
-  color: var(--muted);
-  cursor: default;
-  background: transparent;
-}
-.settings-dropdown-menu svg {
-  width: 16px;
-  height: 16px;
-}
-.settings-dropdown-menu [role='separator'] {
-  margin: 4px 6px;
-  border-top: 1px solid var(--line);
 }
 .guess-sketch {
   flex: 1;

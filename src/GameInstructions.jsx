@@ -12,7 +12,7 @@ export default function GameInstructions({ onContinue }) {
   return (
     <dialog
       ref={dialogRef}
-      className="category-welcome-dialog instructions-dialog"
+      className="instructions-dialog"
       aria-labelledby="instructions-title"
       aria-describedby="instructions-goal instructions-game"
       onCancel={(event) => {
@@ -33,7 +33,7 @@ export default function GameInstructions({ onContinue }) {
         <li>After the final clue, you can choose “I don’t know.”</li>
       </ol>
       <button className="primary-button" type="button" onClick={onContinue} autoFocus>
-        Choose a category
+        Start playing
       </button>
     </dialog>
   )
