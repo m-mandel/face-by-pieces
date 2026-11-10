@@ -1,0 +1,110 @@
+{
+  "subject": "oprah-winfrey",
+  "fingerprint": "ee0755c339a91edba26d089b76e8125e9e9c6b0b80429bca157235fed6f883e7",
+  "input_size": [
+    1728,
+    2416
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -414,
+    -64,
+    1999,
+    2349
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear",
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/oprah-winfrey/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/oprah-winfrey/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/oprah-winfrey/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/oprah-winfrey/transparent/earrings.png",
+    "line-art/oprah-winfrey/white/earrings.png",
+    "line-art/oprah-winfrey/transparent/ears.png",
+    "line-art/oprah-winfrey/white/ears.png",
+    "line-art/oprah-winfrey/transparent/eyebrows.png",
+    "line-art/oprah-winfrey/white/eyebrows.png",
+    "line-art/oprah-winfrey/transparent/eyes.png",
+    "line-art/oprah-winfrey/white/eyes.png",
+    "line-art/oprah-winfrey/transparent/eyewear.png",
+    "line-art/oprah-winfrey/white/eyewear.png",
+    "line-art/oprah-winfrey/transparent/face-details.png",
+    "line-art/oprah-winfrey/white/face-details.png",
+    "line-art/oprah-winfrey/transparent/face-outline.png",
+    "line-art/oprah-winfrey/white/face-outline.png",
+    "line-art/oprah-winfrey/transparent/hair.png",
+    "line-art/oprah-winfrey/white/hair.png",
+    "line-art/oprah-winfrey/transparent/headwear.png",
+    "line-art/oprah-winfrey/white/headwear.png",
+    "line-art/oprah-winfrey/transparent/mouth.png",
+    "line-art/oprah-winfrey/white/mouth.png",
+    "line-art/oprah-winfrey/transparent/nose.png",
+    "line-art/oprah-winfrey/white/nose.png",
+    "line-art/oprah-winfrey/merged-white.png",
+    "sources/oprah-winfrey/source.png",
+    "sources/oprah-winfrey/source-no-bg.png",
+    "line-art/oprah-winfrey/labels.json",
+    "line-art/oprah-winfrey/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

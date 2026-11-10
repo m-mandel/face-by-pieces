@@ -1,0 +1,37 @@
+{
+  "subject": "thomas-edison",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 11558,
+    "eyebrows": 13663,
+    "eyes": 6086,
+    "face-details": 4049,
+    "face-outline": 14352,
+    "hair": 25578,
+    "mouth": 3874,
+    "nose": 4258
+  },
+  "original_class_pixels": {
+    "ears": 11533,
+    "eyebrows": 13794,
+    "eyes": 6171,
+    "face-details": 4161,
+    "face-outline": 14524,
+    "hair": 25976,
+    "mouth": 4030,
+    "nose": 4351
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

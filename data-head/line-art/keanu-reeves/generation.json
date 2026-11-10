@@ -1,0 +1,99 @@
+{
+  "subject": "keanu-reeves",
+  "fingerprint": "1522b7a94a3cf274a80849de160c3266ee104177ee0f3c60b72b0d51fcf7b2e7",
+  "input_size": [
+    2048,
+    2729
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    30,
+    6,
+    2150,
+    2126
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-outline": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/keanu-reeves/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/keanu-reeves/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/keanu-reeves/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/keanu-reeves/transparent/ears.png",
+    "line-art/keanu-reeves/white/ears.png",
+    "line-art/keanu-reeves/transparent/eyebrows.png",
+    "line-art/keanu-reeves/white/eyebrows.png",
+    "line-art/keanu-reeves/transparent/eyes.png",
+    "line-art/keanu-reeves/white/eyes.png",
+    "line-art/keanu-reeves/transparent/face-details.png",
+    "line-art/keanu-reeves/white/face-details.png",
+    "line-art/keanu-reeves/transparent/facial-hair.png",
+    "line-art/keanu-reeves/white/facial-hair.png",
+    "line-art/keanu-reeves/transparent/hair.png",
+    "line-art/keanu-reeves/white/hair.png",
+    "line-art/keanu-reeves/transparent/mouth.png",
+    "line-art/keanu-reeves/white/mouth.png",
+    "line-art/keanu-reeves/transparent/nose.png",
+    "line-art/keanu-reeves/white/nose.png",
+    "line-art/keanu-reeves/merged-white.png",
+    "sources/keanu-reeves/source.png",
+    "sources/keanu-reeves/source-no-bg.png",
+    "line-art/keanu-reeves/labels.json",
+    "line-art/keanu-reeves/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

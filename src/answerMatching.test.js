@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict'
 import { readFileSync, readdirSync } from 'node:fs'
 import { test } from 'node:test'
+import { createServer } from 'vite'
 import { getAnswerOutcome, getCorrectAliases, getSubjectAliases, isCorrectAnswer, normalizeAnswer } from './answerMatching.js'
 import subjectAliases from './config/subject-aliases.json' with { type: 'json' }
+import correctAliases from './config/subject-correct-aliases.json' with { type: 'json' }
 
 const directory = new URL('../data/line-art/', import.meta.url)
 const lineArtIds = readdirSync(directory, { withFileTypes: true })
@@ -18,6 +20,67 @@ const makePortrait = (id, name, aliases) => {
   const portrait = { id, name, aliases }
   return { ...portrait, correctAliases: getCorrectAliases(portrait), aliases: getSubjectAliases(portrait) }
 }
+
+test('first names and their typos are inaccurate, including older accepted aliases', () => {
+  for (const [id, name, first] of [
+    ['hillary-clinton', 'Hillary Clinton', 'Hillary'],
+    ['elon-musk', 'Elon Musk', 'Elon'],
+    ['kobe-bryant', 'Kobe Bryant', 'Kobe'],
+    ['oprah-winfrey', 'Oprah Winfrey', 'Oprah'],
+    ['tom-hanks', 'Tom Hanks', 'Tom'],
+    ['pope-francis', 'Pope Francis', 'Francis'],
+    ['queen-elizabeth-ii', 'Queen Elizabeth II', 'Elizabeth'],
+    ['mother-teresa', 'Mother Teresa', 'Teresa'],
+  ]) {
+    const portrait = makePortrait(id, name, [name, first])
+    assert.equal(getAnswerOutcome(first, portrait), 'inaccurate', name)
+    assert.equal(isCorrectAnswer(first, portrait.correctAliases), false, name)
+    assert.equal(getAnswerOutcome(name, portrait), 'correct', name)
+    assert.equal(getAnswerOutcome(first, { ...portrait, correctAliases: [name, first] }), 'inaccurate', 'old caller-supplied aliases cannot bypass the rule')
+  }
+  const hillary = makePortrait('hillary-clinton', 'Hillary Clinton', ['Hillary', 'Clinton'])
+  for (const guess of ['HILLARY!', 'Hilary', 'Hillari', 'Hillary Cliton']) {
+    assert.equal(getAnswerOutcome(guess, hillary), 'inaccurate', guess)
+  }
+  assert.equal(getAnswerOutcome('Clinton', hillary), 'correct')
+  assert.equal(getAnswerOutcome('Clinton Hillary', hillary), 'correct')
+  assert.equal(getAnswerOutcome('Hillary Obama', hillary), 'incorrect')
+  const charlie = makePortrait('charlie-chaplin', 'Charlie Chaplin', [])
+  assert.equal(getAnswerOutcome('Charles', charlie), 'inaccurate', 'a given name from a trusted full-name variant is also incomplete')
+})
+
+test('complete nicknames, titles and one-word names remain correct', () => {
+  for (const [id, name, aliases] of [
+    ['pope-francis', 'Pope Francis', ['The Pope', 'Pope']],
+    ['dwayne-johnson', 'Dwayne Johnson', ['The Rock', 'Rock']],
+    ['arnold-schwarzenegger', 'Arnold Schwarzenegger', ['Arnie']],
+    ['shaquille-o-neal', "Shaquille O'Neal", ['Shaq', "O'Neal"]],
+    ['queen-elizabeth-ii', 'Queen Elizabeth II', ['Queen Elizabeth', 'Elizabeth II', 'The Queen']],
+    ['adele', 'Adele', ['Adele']],
+    ['madonna', 'Madonna', ['Madonna']],
+    ['beyonce', 'Beyoncé', ['Beyonce']],
+  ]) {
+    const portrait = makePortrait(id, name, aliases)
+    for (const guess of aliases) assert.equal(getAnswerOutcome(guess, portrait), 'correct', `${name}: ${guess}`)
+  }
+})
+
+test('the actual catalog consistently separates first names from correct aliases', async (t) => {
+  const server = await createServer({ server: { middlewareMode: true, hmr: false, ws: false } })
+  t.after(() => server.close())
+  const { PORTRAITS } = await server.ssrLoadModule('/src/portraits.js')
+  for (const portrait of PORTRAITS) {
+    assert.equal(getAnswerOutcome(portrait.name, portrait, PORTRAITS), 'correct', portrait.id)
+    if (portrait.name.trim().includes(' ')) {
+      const first = portrait.name.replace(/^(?:Pope|Queen|Mother) /, '').split(/[\s,]+/)[0]
+      assert.equal(getAnswerOutcome(first, portrait, PORTRAITS), 'inaccurate', `${portrait.id}: ${first}`)
+      assert.equal(isCorrectAnswer(first, portrait.correctAliases), false, `${portrait.id}: first name must not be in the correct list`)
+    }
+    for (const alias of correctAliases[portrait.id] || []) {
+      assert.equal(getAnswerOutcome(alias, portrait, PORTRAITS), 'correct', `${portrait.id}: configured correct alias ${alias}`)
+    }
+  }
+})
 
 test('classifies known typos and close spellings as inaccurate', () => {
   const portrait = makePortrait('novak-djokovic', 'Novak Djokovic', ['Djokovic'])

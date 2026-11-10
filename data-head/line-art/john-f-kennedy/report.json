@@ -1,0 +1,37 @@
+{
+  "subject": "john-f-kennedy",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4641,
+    "eyebrows": 2341,
+    "eyes": 4064,
+    "face-details": 4921,
+    "face-outline": 6306,
+    "hair": 19141,
+    "mouth": 4574,
+    "nose": 2019
+  },
+  "original_class_pixels": {
+    "ears": 8524,
+    "eyebrows": 4280,
+    "eyes": 7408,
+    "face-details": 9129,
+    "face-outline": 11554,
+    "hair": 35228,
+    "mouth": 8421,
+    "nose": 3738
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

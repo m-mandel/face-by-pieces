@@ -1,0 +1,99 @@
+{
+  "subject": "celine-dion",
+  "fingerprint": "05f5e1abedc6f504a70bb96c0a9e4a41c4bb8b48f4a9dba207383a74487fa790",
+  "input_size": [
+    565,
+    800
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -151,
+    -25,
+    721,
+    847
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/celine-dion/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/celine-dion/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/celine-dion/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/celine-dion/transparent/ears.png",
+    "line-art/celine-dion/white/ears.png",
+    "line-art/celine-dion/transparent/eyebrows.png",
+    "line-art/celine-dion/white/eyebrows.png",
+    "line-art/celine-dion/transparent/eyes.png",
+    "line-art/celine-dion/white/eyes.png",
+    "line-art/celine-dion/transparent/face-details.png",
+    "line-art/celine-dion/white/face-details.png",
+    "line-art/celine-dion/transparent/face-outline.png",
+    "line-art/celine-dion/white/face-outline.png",
+    "line-art/celine-dion/transparent/hair.png",
+    "line-art/celine-dion/white/hair.png",
+    "line-art/celine-dion/transparent/mouth.png",
+    "line-art/celine-dion/white/mouth.png",
+    "line-art/celine-dion/transparent/nose.png",
+    "line-art/celine-dion/white/nose.png",
+    "line-art/celine-dion/merged-white.png",
+    "sources/celine-dion/source.png",
+    "sources/celine-dion/source-no-bg.png",
+    "line-art/celine-dion/labels.json",
+    "line-art/celine-dion/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

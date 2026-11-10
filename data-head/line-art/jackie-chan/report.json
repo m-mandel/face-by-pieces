@@ -1,0 +1,39 @@
+{
+  "subject": "jackie-chan",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4582,
+    "eyebrows": 6262,
+    "eyes": 3906,
+    "eyewear": 11609,
+    "face-details": 2150,
+    "face-outline": 3161,
+    "hair": 123126,
+    "mouth": 3613,
+    "nose": 1648
+  },
+  "original_class_pixels": {
+    "ears": 8207,
+    "eyebrows": 11012,
+    "eyes": 6971,
+    "eyewear": 20664,
+    "face-details": 3923,
+    "face-outline": 5578,
+    "hair": 217004,
+    "mouth": 6510,
+    "nose": 3002
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

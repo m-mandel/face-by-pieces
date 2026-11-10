@@ -1,0 +1,104 @@
+{
+  "subject": "taylor-swift",
+  "fingerprint": "e679334d8df2d8bdcffa2fe8224e2ff9164b921f22ee74a37196c14faa39994f",
+  "input_size": [
+    1728,
+    2456
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    211,
+    37,
+    1847,
+    1673
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/taylor-swift/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/taylor-swift/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/taylor-swift/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/taylor-swift/transparent/earrings.png",
+    "line-art/taylor-swift/white/earrings.png",
+    "line-art/taylor-swift/transparent/ears.png",
+    "line-art/taylor-swift/white/ears.png",
+    "line-art/taylor-swift/transparent/eyebrows.png",
+    "line-art/taylor-swift/white/eyebrows.png",
+    "line-art/taylor-swift/transparent/eyes.png",
+    "line-art/taylor-swift/white/eyes.png",
+    "line-art/taylor-swift/transparent/face-details.png",
+    "line-art/taylor-swift/white/face-details.png",
+    "line-art/taylor-swift/transparent/face-outline.png",
+    "line-art/taylor-swift/white/face-outline.png",
+    "line-art/taylor-swift/transparent/hair.png",
+    "line-art/taylor-swift/white/hair.png",
+    "line-art/taylor-swift/transparent/mouth.png",
+    "line-art/taylor-swift/white/mouth.png",
+    "line-art/taylor-swift/transparent/nose.png",
+    "line-art/taylor-swift/white/nose.png",
+    "line-art/taylor-swift/merged-white.png",
+    "sources/taylor-swift/source.png",
+    "sources/taylor-swift/source-no-bg.png",
+    "line-art/taylor-swift/labels.json",
+    "line-art/taylor-swift/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

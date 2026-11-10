@@ -1,0 +1,100 @@
+{
+  "subject": "madonna",
+  "fingerprint": "71a65d27623abbca8146685164d685904db7933467c77b4ff60c9acd25811f87",
+  "input_size": [
+    1632,
+    2612
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    297,
+    79,
+    1354,
+    1136
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/madonna/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/madonna/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/madonna/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/madonna/transparent/ears.png",
+    "line-art/madonna/white/ears.png",
+    "line-art/madonna/transparent/eyebrows.png",
+    "line-art/madonna/white/eyebrows.png",
+    "line-art/madonna/transparent/eyes.png",
+    "line-art/madonna/white/eyes.png",
+    "line-art/madonna/transparent/face-outline.png",
+    "line-art/madonna/white/face-outline.png",
+    "line-art/madonna/transparent/hair.png",
+    "line-art/madonna/white/hair.png",
+    "line-art/madonna/transparent/headwear.png",
+    "line-art/madonna/white/headwear.png",
+    "line-art/madonna/transparent/mouth.png",
+    "line-art/madonna/white/mouth.png",
+    "line-art/madonna/transparent/nose.png",
+    "line-art/madonna/white/nose.png",
+    "line-art/madonna/merged-white.png",
+    "sources/madonna/source.png",
+    "sources/madonna/source-no-bg.png",
+    "line-art/madonna/labels.json",
+    "line-art/madonna/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

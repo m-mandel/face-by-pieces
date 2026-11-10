@@ -1,0 +1,37 @@
+{
+  "subject": "mike-tyson",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 7498,
+    "eyebrows": 6639,
+    "eyes": 7777,
+    "face-details": 4403,
+    "face-outline": 26268,
+    "facial-hair": 18938,
+    "mouth": 8589,
+    "nose": 4634
+  },
+  "original_class_pixels": {
+    "ears": 6644,
+    "eyebrows": 6007,
+    "eyes": 7120,
+    "face-details": 4057,
+    "face-outline": 23791,
+    "facial-hair": 17248,
+    "mouth": 7879,
+    "nose": 4249
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "subject": "muhammad-ali",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 3288,
+    "eyebrows": 3517,
+    "eyes": 5630,
+    "face-details": 854,
+    "face-outline": 5172,
+    "hair": 10910,
+    "mouth": 2297,
+    "nose": 2187
+  },
+  "original_class_pixels": {
+    "ears": 12763,
+    "eyebrows": 13610,
+    "eyes": 22212,
+    "face-details": 3204,
+    "face-outline": 20023,
+    "hair": 42545,
+    "mouth": 8794,
+    "nose": 8556
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

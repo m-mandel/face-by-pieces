@@ -2,19 +2,25 @@ import { LEGACY_PORTRAITS, getLegacyElementCount } from './legacyPortraits'
 import { matchesCategory } from './portraitCategories'
 import { getSubjectAliases, getCorrectAliases } from './answerMatching'
 import lineArtBounds from './generated/line-art-bounds.json'
+import { isHeadLayer } from './headLayers'
 
 // Import URLs instead of embedding PNG contents in the JavaScript bundle.
-const pngFiles = import.meta.glob('../data/line-art/*/transparent/*.png', {
+const pngFiles = import.meta.glob('../data-head/line-art/*/transparent/*.png', {
   eager: true,
   query: '?url',
   import: 'default',
 })
-const sourcePhotos = import.meta.glob('../data/sources/*/source.{png,jpg,jpeg,webp}', {
+const sourcePhotos = import.meta.glob('../data-head/sources/*/source.png', {
   eager: true,
   query: '?url',
   import: 'default',
 })
-const reports = import.meta.glob('../data/line-art/*/report.json', {
+const headPhotos = import.meta.glob('../data-head/sources/*/source-no-bg.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+const reports = import.meta.glob('../data-head/line-art/*/report.json', {
   eager: true,
   import: 'default',
 })
@@ -23,7 +29,7 @@ const legacyLabels = import.meta.glob('../data/vector-lines/*/labels.json', {
   eager: true,
   import: 'default',
 })
-const lineArtLabels = import.meta.glob('../data/line-art/*/labels.json', {
+const lineArtLabels = import.meta.glob('../data-head/line-art/*/labels.json', {
   eager: true,
   import: 'default',
 })
@@ -54,9 +60,9 @@ for (const file of Object.keys(pngFiles).sort()) {
   const [, folder, filename] = file.match(
     /\/line-art\/([^/]+)\/transparent\/([^/]+)\.png$/,
   )
-  const report = reports[`../data/line-art/${folder}/report.json`]
+  const report = reports[`../data-head/line-art/${folder}/report.json`]
   // Filter before assigning indices so excluded layers never enter any view or mode.
-  if (report?.class_pixels?.[filename] < 200) continue
+  if (!isHeadLayer(filename) || report?.class_pixels?.[filename] < 200) continue
 
   const id = folder.replaceAll('_', '-').toLowerCase()
   if (!portraitsById.has(id)) {
@@ -78,7 +84,11 @@ for (const file of Object.keys(pngFiles).sort()) {
   }
 
   const portrait = portraitsById.get(id)
-  const artwork = (portrait.styles['line-art'] ||= { layers: [] })
+  const artwork = (portrait.styles['line-art'] ||= {
+    layers: [],
+    // Keep the exact shared framing of the generated layers and photos.
+    ...(report?.framing && { bounds: report.framing }),
+  })
   artwork.layers.push({
     id: filename,
     src: pngFiles[file],
@@ -117,7 +127,8 @@ for (const portrait of portraitsById.values()) {
   portrait.aliases = getSubjectAliases(portrait)
 }
 
-for (const [file, url] of Object.entries(sourcePhotos)) {
+// Prefer the head-only cutout; the aligned original crop remains a fallback.
+for (const [file, url] of [...Object.entries(sourcePhotos), ...Object.entries(headPhotos)]) {
   const id = file.split('/').at(-2).replaceAll('_', '-').toLowerCase()
   const portrait = portraitsById.get(id)
   if (portrait) portrait.photoSrc = url

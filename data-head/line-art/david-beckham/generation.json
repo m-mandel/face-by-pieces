@@ -1,0 +1,99 @@
+{
+  "subject": "david-beckham",
+  "fingerprint": "df3b2b30682ae6f2a46d3369a6894f0a1b881f287c965b66975cd5cd859c249d",
+  "input_size": [
+    644,
+    922
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    51,
+    -6,
+    556,
+    499
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/david-beckham/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/david-beckham/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/david-beckham/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/david-beckham/transparent/ears.png",
+    "line-art/david-beckham/white/ears.png",
+    "line-art/david-beckham/transparent/eyebrows.png",
+    "line-art/david-beckham/white/eyebrows.png",
+    "line-art/david-beckham/transparent/eyes.png",
+    "line-art/david-beckham/white/eyes.png",
+    "line-art/david-beckham/transparent/face-details.png",
+    "line-art/david-beckham/white/face-details.png",
+    "line-art/david-beckham/transparent/face-outline.png",
+    "line-art/david-beckham/white/face-outline.png",
+    "line-art/david-beckham/transparent/hair.png",
+    "line-art/david-beckham/white/hair.png",
+    "line-art/david-beckham/transparent/mouth.png",
+    "line-art/david-beckham/white/mouth.png",
+    "line-art/david-beckham/transparent/nose.png",
+    "line-art/david-beckham/white/nose.png",
+    "line-art/david-beckham/merged-white.png",
+    "sources/david-beckham/source.png",
+    "sources/david-beckham/source-no-bg.png",
+    "line-art/david-beckham/labels.json",
+    "line-art/david-beckham/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

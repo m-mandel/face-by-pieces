@@ -1,0 +1,37 @@
+{
+  "subject": "snoop-dogg",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5491,
+    "eyewear": 18720,
+    "face-details": 2144,
+    "face-outline": 4078,
+    "facial-hair": 16331,
+    "hair": 21360,
+    "mouth": 2774,
+    "nose": 2981
+  },
+  "original_class_pixels": {
+    "ears": 12706,
+    "eyewear": 43436,
+    "face-details": 5056,
+    "face-outline": 9402,
+    "facial-hair": 38247,
+    "hair": 49803,
+    "mouth": 6453,
+    "nose": 6867
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

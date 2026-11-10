@@ -1,0 +1,99 @@
+{
+  "subject": "marilyn-monroe",
+  "fingerprint": "d789e5e43cd99f54fc4b30dc8a045a30f20b76a02a4614ae877200b493e560dc",
+  "input_size": [
+    1728,
+    2484
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -85,
+    -14,
+    1559,
+    1630
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/marilyn-monroe/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/marilyn-monroe/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/marilyn-monroe/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/marilyn-monroe/transparent/earrings.png",
+    "line-art/marilyn-monroe/white/earrings.png",
+    "line-art/marilyn-monroe/transparent/ears.png",
+    "line-art/marilyn-monroe/white/ears.png",
+    "line-art/marilyn-monroe/transparent/eyebrows.png",
+    "line-art/marilyn-monroe/white/eyebrows.png",
+    "line-art/marilyn-monroe/transparent/eyes.png",
+    "line-art/marilyn-monroe/white/eyes.png",
+    "line-art/marilyn-monroe/transparent/face-outline.png",
+    "line-art/marilyn-monroe/white/face-outline.png",
+    "line-art/marilyn-monroe/transparent/hair.png",
+    "line-art/marilyn-monroe/white/hair.png",
+    "line-art/marilyn-monroe/transparent/mouth.png",
+    "line-art/marilyn-monroe/white/mouth.png",
+    "line-art/marilyn-monroe/transparent/nose.png",
+    "line-art/marilyn-monroe/white/nose.png",
+    "line-art/marilyn-monroe/merged-white.png",
+    "sources/marilyn-monroe/source.png",
+    "sources/marilyn-monroe/source-no-bg.png",
+    "line-art/marilyn-monroe/labels.json",
+    "line-art/marilyn-monroe/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

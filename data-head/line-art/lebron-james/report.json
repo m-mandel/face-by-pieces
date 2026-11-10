@@ -1,0 +1,37 @@
+{
+  "subject": "lebron-james",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 10480,
+    "eyebrows": 4535,
+    "eyes": 6932,
+    "face-details": 2036,
+    "facial-hair": 24775,
+    "hair": 15055,
+    "mouth": 6467,
+    "nose": 3039
+  },
+  "original_class_pixels": {
+    "ears": 5496,
+    "eyebrows": 2401,
+    "eyes": 3642,
+    "face-details": 1095,
+    "facial-hair": 13027,
+    "hair": 7969,
+    "mouth": 3412,
+    "nose": 1602
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

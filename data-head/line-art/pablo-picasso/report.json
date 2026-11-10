@@ -1,0 +1,39 @@
+{
+  "subject": "pablo-picasso",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5516,
+    "eyebrows": 2732,
+    "eyes": 4576,
+    "face-details": 4328,
+    "face-outline": 5159,
+    "hair": 2289,
+    "headwear": 13397,
+    "mouth": 2448,
+    "nose": 1678
+  },
+  "original_class_pixels": {
+    "ears": 8482,
+    "eyebrows": 4211,
+    "eyes": 7091,
+    "face-details": 6768,
+    "face-outline": 7983,
+    "hair": 3531,
+    "headwear": 20668,
+    "mouth": 3795,
+    "nose": 2589
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -18,17 +18,10 @@
     },
     {
       "order": "ordered",
-      "layers": ["body"]
-    },
-    {
-      "order": "ordered",
       "layers": [
         "headwear",
         "earrings",
-        "necklace",
-        "face-piercings",
-        "accessories",
-        "unassigned"
+        "face-piercings"
       ]
     }
   ]

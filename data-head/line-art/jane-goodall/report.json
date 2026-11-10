@@ -1,0 +1,37 @@
+{
+  "subject": "jane-goodall",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4560,
+    "eyebrows": 2002,
+    "eyes": 6516,
+    "face-details": 5631,
+    "face-outline": 6235,
+    "hair": 23771,
+    "mouth": 2310,
+    "nose": 2112
+  },
+  "original_class_pixels": {
+    "ears": 6757,
+    "eyebrows": 2963,
+    "eyes": 9613,
+    "face-details": 8637,
+    "face-outline": 9344,
+    "hair": 35765,
+    "mouth": 3459,
+    "nose": 3173
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

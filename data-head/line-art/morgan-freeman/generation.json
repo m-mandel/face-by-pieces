@@ -1,0 +1,117 @@
+{
+  "subject": "morgan-freeman",
+  "fingerprint": "4feb53ced6cfbee611962c0d794991315135e8aa89ce5cedb91c87f3c3f4289b",
+  "input_size": [
+    478,
+    792
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -8,
+    -26,
+    467,
+    449
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/morgan-freeman/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/morgan-freeman/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/morgan-freeman/background_removed.png",
+  "overrides": {
+    "note": "The drawing places the head higher than the source photo. Align both photo variants before applying the shared crop.",
+    "photo_transform": {
+      "scale": 0.88,
+      "translate": [
+        0.04,
+        -0.075
+      ]
+    }
+  },
+  "outputs": [
+    "line-art/morgan-freeman/transparent/earrings.png",
+    "line-art/morgan-freeman/white/earrings.png",
+    "line-art/morgan-freeman/transparent/ears.png",
+    "line-art/morgan-freeman/white/ears.png",
+    "line-art/morgan-freeman/transparent/eyebrows.png",
+    "line-art/morgan-freeman/white/eyebrows.png",
+    "line-art/morgan-freeman/transparent/eyes.png",
+    "line-art/morgan-freeman/white/eyes.png",
+    "line-art/morgan-freeman/transparent/face-details.png",
+    "line-art/morgan-freeman/white/face-details.png",
+    "line-art/morgan-freeman/transparent/face-outline.png",
+    "line-art/morgan-freeman/white/face-outline.png",
+    "line-art/morgan-freeman/transparent/facial-hair.png",
+    "line-art/morgan-freeman/white/facial-hair.png",
+    "line-art/morgan-freeman/transparent/hair.png",
+    "line-art/morgan-freeman/white/hair.png",
+    "line-art/morgan-freeman/transparent/mouth.png",
+    "line-art/morgan-freeman/white/mouth.png",
+    "line-art/morgan-freeman/transparent/nose.png",
+    "line-art/morgan-freeman/white/nose.png",
+    "line-art/morgan-freeman/merged-white.png",
+    "sources/morgan-freeman/source.png",
+    "sources/morgan-freeman/source-no-bg.png",
+    "line-art/morgan-freeman/labels.json",
+    "line-art/morgan-freeman/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

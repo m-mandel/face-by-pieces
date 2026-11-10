@@ -1,0 +1,37 @@
+{
+  "subject": "natalie-portman",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 396,
+    "eyebrows": 1418,
+    "eyes": 3004,
+    "face-details": 252,
+    "face-outline": 3012,
+    "hair": 47621,
+    "mouth": 1266,
+    "nose": 829
+  },
+  "original_class_pixels": {
+    "earrings": 2030,
+    "eyebrows": 7283,
+    "eyes": 15620,
+    "face-details": 1323,
+    "face-outline": 15534,
+    "hair": 247993,
+    "mouth": 6434,
+    "nose": 4249
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

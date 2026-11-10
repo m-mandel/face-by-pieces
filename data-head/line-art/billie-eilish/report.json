@@ -1,0 +1,39 @@
+{
+  "subject": "billie-eilish",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 858,
+    "eyebrows": 2763,
+    "eyes": 3625,
+    "face-details": 639,
+    "face-outline": 3275,
+    "hair": 32759,
+    "headwear": 14828,
+    "mouth": 4357,
+    "nose": 2396
+  },
+  "original_class_pixels": {
+    "ears": 1814,
+    "eyebrows": 6062,
+    "eyes": 7808,
+    "face-details": 1422,
+    "face-outline": 7117,
+    "hair": 71387,
+    "headwear": 31991,
+    "mouth": 9478,
+    "nose": 5220
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

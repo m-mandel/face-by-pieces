@@ -1,0 +1,35 @@
+{
+  "subject": "whitney-houston",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 1172,
+    "eyebrows": 2619,
+    "eyes": 4867,
+    "face-outline": 4252,
+    "hair": 24155,
+    "mouth": 5436,
+    "nose": 1396
+  },
+  "original_class_pixels": {
+    "ears": 258,
+    "eyebrows": 596,
+    "eyes": 1054,
+    "face-outline": 947,
+    "hair": 5426,
+    "mouth": 1164,
+    "nose": 311
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

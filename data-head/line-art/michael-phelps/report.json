@@ -1,0 +1,37 @@
+{
+  "subject": "michael-phelps",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 7912,
+    "eyebrows": 2522,
+    "eyes": 5046,
+    "face-details": 1142,
+    "face-outline": 3759,
+    "hair": 10276,
+    "mouth": 2447,
+    "nose": 1625
+  },
+  "original_class_pixels": {
+    "ears": 16992,
+    "eyebrows": 5435,
+    "eyes": 10912,
+    "face-details": 2465,
+    "face-outline": 8090,
+    "hair": 22102,
+    "mouth": 5272,
+    "nose": 3519
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

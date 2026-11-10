@@ -1,0 +1,97 @@
+{
+  "subject": "jennifer-lopez",
+  "fingerprint": "566e657a59f2e868340a91f05ba6bd3e3464cb95c3cb2cad2ff8b41334ac990e",
+  "input_size": [
+    1824,
+    2342
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    267,
+    -5,
+    1797,
+    1525
+  ],
+  "layers": [
+    "earrings",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "ears": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/jennifer-lopez/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/jennifer-lopez/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/jennifer-lopez/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/jennifer-lopez/transparent/earrings.png",
+    "line-art/jennifer-lopez/white/earrings.png",
+    "line-art/jennifer-lopez/transparent/eyebrows.png",
+    "line-art/jennifer-lopez/white/eyebrows.png",
+    "line-art/jennifer-lopez/transparent/eyes.png",
+    "line-art/jennifer-lopez/white/eyes.png",
+    "line-art/jennifer-lopez/transparent/face-outline.png",
+    "line-art/jennifer-lopez/white/face-outline.png",
+    "line-art/jennifer-lopez/transparent/hair.png",
+    "line-art/jennifer-lopez/white/hair.png",
+    "line-art/jennifer-lopez/transparent/mouth.png",
+    "line-art/jennifer-lopez/white/mouth.png",
+    "line-art/jennifer-lopez/transparent/nose.png",
+    "line-art/jennifer-lopez/white/nose.png",
+    "line-art/jennifer-lopez/merged-white.png",
+    "sources/jennifer-lopez/source.png",
+    "sources/jennifer-lopez/source-no-bg.png",
+    "line-art/jennifer-lopez/labels.json",
+    "line-art/jennifer-lopez/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

@@ -1,0 +1,103 @@
+{
+  "subject": "andy-warhol",
+  "fingerprint": "be3061313c9439a8702072ab5a77f694c6a3ab6e479ae345c8ec9a9b6eec171a",
+  "input_size": [
+    2048,
+    2977
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    405,
+    262,
+    1519,
+    1376
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/andy-warhol/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/andy-warhol/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/andy-warhol/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/andy-warhol/transparent/ears.png",
+    "line-art/andy-warhol/white/ears.png",
+    "line-art/andy-warhol/transparent/eyebrows.png",
+    "line-art/andy-warhol/white/eyebrows.png",
+    "line-art/andy-warhol/transparent/eyes.png",
+    "line-art/andy-warhol/white/eyes.png",
+    "line-art/andy-warhol/transparent/eyewear.png",
+    "line-art/andy-warhol/white/eyewear.png",
+    "line-art/andy-warhol/transparent/face-details.png",
+    "line-art/andy-warhol/white/face-details.png",
+    "line-art/andy-warhol/transparent/face-outline.png",
+    "line-art/andy-warhol/white/face-outline.png",
+    "line-art/andy-warhol/transparent/hair.png",
+    "line-art/andy-warhol/white/hair.png",
+    "line-art/andy-warhol/transparent/mouth.png",
+    "line-art/andy-warhol/white/mouth.png",
+    "line-art/andy-warhol/transparent/nose.png",
+    "line-art/andy-warhol/white/nose.png",
+    "line-art/andy-warhol/merged-white.png",
+    "sources/andy-warhol/source.png",
+    "sources/andy-warhol/source-no-bg.png",
+    "line-art/andy-warhol/labels.json",
+    "line-art/andy-warhol/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

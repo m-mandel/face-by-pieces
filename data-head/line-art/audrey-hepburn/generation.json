@@ -1,0 +1,96 @@
+{
+  "subject": "audrey-hepburn",
+  "fingerprint": "075745c6d4b286e4530ba5cf550528102a0bec4fe1886391f45a0e61ba8fa317",
+  "input_size": [
+    1760,
+    2428
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -197,
+    -70,
+    2034,
+    2161
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/audrey-hepburn/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/audrey-hepburn/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/audrey-hepburn/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/audrey-hepburn/transparent/ears.png",
+    "line-art/audrey-hepburn/white/ears.png",
+    "line-art/audrey-hepburn/transparent/eyebrows.png",
+    "line-art/audrey-hepburn/white/eyebrows.png",
+    "line-art/audrey-hepburn/transparent/eyes.png",
+    "line-art/audrey-hepburn/white/eyes.png",
+    "line-art/audrey-hepburn/transparent/face-outline.png",
+    "line-art/audrey-hepburn/white/face-outline.png",
+    "line-art/audrey-hepburn/transparent/hair.png",
+    "line-art/audrey-hepburn/white/hair.png",
+    "line-art/audrey-hepburn/transparent/mouth.png",
+    "line-art/audrey-hepburn/white/mouth.png",
+    "line-art/audrey-hepburn/transparent/nose.png",
+    "line-art/audrey-hepburn/white/nose.png",
+    "line-art/audrey-hepburn/merged-white.png",
+    "sources/audrey-hepburn/source.png",
+    "sources/audrey-hepburn/source-no-bg.png",
+    "line-art/audrey-hepburn/labels.json",
+    "line-art/audrey-hepburn/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

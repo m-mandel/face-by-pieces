@@ -1,0 +1,37 @@
+{
+  "subject": "cristiano-ronaldo",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 7031,
+    "eyebrows": 10210,
+    "eyes": 5912,
+    "face-details": 304,
+    "face-outline": 6751,
+    "hair": 119863,
+    "mouth": 4203,
+    "nose": 1952
+  },
+  "original_class_pixels": {
+    "ears": 7499,
+    "eyebrows": 10416,
+    "eyes": 6168,
+    "face-details": 360,
+    "face-outline": 7148,
+    "hair": 120414,
+    "mouth": 4399,
+    "nose": 2190
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

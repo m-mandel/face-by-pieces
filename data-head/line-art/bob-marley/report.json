@@ -1,0 +1,39 @@
+{
+  "subject": "bob-marley",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 2122,
+    "eyebrows": 1756,
+    "eyes": 3171,
+    "face-details": 2475,
+    "face-outline": 3966,
+    "facial-hair": 6324,
+    "hair": 51452,
+    "mouth": 3812,
+    "nose": 1250
+  },
+  "original_class_pixels": {
+    "ears": 819,
+    "eyebrows": 653,
+    "eyes": 1206,
+    "face-details": 987,
+    "face-outline": 1490,
+    "facial-hair": 2444,
+    "hair": 20101,
+    "mouth": 1473,
+    "nose": 499
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

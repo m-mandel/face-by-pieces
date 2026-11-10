@@ -1,0 +1,104 @@
+{
+  "subject": "roger-federer",
+  "fingerprint": "2f5137672093cb627c7a0739981aaacc274499d11abc722c5a128a753fb02e4d",
+  "input_size": [
+    2048,
+    2765
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    247,
+    76,
+    1233,
+    1062
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/roger-federer/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/roger-federer/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/roger-federer/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/roger-federer/transparent/ears.png",
+    "line-art/roger-federer/white/ears.png",
+    "line-art/roger-federer/transparent/eyebrows.png",
+    "line-art/roger-federer/white/eyebrows.png",
+    "line-art/roger-federer/transparent/eyes.png",
+    "line-art/roger-federer/white/eyes.png",
+    "line-art/roger-federer/transparent/face-details.png",
+    "line-art/roger-federer/white/face-details.png",
+    "line-art/roger-federer/transparent/face-outline.png",
+    "line-art/roger-federer/white/face-outline.png",
+    "line-art/roger-federer/transparent/hair.png",
+    "line-art/roger-federer/white/hair.png",
+    "line-art/roger-federer/transparent/headwear.png",
+    "line-art/roger-federer/white/headwear.png",
+    "line-art/roger-federer/transparent/mouth.png",
+    "line-art/roger-federer/white/mouth.png",
+    "line-art/roger-federer/transparent/nose.png",
+    "line-art/roger-federer/white/nose.png",
+    "line-art/roger-federer/merged-white.png",
+    "sources/roger-federer/source.png",
+    "sources/roger-federer/source-no-bg.png",
+    "line-art/roger-federer/labels.json",
+    "line-art/roger-federer/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

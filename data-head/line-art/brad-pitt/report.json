@@ -1,0 +1,39 @@
+{
+  "subject": "brad-pitt",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 3334,
+    "eyebrows": 2993,
+    "eyes": 3807,
+    "face-details": 2508,
+    "face-outline": 3366,
+    "facial-hair": 8591,
+    "hair": 45811,
+    "mouth": 3202,
+    "nose": 1793
+  },
+  "original_class_pixels": {
+    "ears": 5245,
+    "eyebrows": 4802,
+    "eyes": 5979,
+    "face-details": 4102,
+    "face-outline": 5225,
+    "facial-hair": 13687,
+    "hair": 72792,
+    "mouth": 5112,
+    "nose": 2854
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

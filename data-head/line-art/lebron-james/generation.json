@@ -1,0 +1,100 @@
+{
+  "subject": "lebron-james",
+  "fingerprint": "5907042a8387d64c1e77a8baf5a01ea15df810a657dafa9efd440d9b57d64a0a",
+  "input_size": [
+    1920,
+    2224
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    645,
+    -7,
+    1370,
+    718
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-outline": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/lebron-james/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/lebron-james/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/lebron-james/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/lebron-james/transparent/ears.png",
+    "line-art/lebron-james/white/ears.png",
+    "line-art/lebron-james/transparent/eyebrows.png",
+    "line-art/lebron-james/white/eyebrows.png",
+    "line-art/lebron-james/transparent/eyes.png",
+    "line-art/lebron-james/white/eyes.png",
+    "line-art/lebron-james/transparent/face-details.png",
+    "line-art/lebron-james/white/face-details.png",
+    "line-art/lebron-james/transparent/facial-hair.png",
+    "line-art/lebron-james/white/facial-hair.png",
+    "line-art/lebron-james/transparent/hair.png",
+    "line-art/lebron-james/white/hair.png",
+    "line-art/lebron-james/transparent/mouth.png",
+    "line-art/lebron-james/white/mouth.png",
+    "line-art/lebron-james/transparent/nose.png",
+    "line-art/lebron-james/white/nose.png",
+    "line-art/lebron-james/merged-white.png",
+    "sources/lebron-james/source.png",
+    "sources/lebron-james/source-no-bg.png",
+    "line-art/lebron-james/labels.json",
+    "line-art/lebron-james/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

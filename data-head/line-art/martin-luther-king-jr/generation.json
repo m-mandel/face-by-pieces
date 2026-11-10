@@ -1,0 +1,103 @@
+{
+  "subject": "martin-luther-king-jr",
+  "fingerprint": "ec7f7945f9513a0d400b4aa63d2664286d4b34af8434bc46fcd81b120eb76d01",
+  "input_size": [
+    1141,
+    1521
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    148,
+    48,
+    1207,
+    1107
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/martin-luther-king-jr/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/martin-luther-king-jr/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/martin-luther-king-jr/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/martin-luther-king-jr/transparent/ears.png",
+    "line-art/martin-luther-king-jr/white/ears.png",
+    "line-art/martin-luther-king-jr/transparent/eyebrows.png",
+    "line-art/martin-luther-king-jr/white/eyebrows.png",
+    "line-art/martin-luther-king-jr/transparent/eyes.png",
+    "line-art/martin-luther-king-jr/white/eyes.png",
+    "line-art/martin-luther-king-jr/transparent/face-details.png",
+    "line-art/martin-luther-king-jr/white/face-details.png",
+    "line-art/martin-luther-king-jr/transparent/face-outline.png",
+    "line-art/martin-luther-king-jr/white/face-outline.png",
+    "line-art/martin-luther-king-jr/transparent/facial-hair.png",
+    "line-art/martin-luther-king-jr/white/facial-hair.png",
+    "line-art/martin-luther-king-jr/transparent/hair.png",
+    "line-art/martin-luther-king-jr/white/hair.png",
+    "line-art/martin-luther-king-jr/transparent/mouth.png",
+    "line-art/martin-luther-king-jr/white/mouth.png",
+    "line-art/martin-luther-king-jr/transparent/nose.png",
+    "line-art/martin-luther-king-jr/white/nose.png",
+    "line-art/martin-luther-king-jr/merged-white.png",
+    "sources/martin-luther-king-jr/source.png",
+    "sources/martin-luther-king-jr/source-no-bg.png",
+    "line-art/martin-luther-king-jr/labels.json",
+    "line-art/martin-luther-king-jr/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

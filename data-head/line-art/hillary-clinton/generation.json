@@ -1,0 +1,104 @@
+{
+  "subject": "hillary-clinton",
+  "fingerprint": "8af7c192365ded2c7f102aca9e3a048f30535ec2e130ad50bd32b2f377e6e152",
+  "input_size": [
+    1844,
+    2304
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    219,
+    95,
+    1663,
+    1539
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/hillary-clinton/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/hillary-clinton/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/hillary-clinton/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/hillary-clinton/transparent/earrings.png",
+    "line-art/hillary-clinton/white/earrings.png",
+    "line-art/hillary-clinton/transparent/ears.png",
+    "line-art/hillary-clinton/white/ears.png",
+    "line-art/hillary-clinton/transparent/eyebrows.png",
+    "line-art/hillary-clinton/white/eyebrows.png",
+    "line-art/hillary-clinton/transparent/eyes.png",
+    "line-art/hillary-clinton/white/eyes.png",
+    "line-art/hillary-clinton/transparent/face-details.png",
+    "line-art/hillary-clinton/white/face-details.png",
+    "line-art/hillary-clinton/transparent/face-outline.png",
+    "line-art/hillary-clinton/white/face-outline.png",
+    "line-art/hillary-clinton/transparent/hair.png",
+    "line-art/hillary-clinton/white/hair.png",
+    "line-art/hillary-clinton/transparent/mouth.png",
+    "line-art/hillary-clinton/white/mouth.png",
+    "line-art/hillary-clinton/transparent/nose.png",
+    "line-art/hillary-clinton/white/nose.png",
+    "line-art/hillary-clinton/merged-white.png",
+    "sources/hillary-clinton/source.png",
+    "sources/hillary-clinton/source-no-bg.png",
+    "line-art/hillary-clinton/labels.json",
+    "line-art/hillary-clinton/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

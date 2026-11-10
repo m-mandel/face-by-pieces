@@ -1,0 +1,39 @@
+{
+  "subject": "queen-elizabeth-ii",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 584,
+    "ears": 1225,
+    "eyebrows": 3410,
+    "eyes": 6041,
+    "face-outline": 6496,
+    "hair": 26758,
+    "headwear": 30585,
+    "mouth": 2938,
+    "nose": 2229
+  },
+  "original_class_pixels": {
+    "earrings": 389,
+    "ears": 816,
+    "eyebrows": 2291,
+    "eyes": 4016,
+    "face-outline": 4447,
+    "hair": 18020,
+    "headwear": 20587,
+    "mouth": 2025,
+    "nose": 1505
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

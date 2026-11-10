@@ -1,0 +1,39 @@
+{
+  "subject": "martin-luther-king-jr",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4337,
+    "eyebrows": 2699,
+    "eyes": 5306,
+    "face-details": 1962,
+    "face-outline": 7083,
+    "facial-hair": 2731,
+    "hair": 9015,
+    "mouth": 2615,
+    "nose": 2564
+  },
+  "original_class_pixels": {
+    "ears": 4789,
+    "eyebrows": 2978,
+    "eyes": 5806,
+    "face-details": 2219,
+    "face-outline": 7710,
+    "facial-hair": 2989,
+    "hair": 9900,
+    "mouth": 2857,
+    "nose": 2853
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

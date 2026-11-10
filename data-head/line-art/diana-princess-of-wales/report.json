@@ -1,0 +1,37 @@
+{
+  "subject": "diana-princess-of-wales",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 2768,
+    "ears": 4145,
+    "eyebrows": 5015,
+    "eyes": 5664,
+    "face-outline": 6294,
+    "hair": 43447,
+    "mouth": 2702,
+    "nose": 1325
+  },
+  "original_class_pixels": {
+    "earrings": 8013,
+    "ears": 11975,
+    "eyebrows": 14664,
+    "eyes": 16559,
+    "face-outline": 18206,
+    "hair": 126507,
+    "mouth": 7862,
+    "nose": 3818
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

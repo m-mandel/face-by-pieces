@@ -349,7 +349,8 @@ function SessionResults({ rounds, onPlayAgain }) {
                           <>
                             Photo answer: {round.photoRecognized === false || !round.submittedAnswer?.trim()
                               ? 'did not know'
-                              : round.photoOutcome === 'correct' ? 'Correct' : 'Incorrect'}.
+                              : round.photoOutcome === 'correct' ? 'Correct'
+                                : round.photoOutcome === 'inaccurate' ? 'Inaccurate' : 'Incorrect'}.
                             {round.submittedAnswer && <><br />You guessed <strong>{round.submittedAnswer}</strong></>}
                             {round.photoOutcome === 'inaccurate' && <><br />Did you mean <strong>{round.portrait.name}</strong>?</>}
                           </>

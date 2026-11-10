@@ -1,0 +1,37 @@
+{
+  "subject": "nelson-mandela",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 2935,
+    "eyebrows": 636,
+    "eyes": 2629,
+    "face-details": 7251,
+    "face-outline": 6055,
+    "hair": 10665,
+    "mouth": 2485,
+    "nose": 1843
+  },
+  "original_class_pixels": {
+    "ears": 8419,
+    "eyebrows": 1884,
+    "eyes": 7611,
+    "face-details": 20985,
+    "face-outline": 17478,
+    "hair": 30926,
+    "mouth": 7195,
+    "nose": 5303
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

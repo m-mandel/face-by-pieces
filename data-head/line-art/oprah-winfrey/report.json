@@ -1,0 +1,43 @@
+{
+  "subject": "oprah-winfrey",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 1756,
+    "ears": 1016,
+    "eyebrows": 970,
+    "eyes": 2560,
+    "eyewear": 4182,
+    "face-details": 1056,
+    "face-outline": 1711,
+    "hair": 17139,
+    "headwear": 2599,
+    "mouth": 1857,
+    "nose": 552
+  },
+  "original_class_pixels": {
+    "earrings": 8920,
+    "ears": 4969,
+    "eyebrows": 4775,
+    "eyes": 13569,
+    "eyewear": 21025,
+    "face-details": 5107,
+    "face-outline": 8510,
+    "hair": 87489,
+    "headwear": 13194,
+    "mouth": 9408,
+    "nose": 2851
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

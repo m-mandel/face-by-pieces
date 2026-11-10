@@ -1,0 +1,37 @@
+{
+  "subject": "david-beckham",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 6129,
+    "eyebrows": 3675,
+    "eyes": 4232,
+    "face-details": 4889,
+    "face-outline": 8880,
+    "hair": 26674,
+    "mouth": 2994,
+    "nose": 2521
+  },
+  "original_class_pixels": {
+    "ears": 1525,
+    "eyebrows": 936,
+    "eyes": 1047,
+    "face-details": 1399,
+    "face-outline": 2183,
+    "hair": 6793,
+    "mouth": 781,
+    "nose": 648
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "subject": "frida-kahlo",
+  "fingerprint": "baf5a863db5bb17b1a683444c2283ea501aee715bea2a30c42a085a2cce35247",
+  "input_size": [
+    1888,
+    2272
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    222,
+    30,
+    1646,
+    1454
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/frida-kahlo/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/frida-kahlo/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/frida-kahlo/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/frida-kahlo/transparent/earrings.png",
+    "line-art/frida-kahlo/white/earrings.png",
+    "line-art/frida-kahlo/transparent/ears.png",
+    "line-art/frida-kahlo/white/ears.png",
+    "line-art/frida-kahlo/transparent/eyebrows.png",
+    "line-art/frida-kahlo/white/eyebrows.png",
+    "line-art/frida-kahlo/transparent/eyes.png",
+    "line-art/frida-kahlo/white/eyes.png",
+    "line-art/frida-kahlo/transparent/face-outline.png",
+    "line-art/frida-kahlo/white/face-outline.png",
+    "line-art/frida-kahlo/transparent/hair.png",
+    "line-art/frida-kahlo/white/hair.png",
+    "line-art/frida-kahlo/transparent/mouth.png",
+    "line-art/frida-kahlo/white/mouth.png",
+    "line-art/frida-kahlo/transparent/nose.png",
+    "line-art/frida-kahlo/white/nose.png",
+    "line-art/frida-kahlo/merged-white.png",
+    "sources/frida-kahlo/source.png",
+    "sources/frida-kahlo/source-no-bg.png",
+    "line-art/frida-kahlo/labels.json",
+    "line-art/frida-kahlo/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

@@ -7,8 +7,7 @@ import layerOrder from './config/layer-order.json' with { type: 'json' }
 
 const core = ['eyes', 'eyebrows', 'nose', 'mouth', 'hair', 'ears']
 const tail = [
-  'facial-hair', 'eyewear', 'face-details', 'body', 'headwear', 'earrings',
-  'necklace', 'face-piercings', 'accessories', 'unassigned',
+  'facial-hair', 'eyewear', 'face-details', 'headwear', 'earrings', 'face-piercings',
 ]
 
 function reveal(layers, random = () => 0) {
@@ -44,21 +43,21 @@ test('reveals outline, exhausts randomized core features, then uses the fixed ta
 })
 
 test('skips missing layers and empty groups, including a missing outline', () => {
-  const layers = ['body', 'eyewear', 'nose', 'accessories', 'face-details', 'headwear']
+  const layers = ['earrings', 'eyewear', 'nose', 'face-piercings', 'face-details', 'headwear']
     .map(id => ({ id }))
   assert.deepEqual(reveal(layers), [
-    'nose', 'eyewear', 'face-details', 'body', 'headwear', 'accessories',
+    'nose', 'eyewear', 'face-details', 'headwear', 'earrings', 'face-piercings',
   ])
 })
 
 test('unconfigured layers appear last and an empty portrait is complete', () => {
-  const layers = ['future-layer', 'body', 'face-outline'].map(id => ({ id }))
-  assert.deepEqual(reveal(layers), ['face-outline', 'body', 'future-layer'])
+  const layers = ['future-layer', 'headwear', 'face-outline'].map(id => ({ id }))
+  assert.deepEqual(reveal(layers), ['face-outline', 'headwear', 'future-layer'])
   assert.equal(getNextLayerIndex([]), null)
 })
 
 test('every current portrait reveals all eligible layers in group order', () => {
-  const directory = new URL('../data/line-art/', import.meta.url)
+  const directory = new URL('../data-head/line-art/', import.meta.url)
   let portraits = 0
   for (const folder of readdirSync(directory, { withFileTypes: true })) {
     if (!folder.isDirectory()) continue

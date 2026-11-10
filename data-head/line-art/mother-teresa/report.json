@@ -1,0 +1,37 @@
+{
+  "subject": "mother-teresa",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 582,
+    "eyebrows": 899,
+    "eyes": 3022,
+    "face-details": 8519,
+    "face-outline": 4339,
+    "headwear": 44401,
+    "mouth": 2980,
+    "nose": 2634
+  },
+  "original_class_pixels": {
+    "ears": 246,
+    "eyebrows": 379,
+    "eyes": 1279,
+    "face-details": 3717,
+    "face-outline": 1842,
+    "headwear": 18885,
+    "mouth": 1261,
+    "nose": 1117
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

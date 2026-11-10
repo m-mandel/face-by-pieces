@@ -1,0 +1,37 @@
+{
+  "subject": "rafael-nadal",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 6376,
+    "eyebrows": 9206,
+    "eyes": 5488,
+    "face-details": 5147,
+    "face-outline": 6096,
+    "hair": 19744,
+    "mouth": 6107,
+    "nose": 2170
+  },
+  "original_class_pixels": {
+    "ears": 3109,
+    "eyebrows": 4390,
+    "eyes": 2657,
+    "face-details": 2590,
+    "face-outline": 2964,
+    "hair": 9732,
+    "mouth": 2998,
+    "nose": 1088
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

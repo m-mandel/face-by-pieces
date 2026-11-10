@@ -1,0 +1,100 @@
+{
+  "subject": "greta-thunberg",
+  "fingerprint": "202e9647b508bc70212491025307f215bed05316ac844a8a845c84167451c345",
+  "input_size": [
+    1822,
+    2368
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    435,
+    27,
+    1430,
+    1022
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/greta-thunberg/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/greta-thunberg/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/greta-thunberg/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/greta-thunberg/transparent/ears.png",
+    "line-art/greta-thunberg/white/ears.png",
+    "line-art/greta-thunberg/transparent/eyebrows.png",
+    "line-art/greta-thunberg/white/eyebrows.png",
+    "line-art/greta-thunberg/transparent/eyes.png",
+    "line-art/greta-thunberg/white/eyes.png",
+    "line-art/greta-thunberg/transparent/face-details.png",
+    "line-art/greta-thunberg/white/face-details.png",
+    "line-art/greta-thunberg/transparent/face-outline.png",
+    "line-art/greta-thunberg/white/face-outline.png",
+    "line-art/greta-thunberg/transparent/hair.png",
+    "line-art/greta-thunberg/white/hair.png",
+    "line-art/greta-thunberg/transparent/mouth.png",
+    "line-art/greta-thunberg/white/mouth.png",
+    "line-art/greta-thunberg/transparent/nose.png",
+    "line-art/greta-thunberg/white/nose.png",
+    "line-art/greta-thunberg/merged-white.png",
+    "sources/greta-thunberg/source.png",
+    "sources/greta-thunberg/source-no-bg.png",
+    "line-art/greta-thunberg/labels.json",
+    "line-art/greta-thunberg/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

@@ -1,0 +1,37 @@
+{
+  "subject": "tom-cruise",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 1906,
+    "eyebrows": 2740,
+    "eyes": 2652,
+    "face-details": 2425,
+    "face-outline": 5729,
+    "hair": 32144,
+    "mouth": 3585,
+    "nose": 1840
+  },
+  "original_class_pixels": {
+    "ears": 3963,
+    "eyebrows": 5689,
+    "eyes": 5511,
+    "face-details": 5293,
+    "face-outline": 11927,
+    "hair": 67519,
+    "mouth": 7578,
+    "nose": 3894
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

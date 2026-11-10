@@ -1,0 +1,37 @@
+{
+  "subject": "arnold-schwarzenegger",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 2948,
+    "eyebrows": 2741,
+    "eyes": 2984,
+    "face-details": 3094,
+    "facial-hair": 10779,
+    "hair": 18102,
+    "mouth": 3157,
+    "nose": 1424
+  },
+  "original_class_pixels": {
+    "ears": 3153,
+    "eyebrows": 2952,
+    "eyes": 3142,
+    "face-details": 3330,
+    "facial-hair": 11434,
+    "hair": 19237,
+    "mouth": 3373,
+    "nose": 1451
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

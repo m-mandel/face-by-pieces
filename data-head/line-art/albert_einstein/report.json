@@ -1,0 +1,39 @@
+{
+  "subject": "albert-einstein",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4953,
+    "eyebrows": 3400,
+    "eyes": 5161,
+    "face-details": 12117,
+    "face-outline": 10375,
+    "facial-hair": 6525,
+    "hair": 47523,
+    "mouth": 1730,
+    "nose": 3304
+  },
+  "original_class_pixels": {
+    "ears": 2201,
+    "eyebrows": 1560,
+    "eyes": 2269,
+    "face-details": 5798,
+    "face-outline": 4499,
+    "facial-hair": 3048,
+    "hair": 21824,
+    "mouth": 784,
+    "nose": 1595
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

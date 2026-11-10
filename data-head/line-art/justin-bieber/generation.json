@@ -1,0 +1,99 @@
+{
+  "subject": "justin-bieber",
+  "fingerprint": "563217b2d918b1cb6ee6a721c3f47577444add4ce377e25ddc0b1dda5df21056",
+  "input_size": [
+    1728,
+    2470
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    323,
+    -14,
+    1202,
+    865
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/justin-bieber/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/justin-bieber/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/justin-bieber/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/justin-bieber/transparent/ears.png",
+    "line-art/justin-bieber/white/ears.png",
+    "line-art/justin-bieber/transparent/eyebrows.png",
+    "line-art/justin-bieber/white/eyebrows.png",
+    "line-art/justin-bieber/transparent/eyes.png",
+    "line-art/justin-bieber/white/eyes.png",
+    "line-art/justin-bieber/transparent/face-outline.png",
+    "line-art/justin-bieber/white/face-outline.png",
+    "line-art/justin-bieber/transparent/hair.png",
+    "line-art/justin-bieber/white/hair.png",
+    "line-art/justin-bieber/transparent/headwear.png",
+    "line-art/justin-bieber/white/headwear.png",
+    "line-art/justin-bieber/transparent/mouth.png",
+    "line-art/justin-bieber/white/mouth.png",
+    "line-art/justin-bieber/transparent/nose.png",
+    "line-art/justin-bieber/white/nose.png",
+    "line-art/justin-bieber/merged-white.png",
+    "sources/justin-bieber/source.png",
+    "sources/justin-bieber/source-no-bg.png",
+    "line-art/justin-bieber/labels.json",
+    "line-art/justin-bieber/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

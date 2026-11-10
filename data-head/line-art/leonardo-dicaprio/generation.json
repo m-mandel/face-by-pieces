@@ -1,0 +1,99 @@
+{
+  "subject": "leonardo-dicaprio",
+  "fingerprint": "52e8c049caaca390a56731ede974621962e9a4d92a7d57962b0ff4a7648e4940",
+  "input_size": [
+    1856,
+    2280
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    107,
+    47,
+    1701,
+    1641
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-outline": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/leonardo-dicaprio/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/leonardo-dicaprio/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/leonardo-dicaprio/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/leonardo-dicaprio/transparent/ears.png",
+    "line-art/leonardo-dicaprio/white/ears.png",
+    "line-art/leonardo-dicaprio/transparent/eyebrows.png",
+    "line-art/leonardo-dicaprio/white/eyebrows.png",
+    "line-art/leonardo-dicaprio/transparent/eyes.png",
+    "line-art/leonardo-dicaprio/white/eyes.png",
+    "line-art/leonardo-dicaprio/transparent/face-details.png",
+    "line-art/leonardo-dicaprio/white/face-details.png",
+    "line-art/leonardo-dicaprio/transparent/facial-hair.png",
+    "line-art/leonardo-dicaprio/white/facial-hair.png",
+    "line-art/leonardo-dicaprio/transparent/hair.png",
+    "line-art/leonardo-dicaprio/white/hair.png",
+    "line-art/leonardo-dicaprio/transparent/mouth.png",
+    "line-art/leonardo-dicaprio/white/mouth.png",
+    "line-art/leonardo-dicaprio/transparent/nose.png",
+    "line-art/leonardo-dicaprio/white/nose.png",
+    "line-art/leonardo-dicaprio/merged-white.png",
+    "sources/leonardo-dicaprio/source.png",
+    "sources/leonardo-dicaprio/source-no-bg.png",
+    "line-art/leonardo-dicaprio/labels.json",
+    "line-art/leonardo-dicaprio/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

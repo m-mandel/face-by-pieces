@@ -1,0 +1,96 @@
+{
+  "subject": "julia-roberts",
+  "fingerprint": "830603bb6510493cab2252856f45f73f5649f263489f0225e404c4f490c6cfeb",
+  "input_size": [
+    1244,
+    1470
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -216,
+    -17,
+    1355,
+    1554
+  ],
+  "layers": [
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "ears": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/julia-roberts/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/julia-roberts/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/julia-roberts/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/julia-roberts/transparent/eyebrows.png",
+    "line-art/julia-roberts/white/eyebrows.png",
+    "line-art/julia-roberts/transparent/eyes.png",
+    "line-art/julia-roberts/white/eyes.png",
+    "line-art/julia-roberts/transparent/face-details.png",
+    "line-art/julia-roberts/white/face-details.png",
+    "line-art/julia-roberts/transparent/face-outline.png",
+    "line-art/julia-roberts/white/face-outline.png",
+    "line-art/julia-roberts/transparent/hair.png",
+    "line-art/julia-roberts/white/hair.png",
+    "line-art/julia-roberts/transparent/mouth.png",
+    "line-art/julia-roberts/white/mouth.png",
+    "line-art/julia-roberts/transparent/nose.png",
+    "line-art/julia-roberts/white/nose.png",
+    "line-art/julia-roberts/merged-white.png",
+    "sources/julia-roberts/source.png",
+    "sources/julia-roberts/source-no-bg.png",
+    "line-art/julia-roberts/labels.json",
+    "line-art/julia-roberts/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

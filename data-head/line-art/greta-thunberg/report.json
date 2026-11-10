@@ -1,0 +1,37 @@
+{
+  "subject": "greta-thunberg",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 1241,
+    "eyebrows": 992,
+    "eyes": 1574,
+    "face-details": 333,
+    "face-outline": 2137,
+    "hair": 25698,
+    "mouth": 744,
+    "nose": 501
+  },
+  "original_class_pixels": {
+    "ears": 1273,
+    "eyebrows": 1063,
+    "eyes": 1680,
+    "face-details": 368,
+    "face-outline": 2192,
+    "hair": 28200,
+    "mouth": 788,
+    "nose": 556
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

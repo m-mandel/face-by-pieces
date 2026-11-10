@@ -1,0 +1,35 @@
+{
+  "subject": "michael-jackson",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 3201,
+    "eyebrows": 6298,
+    "eyes": 5716,
+    "face-outline": 6113,
+    "hair": 22324,
+    "mouth": 3855,
+    "nose": 1651
+  },
+  "original_class_pixels": {
+    "ears": 2017,
+    "eyebrows": 3747,
+    "eyes": 3470,
+    "face-outline": 3759,
+    "hair": 13829,
+    "mouth": 2419,
+    "nose": 1058
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

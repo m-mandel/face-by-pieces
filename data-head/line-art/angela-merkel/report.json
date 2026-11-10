@@ -1,0 +1,37 @@
+{
+  "subject": "angela-merkel",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4571,
+    "eyebrows": 2865,
+    "eyes": 5512,
+    "face-details": 2429,
+    "face-outline": 8113,
+    "hair": 45585,
+    "mouth": 3095,
+    "nose": 2007
+  },
+  "original_class_pixels": {
+    "ears": 3939,
+    "eyebrows": 2562,
+    "eyes": 4696,
+    "face-details": 2244,
+    "face-outline": 6880,
+    "hair": 39520,
+    "mouth": 2649,
+    "nose": 1786
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

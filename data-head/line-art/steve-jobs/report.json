@@ -1,0 +1,41 @@
+{
+  "subject": "steve-jobs",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 7459,
+    "eyebrows": 2053,
+    "eyes": 4416,
+    "eyewear": 6204,
+    "face-details": 2269,
+    "face-outline": 4866,
+    "facial-hair": 4504,
+    "hair": 9570,
+    "mouth": 2405,
+    "nose": 1370
+  },
+  "original_class_pixels": {
+    "ears": 29717,
+    "eyebrows": 7944,
+    "eyes": 17975,
+    "eyewear": 24397,
+    "face-details": 8933,
+    "face-outline": 19520,
+    "facial-hair": 17694,
+    "hair": 38103,
+    "mouth": 9504,
+    "nose": 5422
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

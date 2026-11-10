@@ -1,0 +1,99 @@
+{
+  "subject": "abraham-lincoln",
+  "fingerprint": "d8f2c09143334084b3aedb01c44f1587715dc320bf0b3418e4f7837afa61c038",
+  "input_size": [
+    1824,
+    2350
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    40,
+    10,
+    1688,
+    1658
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-outline": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/abraham-lincoln/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/abraham-lincoln/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/abraham-lincoln/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/abraham-lincoln/transparent/ears.png",
+    "line-art/abraham-lincoln/white/ears.png",
+    "line-art/abraham-lincoln/transparent/eyebrows.png",
+    "line-art/abraham-lincoln/white/eyebrows.png",
+    "line-art/abraham-lincoln/transparent/eyes.png",
+    "line-art/abraham-lincoln/white/eyes.png",
+    "line-art/abraham-lincoln/transparent/face-details.png",
+    "line-art/abraham-lincoln/white/face-details.png",
+    "line-art/abraham-lincoln/transparent/facial-hair.png",
+    "line-art/abraham-lincoln/white/facial-hair.png",
+    "line-art/abraham-lincoln/transparent/hair.png",
+    "line-art/abraham-lincoln/white/hair.png",
+    "line-art/abraham-lincoln/transparent/mouth.png",
+    "line-art/abraham-lincoln/white/mouth.png",
+    "line-art/abraham-lincoln/transparent/nose.png",
+    "line-art/abraham-lincoln/white/nose.png",
+    "line-art/abraham-lincoln/merged-white.png",
+    "sources/abraham-lincoln/source.png",
+    "sources/abraham-lincoln/source-no-bg.png",
+    "line-art/abraham-lincoln/labels.json",
+    "line-art/abraham-lincoln/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

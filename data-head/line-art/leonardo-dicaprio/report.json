@@ -1,0 +1,37 @@
+{
+  "subject": "leonardo-dicaprio",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4943,
+    "eyebrows": 3309,
+    "eyes": 4433,
+    "face-details": 1891,
+    "facial-hair": 11078,
+    "hair": 21714,
+    "mouth": 3346,
+    "nose": 1621
+  },
+  "original_class_pixels": {
+    "ears": 11602,
+    "eyebrows": 7739,
+    "eyes": 10497,
+    "face-details": 4348,
+    "facial-hair": 25945,
+    "hair": 51175,
+    "mouth": 7765,
+    "nose": 3764
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

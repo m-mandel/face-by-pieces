@@ -1,0 +1,95 @@
+{
+  "subject": "whitney-houston",
+  "fingerprint": "c47d0d768a593210d54c861bfe862ff57720b332f440df949d40d1c403deb288",
+  "input_size": [
+    518,
+    736
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    26,
+    -2,
+    500,
+    472
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/whitney-houston/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/whitney-houston/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/whitney-houston/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/whitney-houston/transparent/ears.png",
+    "line-art/whitney-houston/white/ears.png",
+    "line-art/whitney-houston/transparent/eyebrows.png",
+    "line-art/whitney-houston/white/eyebrows.png",
+    "line-art/whitney-houston/transparent/eyes.png",
+    "line-art/whitney-houston/white/eyes.png",
+    "line-art/whitney-houston/transparent/face-outline.png",
+    "line-art/whitney-houston/white/face-outline.png",
+    "line-art/whitney-houston/transparent/hair.png",
+    "line-art/whitney-houston/white/hair.png",
+    "line-art/whitney-houston/transparent/mouth.png",
+    "line-art/whitney-houston/white/mouth.png",
+    "line-art/whitney-houston/transparent/nose.png",
+    "line-art/whitney-houston/white/nose.png",
+    "line-art/whitney-houston/merged-white.png",
+    "sources/whitney-houston/source.png",
+    "sources/whitney-houston/source-no-bg.png",
+    "line-art/whitney-houston/labels.json",
+    "line-art/whitney-houston/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

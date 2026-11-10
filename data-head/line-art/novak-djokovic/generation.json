@@ -1,0 +1,100 @@
+{
+  "subject": "novak-djokovic",
+  "fingerprint": "5210f2977b065c4e709b3abd215ce1b82d238a0c2c43f608050de695a492560a",
+  "input_size": [
+    2048,
+    2731
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -119,
+    52,
+    1990,
+    2161
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-outline": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/novak-djokovic/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/novak-djokovic/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/novak-djokovic/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/novak-djokovic/transparent/ears.png",
+    "line-art/novak-djokovic/white/ears.png",
+    "line-art/novak-djokovic/transparent/eyebrows.png",
+    "line-art/novak-djokovic/white/eyebrows.png",
+    "line-art/novak-djokovic/transparent/eyes.png",
+    "line-art/novak-djokovic/white/eyes.png",
+    "line-art/novak-djokovic/transparent/face-details.png",
+    "line-art/novak-djokovic/white/face-details.png",
+    "line-art/novak-djokovic/transparent/facial-hair.png",
+    "line-art/novak-djokovic/white/facial-hair.png",
+    "line-art/novak-djokovic/transparent/hair.png",
+    "line-art/novak-djokovic/white/hair.png",
+    "line-art/novak-djokovic/transparent/mouth.png",
+    "line-art/novak-djokovic/white/mouth.png",
+    "line-art/novak-djokovic/transparent/nose.png",
+    "line-art/novak-djokovic/white/nose.png",
+    "line-art/novak-djokovic/merged-white.png",
+    "sources/novak-djokovic/source.png",
+    "sources/novak-djokovic/source-no-bg.png",
+    "line-art/novak-djokovic/labels.json",
+    "line-art/novak-djokovic/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

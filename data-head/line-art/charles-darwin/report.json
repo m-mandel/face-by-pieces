@@ -1,0 +1,39 @@
+{
+  "subject": "charles-darwin",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 720,
+    "eyebrows": 2378,
+    "eyes": 3434,
+    "face-details": 4540,
+    "face-outline": 2656,
+    "facial-hair": 22209,
+    "hair": 8013,
+    "mouth": 1259,
+    "nose": 2356
+  },
+  "original_class_pixels": {
+    "ears": 336,
+    "eyebrows": 1106,
+    "eyes": 1576,
+    "face-details": 2085,
+    "face-outline": 1238,
+    "facial-hair": 10398,
+    "hair": 3728,
+    "mouth": 587,
+    "nose": 1106
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

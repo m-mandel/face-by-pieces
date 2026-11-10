@@ -1,0 +1,37 @@
+{
+  "subject": "marilyn-monroe",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 8282,
+    "ears": 792,
+    "eyebrows": 2298,
+    "eyes": 6154,
+    "face-outline": 2560,
+    "hair": 24544,
+    "mouth": 3562,
+    "nose": 1118
+  },
+  "original_class_pixels": {
+    "earrings": 21167,
+    "ears": 2028,
+    "eyebrows": 5904,
+    "eyes": 15922,
+    "face-outline": 6493,
+    "hair": 63007,
+    "mouth": 9136,
+    "nose": 2883
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

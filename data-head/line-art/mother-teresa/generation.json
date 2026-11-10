@@ -1,0 +1,100 @@
+{
+  "subject": "mother-teresa",
+  "fingerprint": "3db535e3a3f1122c82cc76373ff092961e5f950eb3b8fc17eb67aa8d40211d2e",
+  "input_size": [
+    576,
+    768
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -68,
+    -36,
+    592,
+    624
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/mother-teresa/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/mother-teresa/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/mother-teresa/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/mother-teresa/transparent/ears.png",
+    "line-art/mother-teresa/white/ears.png",
+    "line-art/mother-teresa/transparent/eyebrows.png",
+    "line-art/mother-teresa/white/eyebrows.png",
+    "line-art/mother-teresa/transparent/eyes.png",
+    "line-art/mother-teresa/white/eyes.png",
+    "line-art/mother-teresa/transparent/face-details.png",
+    "line-art/mother-teresa/white/face-details.png",
+    "line-art/mother-teresa/transparent/face-outline.png",
+    "line-art/mother-teresa/white/face-outline.png",
+    "line-art/mother-teresa/transparent/headwear.png",
+    "line-art/mother-teresa/white/headwear.png",
+    "line-art/mother-teresa/transparent/mouth.png",
+    "line-art/mother-teresa/white/mouth.png",
+    "line-art/mother-teresa/transparent/nose.png",
+    "line-art/mother-teresa/white/nose.png",
+    "line-art/mother-teresa/merged-white.png",
+    "sources/mother-teresa/source.png",
+    "sources/mother-teresa/source-no-bg.png",
+    "line-art/mother-teresa/labels.json",
+    "line-art/mother-teresa/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

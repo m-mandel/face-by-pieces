@@ -1,0 +1,99 @@
+{
+  "subject": "charlie-chaplin",
+  "fingerprint": "a093ab7b0b3205f45e9d48b934fa1ca0cc545dc6571bf7234c3109b144c4d84e",
+  "input_size": [
+    2048,
+    2918
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    136,
+    34,
+    1930,
+    1828
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/charlie-chaplin/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/charlie-chaplin/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/charlie-chaplin/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/charlie-chaplin/transparent/ears.png",
+    "line-art/charlie-chaplin/white/ears.png",
+    "line-art/charlie-chaplin/transparent/eyebrows.png",
+    "line-art/charlie-chaplin/white/eyebrows.png",
+    "line-art/charlie-chaplin/transparent/eyes.png",
+    "line-art/charlie-chaplin/white/eyes.png",
+    "line-art/charlie-chaplin/transparent/face-details.png",
+    "line-art/charlie-chaplin/white/face-details.png",
+    "line-art/charlie-chaplin/transparent/face-outline.png",
+    "line-art/charlie-chaplin/white/face-outline.png",
+    "line-art/charlie-chaplin/transparent/hair.png",
+    "line-art/charlie-chaplin/white/hair.png",
+    "line-art/charlie-chaplin/transparent/mouth.png",
+    "line-art/charlie-chaplin/white/mouth.png",
+    "line-art/charlie-chaplin/transparent/nose.png",
+    "line-art/charlie-chaplin/white/nose.png",
+    "line-art/charlie-chaplin/merged-white.png",
+    "sources/charlie-chaplin/source.png",
+    "sources/charlie-chaplin/source-no-bg.png",
+    "line-art/charlie-chaplin/labels.json",
+    "line-art/charlie-chaplin/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

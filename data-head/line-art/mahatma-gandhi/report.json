@@ -1,0 +1,39 @@
+{
+  "subject": "mahatma-gandhi",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 18202,
+    "eyebrows": 3270,
+    "eyes": 6752,
+    "eyewear": 13275,
+    "face-details": 9708,
+    "face-outline": 33929,
+    "facial-hair": 5841,
+    "mouth": 2648,
+    "nose": 4075
+  },
+  "original_class_pixels": {
+    "ears": 14533,
+    "eyebrows": 2764,
+    "eyes": 5400,
+    "eyewear": 10619,
+    "face-details": 8199,
+    "face-outline": 26782,
+    "facial-hair": 4782,
+    "mouth": 2078,
+    "nose": 3301
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

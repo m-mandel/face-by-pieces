@@ -1,0 +1,37 @@
+{
+  "subject": "angelina-jolie",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 305,
+    "eyebrows": 705,
+    "eyes": 2199,
+    "face-details": 255,
+    "face-outline": 2284,
+    "hair": 29162,
+    "mouth": 1017,
+    "nose": 647
+  },
+  "original_class_pixels": {
+    "ears": 1630,
+    "eyebrows": 3641,
+    "eyes": 12216,
+    "face-details": 1347,
+    "face-outline": 12287,
+    "hair": 157811,
+    "mouth": 5506,
+    "nose": 3445
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

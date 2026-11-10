@@ -1,0 +1,112 @@
+{
+  "subject": "malala-yousafzai",
+  "fingerprint": "122f199b4150cfcab4bfd10f0a17abc0fd8082a74630be2b63f1d4878015759a",
+  "input_size": [
+    2048,
+    2048
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    262,
+    11,
+    1721,
+    1470
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/malala-yousafzai/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/malala-yousafzai/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/malala-yousafzai/background_removed.png",
+  "overrides": {
+    "note": "Headwear includes the shawl across the torso. Retain only its head portion.",
+    "clip_box": [
+      0,
+      0,
+      1,
+      0.68
+    ]
+  },
+  "outputs": [
+    "line-art/malala-yousafzai/transparent/ears.png",
+    "line-art/malala-yousafzai/white/ears.png",
+    "line-art/malala-yousafzai/transparent/eyebrows.png",
+    "line-art/malala-yousafzai/white/eyebrows.png",
+    "line-art/malala-yousafzai/transparent/eyes.png",
+    "line-art/malala-yousafzai/white/eyes.png",
+    "line-art/malala-yousafzai/transparent/face-details.png",
+    "line-art/malala-yousafzai/white/face-details.png",
+    "line-art/malala-yousafzai/transparent/face-outline.png",
+    "line-art/malala-yousafzai/white/face-outline.png",
+    "line-art/malala-yousafzai/transparent/hair.png",
+    "line-art/malala-yousafzai/white/hair.png",
+    "line-art/malala-yousafzai/transparent/headwear.png",
+    "line-art/malala-yousafzai/white/headwear.png",
+    "line-art/malala-yousafzai/transparent/mouth.png",
+    "line-art/malala-yousafzai/white/mouth.png",
+    "line-art/malala-yousafzai/transparent/nose.png",
+    "line-art/malala-yousafzai/white/nose.png",
+    "line-art/malala-yousafzai/merged-white.png",
+    "sources/malala-yousafzai/source.png",
+    "sources/malala-yousafzai/source-no-bg.png",
+    "line-art/malala-yousafzai/labels.json",
+    "line-art/malala-yousafzai/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

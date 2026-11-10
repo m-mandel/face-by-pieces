@@ -1,0 +1,100 @@
+{
+  "subject": "freddie-mercury",
+  "fingerprint": "4034336152adac9ca0a088d5220a9e16367b6bd755cbbaa211108ede8550dc94",
+  "input_size": [
+    2048,
+    3039
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    714,
+    71,
+    1755,
+    1112
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/freddie-mercury/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/freddie-mercury/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/freddie-mercury/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/freddie-mercury/transparent/ears.png",
+    "line-art/freddie-mercury/white/ears.png",
+    "line-art/freddie-mercury/transparent/eyebrows.png",
+    "line-art/freddie-mercury/white/eyebrows.png",
+    "line-art/freddie-mercury/transparent/eyes.png",
+    "line-art/freddie-mercury/white/eyes.png",
+    "line-art/freddie-mercury/transparent/face-details.png",
+    "line-art/freddie-mercury/white/face-details.png",
+    "line-art/freddie-mercury/transparent/face-outline.png",
+    "line-art/freddie-mercury/white/face-outline.png",
+    "line-art/freddie-mercury/transparent/hair.png",
+    "line-art/freddie-mercury/white/hair.png",
+    "line-art/freddie-mercury/transparent/mouth.png",
+    "line-art/freddie-mercury/white/mouth.png",
+    "line-art/freddie-mercury/transparent/nose.png",
+    "line-art/freddie-mercury/white/nose.png",
+    "line-art/freddie-mercury/merged-white.png",
+    "sources/freddie-mercury/source.png",
+    "sources/freddie-mercury/source-no-bg.png",
+    "line-art/freddie-mercury/labels.json",
+    "line-art/freddie-mercury/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

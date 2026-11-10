@@ -1,0 +1,37 @@
+{
+  "subject": "tiger-woods",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 7067,
+    "eyebrows": 2253,
+    "eyes": 5289,
+    "face-details": 2048,
+    "face-outline": 6150,
+    "hair": 13558,
+    "mouth": 5985,
+    "nose": 2363
+  },
+  "original_class_pixels": {
+    "ears": 4211,
+    "eyebrows": 1348,
+    "eyes": 3106,
+    "face-details": 1225,
+    "face-outline": 3610,
+    "hair": 7970,
+    "mouth": 3554,
+    "nose": 1409
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "subject": "michelle-obama",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 292,
+    "ears": 517,
+    "eyebrows": 2452,
+    "eyes": 6244,
+    "face-details": 976,
+    "face-outline": 6607,
+    "hair": 49155,
+    "mouth": 5212,
+    "nose": 1167
+  },
+  "original_class_pixels": {
+    "earrings": 756,
+    "ears": 1391,
+    "eyebrows": 6579,
+    "eyes": 16850,
+    "face-details": 2631,
+    "face-outline": 17677,
+    "hair": 131614,
+    "mouth": 13995,
+    "nose": 3162
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

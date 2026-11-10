@@ -1,0 +1,99 @@
+{
+  "subject": "volodymyr-zelenskyy",
+  "fingerprint": "263245f27b498650c21c49576d9ab55ffc207d2f365274bd171b7c3ea9dc5836",
+  "input_size": [
+    921,
+    1256
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    153,
+    29,
+    796,
+    672
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-outline": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/volodymyr-zelenskyy/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/volodymyr-zelenskyy/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/volodymyr-zelenskyy/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/volodymyr-zelenskyy/transparent/ears.png",
+    "line-art/volodymyr-zelenskyy/white/ears.png",
+    "line-art/volodymyr-zelenskyy/transparent/eyebrows.png",
+    "line-art/volodymyr-zelenskyy/white/eyebrows.png",
+    "line-art/volodymyr-zelenskyy/transparent/eyes.png",
+    "line-art/volodymyr-zelenskyy/white/eyes.png",
+    "line-art/volodymyr-zelenskyy/transparent/face-details.png",
+    "line-art/volodymyr-zelenskyy/white/face-details.png",
+    "line-art/volodymyr-zelenskyy/transparent/facial-hair.png",
+    "line-art/volodymyr-zelenskyy/white/facial-hair.png",
+    "line-art/volodymyr-zelenskyy/transparent/hair.png",
+    "line-art/volodymyr-zelenskyy/white/hair.png",
+    "line-art/volodymyr-zelenskyy/transparent/mouth.png",
+    "line-art/volodymyr-zelenskyy/white/mouth.png",
+    "line-art/volodymyr-zelenskyy/transparent/nose.png",
+    "line-art/volodymyr-zelenskyy/white/nose.png",
+    "line-art/volodymyr-zelenskyy/merged-white.png",
+    "sources/volodymyr-zelenskyy/source.png",
+    "sources/volodymyr-zelenskyy/source-no-bg.png",
+    "line-art/volodymyr-zelenskyy/labels.json",
+    "line-art/volodymyr-zelenskyy/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

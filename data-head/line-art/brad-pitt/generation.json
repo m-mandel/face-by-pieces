@@ -1,0 +1,103 @@
+{
+  "subject": "brad-pitt",
+  "fingerprint": "116f754e3e2690b79f63decf2b368e1b4f0fecd0dcfab13f3c8b4b3329746b79",
+  "input_size": [
+    1435,
+    2153
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    107,
+    57,
+    1386,
+    1336
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/brad-pitt/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/brad-pitt/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/brad-pitt/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/brad-pitt/transparent/ears.png",
+    "line-art/brad-pitt/white/ears.png",
+    "line-art/brad-pitt/transparent/eyebrows.png",
+    "line-art/brad-pitt/white/eyebrows.png",
+    "line-art/brad-pitt/transparent/eyes.png",
+    "line-art/brad-pitt/white/eyes.png",
+    "line-art/brad-pitt/transparent/face-details.png",
+    "line-art/brad-pitt/white/face-details.png",
+    "line-art/brad-pitt/transparent/face-outline.png",
+    "line-art/brad-pitt/white/face-outline.png",
+    "line-art/brad-pitt/transparent/facial-hair.png",
+    "line-art/brad-pitt/white/facial-hair.png",
+    "line-art/brad-pitt/transparent/hair.png",
+    "line-art/brad-pitt/white/hair.png",
+    "line-art/brad-pitt/transparent/mouth.png",
+    "line-art/brad-pitt/white/mouth.png",
+    "line-art/brad-pitt/transparent/nose.png",
+    "line-art/brad-pitt/white/nose.png",
+    "line-art/brad-pitt/merged-white.png",
+    "sources/brad-pitt/source.png",
+    "sources/brad-pitt/source-no-bg.png",
+    "line-art/brad-pitt/labels.json",
+    "line-art/brad-pitt/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

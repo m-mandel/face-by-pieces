@@ -1,0 +1,39 @@
+{
+  "subject": "dolly-parton",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 2271,
+    "eyebrows": 976,
+    "eyes": 2982,
+    "face-details": 592,
+    "face-outline": 2164,
+    "hair": 35719,
+    "headwear": 13538,
+    "mouth": 1732,
+    "nose": 610
+  },
+  "original_class_pixels": {
+    "earrings": 2163,
+    "eyebrows": 928,
+    "eyes": 2800,
+    "face-details": 554,
+    "face-outline": 1999,
+    "hair": 34190,
+    "headwear": 12466,
+    "mouth": 1694,
+    "nose": 585
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

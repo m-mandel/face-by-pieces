@@ -1,0 +1,100 @@
+{
+  "subject": "diana-princess-of-wales",
+  "fingerprint": "13342a9652677270fb7a19b68878aa2aa3c525d802843b0d7a73f11333b593c4",
+  "input_size": [
+    1824,
+    2342
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    23,
+    31,
+    1781,
+    1789
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer",
+    "face-details": "below minimum output pixel count"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/diana-princess-of-wales/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/diana-princess-of-wales/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/diana-princess-of-wales/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/diana-princess-of-wales/transparent/earrings.png",
+    "line-art/diana-princess-of-wales/white/earrings.png",
+    "line-art/diana-princess-of-wales/transparent/ears.png",
+    "line-art/diana-princess-of-wales/white/ears.png",
+    "line-art/diana-princess-of-wales/transparent/eyebrows.png",
+    "line-art/diana-princess-of-wales/white/eyebrows.png",
+    "line-art/diana-princess-of-wales/transparent/eyes.png",
+    "line-art/diana-princess-of-wales/white/eyes.png",
+    "line-art/diana-princess-of-wales/transparent/face-outline.png",
+    "line-art/diana-princess-of-wales/white/face-outline.png",
+    "line-art/diana-princess-of-wales/transparent/hair.png",
+    "line-art/diana-princess-of-wales/white/hair.png",
+    "line-art/diana-princess-of-wales/transparent/mouth.png",
+    "line-art/diana-princess-of-wales/white/mouth.png",
+    "line-art/diana-princess-of-wales/transparent/nose.png",
+    "line-art/diana-princess-of-wales/white/nose.png",
+    "line-art/diana-princess-of-wales/merged-white.png",
+    "sources/diana-princess-of-wales/source.png",
+    "sources/diana-princess-of-wales/source-no-bg.png",
+    "line-art/diana-princess-of-wales/labels.json",
+    "line-art/diana-princess-of-wales/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

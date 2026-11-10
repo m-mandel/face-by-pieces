@@ -1,0 +1,39 @@
+{
+  "subject": "lady-gaga",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 3937,
+    "ears": 1435,
+    "eyebrows": 2871,
+    "eyes": 5420,
+    "face-details": 808,
+    "face-outline": 3624,
+    "hair": 43984,
+    "mouth": 2688,
+    "nose": 1598
+  },
+  "original_class_pixels": {
+    "earrings": 10914,
+    "ears": 4001,
+    "eyebrows": 8080,
+    "eyes": 15332,
+    "face-details": 2284,
+    "face-outline": 10128,
+    "hair": 124152,
+    "mouth": 7600,
+    "nose": 4447
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

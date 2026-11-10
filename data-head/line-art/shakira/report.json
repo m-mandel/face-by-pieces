@@ -1,0 +1,33 @@
+{
+  "subject": "shakira",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "eyebrows": 1496,
+    "eyes": 3591,
+    "face-outline": 2545,
+    "hair": 49849,
+    "mouth": 2186,
+    "nose": 598
+  },
+  "original_class_pixels": {
+    "eyebrows": 3951,
+    "eyes": 9760,
+    "face-outline": 6791,
+    "hair": 133240,
+    "mouth": 5889,
+    "nose": 1588
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

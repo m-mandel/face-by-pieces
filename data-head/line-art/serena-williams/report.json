@@ -1,0 +1,37 @@
+{
+  "subject": "serena-williams",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 2776,
+    "eyebrows": 1669,
+    "eyes": 3173,
+    "face-outline": 4729,
+    "hair": 33001,
+    "headwear": 9732,
+    "mouth": 2059,
+    "nose": 1058
+  },
+  "original_class_pixels": {
+    "ears": 11247,
+    "eyebrows": 6740,
+    "eyes": 13180,
+    "face-outline": 19334,
+    "hair": 137990,
+    "headwear": 39766,
+    "mouth": 8403,
+    "nose": 4254
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

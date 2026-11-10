@@ -1,0 +1,100 @@
+{
+  "subject": "serena-williams",
+  "fingerprint": "f1cc5f4e4a000122dbebe0662c7b868c00b9a605dbb34dbef93aaf43c78dc93e",
+  "input_size": [
+    1792,
+    2362
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -160,
+    85,
+    1951,
+    2196
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer",
+    "face-details": "below minimum output pixel count"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/serena-williams/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/serena-williams/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/serena-williams/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/serena-williams/transparent/ears.png",
+    "line-art/serena-williams/white/ears.png",
+    "line-art/serena-williams/transparent/eyebrows.png",
+    "line-art/serena-williams/white/eyebrows.png",
+    "line-art/serena-williams/transparent/eyes.png",
+    "line-art/serena-williams/white/eyes.png",
+    "line-art/serena-williams/transparent/face-outline.png",
+    "line-art/serena-williams/white/face-outline.png",
+    "line-art/serena-williams/transparent/hair.png",
+    "line-art/serena-williams/white/hair.png",
+    "line-art/serena-williams/transparent/headwear.png",
+    "line-art/serena-williams/white/headwear.png",
+    "line-art/serena-williams/transparent/mouth.png",
+    "line-art/serena-williams/white/mouth.png",
+    "line-art/serena-williams/transparent/nose.png",
+    "line-art/serena-williams/white/nose.png",
+    "line-art/serena-williams/merged-white.png",
+    "sources/serena-williams/source.png",
+    "sources/serena-williams/source-no-bg.png",
+    "line-art/serena-williams/labels.json",
+    "line-art/serena-williams/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

@@ -1,0 +1,103 @@
+{
+  "subject": "bob-marley",
+  "fingerprint": "6869f6075e267c3c264e808353b743cc2a5d39263b4d92bd0b8c9b0c666c5ad2",
+  "input_size": [
+    655,
+    862
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    47,
+    -43,
+    674,
+    584
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/bob-marley/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/bob-marley/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/bob-marley/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/bob-marley/transparent/ears.png",
+    "line-art/bob-marley/white/ears.png",
+    "line-art/bob-marley/transparent/eyebrows.png",
+    "line-art/bob-marley/white/eyebrows.png",
+    "line-art/bob-marley/transparent/eyes.png",
+    "line-art/bob-marley/white/eyes.png",
+    "line-art/bob-marley/transparent/face-details.png",
+    "line-art/bob-marley/white/face-details.png",
+    "line-art/bob-marley/transparent/face-outline.png",
+    "line-art/bob-marley/white/face-outline.png",
+    "line-art/bob-marley/transparent/facial-hair.png",
+    "line-art/bob-marley/white/facial-hair.png",
+    "line-art/bob-marley/transparent/hair.png",
+    "line-art/bob-marley/white/hair.png",
+    "line-art/bob-marley/transparent/mouth.png",
+    "line-art/bob-marley/white/mouth.png",
+    "line-art/bob-marley/transparent/nose.png",
+    "line-art/bob-marley/white/nose.png",
+    "line-art/bob-marley/merged-white.png",
+    "sources/bob-marley/source.png",
+    "sources/bob-marley/source-no-bg.png",
+    "line-art/bob-marley/labels.json",
+    "line-art/bob-marley/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

@@ -1,0 +1,104 @@
+{
+  "subject": "dalai-lama",
+  "fingerprint": "75175dcbb022718020c47fc1ca8531672132bb10d7449d05cf21af9cc8c0ee63",
+  "input_size": [
+    2048,
+    3072
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    110,
+    170,
+    1680,
+    1740
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/dalai-lama/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/dalai-lama/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/dalai-lama/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/dalai-lama/transparent/ears.png",
+    "line-art/dalai-lama/white/ears.png",
+    "line-art/dalai-lama/transparent/eyebrows.png",
+    "line-art/dalai-lama/white/eyebrows.png",
+    "line-art/dalai-lama/transparent/eyes.png",
+    "line-art/dalai-lama/white/eyes.png",
+    "line-art/dalai-lama/transparent/eyewear.png",
+    "line-art/dalai-lama/white/eyewear.png",
+    "line-art/dalai-lama/transparent/face-details.png",
+    "line-art/dalai-lama/white/face-details.png",
+    "line-art/dalai-lama/transparent/face-outline.png",
+    "line-art/dalai-lama/white/face-outline.png",
+    "line-art/dalai-lama/transparent/hair.png",
+    "line-art/dalai-lama/white/hair.png",
+    "line-art/dalai-lama/transparent/mouth.png",
+    "line-art/dalai-lama/white/mouth.png",
+    "line-art/dalai-lama/transparent/nose.png",
+    "line-art/dalai-lama/white/nose.png",
+    "line-art/dalai-lama/merged-white.png",
+    "sources/dalai-lama/source.png",
+    "sources/dalai-lama/source-no-bg.png",
+    "line-art/dalai-lama/labels.json",
+    "line-art/dalai-lama/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

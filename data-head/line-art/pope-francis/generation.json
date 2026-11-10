@@ -1,0 +1,104 @@
+{
+  "subject": "pope-francis",
+  "fingerprint": "d4e619a835a2bc6c975a215ff9d7066d61fea008ceb44db05bac8d9e6ebf179e",
+  "input_size": [
+    1797,
+    2381
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    466,
+    302,
+    1461,
+    1297
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/pope-francis/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/pope-francis/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/pope-francis/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/pope-francis/transparent/ears.png",
+    "line-art/pope-francis/white/ears.png",
+    "line-art/pope-francis/transparent/eyebrows.png",
+    "line-art/pope-francis/white/eyebrows.png",
+    "line-art/pope-francis/transparent/eyes.png",
+    "line-art/pope-francis/white/eyes.png",
+    "line-art/pope-francis/transparent/face-details.png",
+    "line-art/pope-francis/white/face-details.png",
+    "line-art/pope-francis/transparent/face-outline.png",
+    "line-art/pope-francis/white/face-outline.png",
+    "line-art/pope-francis/transparent/hair.png",
+    "line-art/pope-francis/white/hair.png",
+    "line-art/pope-francis/transparent/headwear.png",
+    "line-art/pope-francis/white/headwear.png",
+    "line-art/pope-francis/transparent/mouth.png",
+    "line-art/pope-francis/white/mouth.png",
+    "line-art/pope-francis/transparent/nose.png",
+    "line-art/pope-francis/white/nose.png",
+    "line-art/pope-francis/merged-white.png",
+    "sources/pope-francis/source.png",
+    "sources/pope-francis/source-no-bg.png",
+    "line-art/pope-francis/labels.json",
+    "line-art/pope-francis/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

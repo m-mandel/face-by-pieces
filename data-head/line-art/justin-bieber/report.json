@@ -1,0 +1,37 @@
+{
+  "subject": "justin-bieber",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5351,
+    "eyebrows": 4837,
+    "eyes": 3313,
+    "face-outline": 7623,
+    "hair": 5945,
+    "headwear": 37014,
+    "mouth": 2328,
+    "nose": 2094
+  },
+  "original_class_pixels": {
+    "ears": 4047,
+    "eyebrows": 3629,
+    "eyes": 2497,
+    "face-outline": 5788,
+    "hair": 4532,
+    "headwear": 33084,
+    "mouth": 1832,
+    "nose": 1599
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

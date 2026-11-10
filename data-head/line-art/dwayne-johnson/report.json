@@ -1,0 +1,37 @@
+{
+  "subject": "dwayne-johnson",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 9868,
+    "eyebrows": 3602,
+    "eyes": 5512,
+    "eyewear": 10252,
+    "face-details": 5654,
+    "face-outline": 24296,
+    "mouth": 7080,
+    "nose": 2654
+  },
+  "original_class_pixels": {
+    "ears": 15890,
+    "eyebrows": 5586,
+    "eyes": 8818,
+    "eyewear": 16345,
+    "face-details": 9096,
+    "face-outline": 38699,
+    "mouth": 11396,
+    "nose": 4246
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

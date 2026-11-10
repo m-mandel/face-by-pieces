@@ -1,0 +1,100 @@
+{
+  "subject": "dwayne-johnson",
+  "fingerprint": "b6bee5fcb81145cf0e1c5cb68a1680e60ce3710aad379341c41707f6bd3e9f58",
+  "input_size": [
+    1792,
+    2388
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    269,
+    142,
+    1555,
+    1428
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/dwayne-johnson/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/dwayne-johnson/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/dwayne-johnson/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/dwayne-johnson/transparent/ears.png",
+    "line-art/dwayne-johnson/white/ears.png",
+    "line-art/dwayne-johnson/transparent/eyebrows.png",
+    "line-art/dwayne-johnson/white/eyebrows.png",
+    "line-art/dwayne-johnson/transparent/eyes.png",
+    "line-art/dwayne-johnson/white/eyes.png",
+    "line-art/dwayne-johnson/transparent/eyewear.png",
+    "line-art/dwayne-johnson/white/eyewear.png",
+    "line-art/dwayne-johnson/transparent/face-details.png",
+    "line-art/dwayne-johnson/white/face-details.png",
+    "line-art/dwayne-johnson/transparent/face-outline.png",
+    "line-art/dwayne-johnson/white/face-outline.png",
+    "line-art/dwayne-johnson/transparent/mouth.png",
+    "line-art/dwayne-johnson/white/mouth.png",
+    "line-art/dwayne-johnson/transparent/nose.png",
+    "line-art/dwayne-johnson/white/nose.png",
+    "line-art/dwayne-johnson/merged-white.png",
+    "sources/dwayne-johnson/source.png",
+    "sources/dwayne-johnson/source-no-bg.png",
+    "line-art/dwayne-johnson/labels.json",
+    "line-art/dwayne-johnson/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

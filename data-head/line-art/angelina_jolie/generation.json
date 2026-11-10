@@ -1,0 +1,100 @@
+{
+  "subject": "angelina-jolie",
+  "fingerprint": "53a388ddccfa348efd43e90ae6bdb1389ae0726167726787a45dfb65a5cbcd88",
+  "input_size": [
+    1792,
+    2396
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -358,
+    -43,
+    2127,
+    2442
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/angelina_jolie/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/angelina-jolie/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/angelina-jolie/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/angelina_jolie/transparent/ears.png",
+    "line-art/angelina_jolie/white/ears.png",
+    "line-art/angelina_jolie/transparent/eyebrows.png",
+    "line-art/angelina_jolie/white/eyebrows.png",
+    "line-art/angelina_jolie/transparent/eyes.png",
+    "line-art/angelina_jolie/white/eyes.png",
+    "line-art/angelina_jolie/transparent/face-details.png",
+    "line-art/angelina_jolie/white/face-details.png",
+    "line-art/angelina_jolie/transparent/face-outline.png",
+    "line-art/angelina_jolie/white/face-outline.png",
+    "line-art/angelina_jolie/transparent/hair.png",
+    "line-art/angelina_jolie/white/hair.png",
+    "line-art/angelina_jolie/transparent/mouth.png",
+    "line-art/angelina_jolie/white/mouth.png",
+    "line-art/angelina_jolie/transparent/nose.png",
+    "line-art/angelina_jolie/white/nose.png",
+    "line-art/angelina_jolie/merged-white.png",
+    "sources/angelina_jolie/source.png",
+    "sources/angelina_jolie/source-no-bg.png",
+    "line-art/angelina_jolie/labels.json",
+    "line-art/angelina_jolie/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

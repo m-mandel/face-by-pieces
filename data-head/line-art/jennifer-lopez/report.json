@@ -1,0 +1,35 @@
+{
+  "subject": "jennifer-lopez",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 2072,
+    "eyebrows": 2148,
+    "eyes": 4875,
+    "face-outline": 6686,
+    "hair": 74736,
+    "mouth": 2395,
+    "nose": 1620
+  },
+  "original_class_pixels": {
+    "earrings": 4601,
+    "eyebrows": 4769,
+    "eyes": 10933,
+    "face-outline": 14706,
+    "hair": 167382,
+    "mouth": 5367,
+    "nose": 3482
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

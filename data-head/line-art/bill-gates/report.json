@@ -1,0 +1,39 @@
+{
+  "subject": "bill-gates",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4554,
+    "eyebrows": 1048,
+    "eyes": 4234,
+    "eyewear": 11241,
+    "face-details": 5256,
+    "face-outline": 3895,
+    "hair": 15312,
+    "mouth": 4627,
+    "nose": 1490
+  },
+  "original_class_pixels": {
+    "ears": 12822,
+    "eyebrows": 2975,
+    "eyes": 12001,
+    "eyewear": 31135,
+    "face-details": 14789,
+    "face-outline": 10890,
+    "hair": 43091,
+    "mouth": 13090,
+    "nose": 4204
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

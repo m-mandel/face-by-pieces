@@ -1,0 +1,92 @@
+{
+  "subject": "shakira",
+  "fingerprint": "e77ce922b732928c37cac7cb49efbe50b2734b04047c60a1f6959d7cc25824a8",
+  "input_size": [
+    1200,
+    1600
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -255,
+    -38,
+    1452,
+    1669
+  ],
+  "layers": [
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "ears": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "face-details": "below minimum output pixel count"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/shakira/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/shakira/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/shakira/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/shakira/transparent/eyebrows.png",
+    "line-art/shakira/white/eyebrows.png",
+    "line-art/shakira/transparent/eyes.png",
+    "line-art/shakira/white/eyes.png",
+    "line-art/shakira/transparent/face-outline.png",
+    "line-art/shakira/white/face-outline.png",
+    "line-art/shakira/transparent/hair.png",
+    "line-art/shakira/white/hair.png",
+    "line-art/shakira/transparent/mouth.png",
+    "line-art/shakira/white/mouth.png",
+    "line-art/shakira/transparent/nose.png",
+    "line-art/shakira/white/nose.png",
+    "line-art/shakira/merged-white.png",
+    "sources/shakira/source.png",
+    "sources/shakira/source-no-bg.png",
+    "line-art/shakira/labels.json",
+    "line-art/shakira/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

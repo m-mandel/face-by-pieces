@@ -1,0 +1,103 @@
+{
+  "subject": "lewis-hamilton",
+  "fingerprint": "25453baebffb38aba96faa65d232c61580ca9fc511d83f0fc31635c61d5778cf",
+  "input_size": [
+    656,
+    875
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    65,
+    7,
+    582,
+    524
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/lewis-hamilton/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/lewis-hamilton/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/lewis-hamilton/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/lewis-hamilton/transparent/ears.png",
+    "line-art/lewis-hamilton/white/ears.png",
+    "line-art/lewis-hamilton/transparent/eyebrows.png",
+    "line-art/lewis-hamilton/white/eyebrows.png",
+    "line-art/lewis-hamilton/transparent/eyes.png",
+    "line-art/lewis-hamilton/white/eyes.png",
+    "line-art/lewis-hamilton/transparent/face-details.png",
+    "line-art/lewis-hamilton/white/face-details.png",
+    "line-art/lewis-hamilton/transparent/face-outline.png",
+    "line-art/lewis-hamilton/white/face-outline.png",
+    "line-art/lewis-hamilton/transparent/facial-hair.png",
+    "line-art/lewis-hamilton/white/facial-hair.png",
+    "line-art/lewis-hamilton/transparent/hair.png",
+    "line-art/lewis-hamilton/white/hair.png",
+    "line-art/lewis-hamilton/transparent/mouth.png",
+    "line-art/lewis-hamilton/white/mouth.png",
+    "line-art/lewis-hamilton/transparent/nose.png",
+    "line-art/lewis-hamilton/white/nose.png",
+    "line-art/lewis-hamilton/merged-white.png",
+    "sources/lewis-hamilton/source.png",
+    "sources/lewis-hamilton/source-no-bg.png",
+    "line-art/lewis-hamilton/labels.json",
+    "line-art/lewis-hamilton/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

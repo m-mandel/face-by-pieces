@@ -1,0 +1,37 @@
+{
+  "subject": "barack-obama",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 10109,
+    "eyebrows": 4793,
+    "eyes": 4162,
+    "face-details": 5657,
+    "face-outline": 7662,
+    "hair": 14482,
+    "mouth": 7934,
+    "nose": 2033
+  },
+  "original_class_pixels": {
+    "ears": 16164,
+    "eyebrows": 7640,
+    "eyes": 6660,
+    "face-details": 9339,
+    "face-outline": 12050,
+    "hair": 23083,
+    "mouth": 12685,
+    "nose": 3340
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

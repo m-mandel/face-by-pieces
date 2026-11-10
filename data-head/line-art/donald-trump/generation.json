@@ -1,0 +1,100 @@
+{
+  "subject": "donald-trump",
+  "fingerprint": "44f43711e7a188543f4e45d69403775d53c4aaadb2d4e8be7c685f30b4714d64",
+  "input_size": [
+    1594,
+    2048
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -5,
+    58,
+    1552,
+    1615
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/donald-trump/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/donald-trump/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/donald-trump/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/donald-trump/transparent/ears.png",
+    "line-art/donald-trump/white/ears.png",
+    "line-art/donald-trump/transparent/eyebrows.png",
+    "line-art/donald-trump/white/eyebrows.png",
+    "line-art/donald-trump/transparent/eyes.png",
+    "line-art/donald-trump/white/eyes.png",
+    "line-art/donald-trump/transparent/face-details.png",
+    "line-art/donald-trump/white/face-details.png",
+    "line-art/donald-trump/transparent/face-outline.png",
+    "line-art/donald-trump/white/face-outline.png",
+    "line-art/donald-trump/transparent/hair.png",
+    "line-art/donald-trump/white/hair.png",
+    "line-art/donald-trump/transparent/mouth.png",
+    "line-art/donald-trump/white/mouth.png",
+    "line-art/donald-trump/transparent/nose.png",
+    "line-art/donald-trump/white/nose.png",
+    "line-art/donald-trump/merged-white.png",
+    "sources/donald-trump/source.png",
+    "sources/donald-trump/source-no-bg.png",
+    "line-art/donald-trump/labels.json",
+    "line-art/donald-trump/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

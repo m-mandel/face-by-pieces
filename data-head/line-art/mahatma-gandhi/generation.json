@@ -1,0 +1,103 @@
+{
+  "subject": "mahatma-gandhi",
+  "fingerprint": "24b49bfeb21629c47cdf85629e028264d9dfac8ecd1e831cc79cd02d0adf5f86",
+  "input_size": [
+    1846,
+    2304
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    527,
+    -11,
+    1430,
+    892
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair",
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/mahatma-gandhi/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/mahatma-gandhi/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/mahatma-gandhi/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/mahatma-gandhi/transparent/ears.png",
+    "line-art/mahatma-gandhi/white/ears.png",
+    "line-art/mahatma-gandhi/transparent/eyebrows.png",
+    "line-art/mahatma-gandhi/white/eyebrows.png",
+    "line-art/mahatma-gandhi/transparent/eyes.png",
+    "line-art/mahatma-gandhi/white/eyes.png",
+    "line-art/mahatma-gandhi/transparent/eyewear.png",
+    "line-art/mahatma-gandhi/white/eyewear.png",
+    "line-art/mahatma-gandhi/transparent/face-details.png",
+    "line-art/mahatma-gandhi/white/face-details.png",
+    "line-art/mahatma-gandhi/transparent/face-outline.png",
+    "line-art/mahatma-gandhi/white/face-outline.png",
+    "line-art/mahatma-gandhi/transparent/facial-hair.png",
+    "line-art/mahatma-gandhi/white/facial-hair.png",
+    "line-art/mahatma-gandhi/transparent/mouth.png",
+    "line-art/mahatma-gandhi/white/mouth.png",
+    "line-art/mahatma-gandhi/transparent/nose.png",
+    "line-art/mahatma-gandhi/white/nose.png",
+    "line-art/mahatma-gandhi/merged-white.png",
+    "sources/mahatma-gandhi/source.png",
+    "sources/mahatma-gandhi/source-no-bg.png",
+    "line-art/mahatma-gandhi/labels.json",
+    "line-art/mahatma-gandhi/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

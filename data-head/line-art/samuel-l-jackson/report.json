@@ -1,0 +1,37 @@
+{
+  "subject": "samuel-l-jackson",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 2817,
+    "eyebrows": 723,
+    "eyes": 5562,
+    "eyewear": 9475,
+    "face-details": 2452,
+    "face-outline": 7284,
+    "mouth": 5460,
+    "nose": 1960
+  },
+  "original_class_pixels": {
+    "ears": 17342,
+    "eyebrows": 4345,
+    "eyes": 35045,
+    "eyewear": 58709,
+    "face-details": 14738,
+    "face-outline": 48764,
+    "mouth": 34040,
+    "nose": 11979
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "subject": "scarlett-johansson",
+  "fingerprint": "0b1f891cc8d081924d5537fdec1df709ea6319314a79bd4f99921ed237647603",
+  "input_size": [
+    2048,
+    2731
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    160,
+    172,
+    1911,
+    1923
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/scarlett-johansson/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/scarlett-johansson/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/scarlett-johansson/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/scarlett-johansson/transparent/earrings.png",
+    "line-art/scarlett-johansson/white/earrings.png",
+    "line-art/scarlett-johansson/transparent/ears.png",
+    "line-art/scarlett-johansson/white/ears.png",
+    "line-art/scarlett-johansson/transparent/eyebrows.png",
+    "line-art/scarlett-johansson/white/eyebrows.png",
+    "line-art/scarlett-johansson/transparent/eyes.png",
+    "line-art/scarlett-johansson/white/eyes.png",
+    "line-art/scarlett-johansson/transparent/face-outline.png",
+    "line-art/scarlett-johansson/white/face-outline.png",
+    "line-art/scarlett-johansson/transparent/hair.png",
+    "line-art/scarlett-johansson/white/hair.png",
+    "line-art/scarlett-johansson/transparent/mouth.png",
+    "line-art/scarlett-johansson/white/mouth.png",
+    "line-art/scarlett-johansson/transparent/nose.png",
+    "line-art/scarlett-johansson/white/nose.png",
+    "line-art/scarlett-johansson/merged-white.png",
+    "sources/scarlett-johansson/source.png",
+    "sources/scarlett-johansson/source-no-bg.png",
+    "line-art/scarlett-johansson/labels.json",
+    "line-art/scarlett-johansson/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

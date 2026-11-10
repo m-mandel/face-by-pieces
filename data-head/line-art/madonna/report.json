@@ -1,0 +1,37 @@
+{
+  "subject": "madonna",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 323,
+    "eyebrows": 2825,
+    "eyes": 3696,
+    "face-outline": 3748,
+    "hair": 55685,
+    "headwear": 599,
+    "mouth": 2409,
+    "nose": 1143
+  },
+  "original_class_pixels": {
+    "ears": 340,
+    "eyebrows": 3120,
+    "eyes": 4100,
+    "face-outline": 4122,
+    "hair": 61939,
+    "headwear": 1121,
+    "mouth": 2648,
+    "nose": 1282
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

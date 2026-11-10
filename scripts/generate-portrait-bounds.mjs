@@ -2,9 +2,10 @@ import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { join } from 'node:path'
 import { PNG } from 'pngjs'
+import { isHeadLayer } from '../src/headLayers.js'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
-const dataDirectory = join(root, 'data/line-art')
+const dataDirectory = join(root, 'data-head/line-art')
 const outputDirectory = join(root, 'src/generated')
 const manifest = {}
 let layerCount = 0
@@ -28,10 +29,17 @@ for (const folder of (await readdir(dataDirectory, { withFileTypes: true }))
     .filter(
       (file) =>
         file.endsWith('.png') &&
+        isHeadLayer(file.slice(0, -4)) &&
         !(report.class_pixels?.[file.slice(0, -4)] < 200),
     )
     .sort()
   if (!layers.length) continue
+
+  if (report.framing) {
+    manifest[folder] = { layers: layers.map(file => file.slice(0, -4)), bounds: report.framing }
+    layerCount += layers.length
+    continue
+  }
 
   let width, height
   let left = Infinity,
@@ -82,6 +90,7 @@ for (const folder of (await readdir(dataDirectory, { withFileTypes: true }))
   layerCount += layers.length
 }
 
+if (layerCount === 0) throw new Error('No head portraits found. Run npm run prepare:heads first.')
 await mkdir(outputDirectory, { recursive: true })
 const outputPath = join(outputDirectory, 'line-art-bounds.json')
 const content = JSON.stringify(manifest) + '\n'

@@ -1,0 +1,110 @@
+{
+  "subject": "johnny-depp",
+  "fingerprint": "d53e375241485532f493a116154c98b035dd4673c44f3f59fc33ea1f1ee8c7a2",
+  "input_size": [
+    400,
+    550
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    18,
+    -16,
+    393,
+    359
+  ],
+  "layers": [
+    "earrings",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "ears": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair",
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear",
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/johnny-depp/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/johnny-depp/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/johnny-depp/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/johnny-depp/transparent/earrings.png",
+    "line-art/johnny-depp/white/earrings.png",
+    "line-art/johnny-depp/transparent/eyebrows.png",
+    "line-art/johnny-depp/white/eyebrows.png",
+    "line-art/johnny-depp/transparent/eyes.png",
+    "line-art/johnny-depp/white/eyes.png",
+    "line-art/johnny-depp/transparent/eyewear.png",
+    "line-art/johnny-depp/white/eyewear.png",
+    "line-art/johnny-depp/transparent/face-details.png",
+    "line-art/johnny-depp/white/face-details.png",
+    "line-art/johnny-depp/transparent/face-outline.png",
+    "line-art/johnny-depp/white/face-outline.png",
+    "line-art/johnny-depp/transparent/facial-hair.png",
+    "line-art/johnny-depp/white/facial-hair.png",
+    "line-art/johnny-depp/transparent/hair.png",
+    "line-art/johnny-depp/white/hair.png",
+    "line-art/johnny-depp/transparent/headwear.png",
+    "line-art/johnny-depp/white/headwear.png",
+    "line-art/johnny-depp/transparent/mouth.png",
+    "line-art/johnny-depp/white/mouth.png",
+    "line-art/johnny-depp/transparent/nose.png",
+    "line-art/johnny-depp/white/nose.png",
+    "line-art/johnny-depp/merged-white.png",
+    "sources/johnny-depp/source.png",
+    "sources/johnny-depp/source-no-bg.png",
+    "line-art/johnny-depp/labels.json",
+    "line-art/johnny-depp/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

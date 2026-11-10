@@ -1,0 +1,99 @@
+{
+  "subject": "thomas-edison",
+  "fingerprint": "e44ae28be178c78f4c61359359fe9b580a926822c4224dfc69d2a6f22d7f2126",
+  "input_size": [
+    1069,
+    1554
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -24,
+    37,
+    1003,
+    1064
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/thomas-edison/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/thomas-edison/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/thomas-edison/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/thomas-edison/transparent/ears.png",
+    "line-art/thomas-edison/white/ears.png",
+    "line-art/thomas-edison/transparent/eyebrows.png",
+    "line-art/thomas-edison/white/eyebrows.png",
+    "line-art/thomas-edison/transparent/eyes.png",
+    "line-art/thomas-edison/white/eyes.png",
+    "line-art/thomas-edison/transparent/face-details.png",
+    "line-art/thomas-edison/white/face-details.png",
+    "line-art/thomas-edison/transparent/face-outline.png",
+    "line-art/thomas-edison/white/face-outline.png",
+    "line-art/thomas-edison/transparent/hair.png",
+    "line-art/thomas-edison/white/hair.png",
+    "line-art/thomas-edison/transparent/mouth.png",
+    "line-art/thomas-edison/white/mouth.png",
+    "line-art/thomas-edison/transparent/nose.png",
+    "line-art/thomas-edison/white/nose.png",
+    "line-art/thomas-edison/merged-white.png",
+    "sources/thomas-edison/source.png",
+    "sources/thomas-edison/source-no-bg.png",
+    "line-art/thomas-edison/labels.json",
+    "line-art/thomas-edison/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

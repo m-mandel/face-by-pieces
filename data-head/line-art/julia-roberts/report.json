@@ -1,0 +1,35 @@
+{
+  "subject": "julia-roberts",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "eyebrows": 1042,
+    "eyes": 2674,
+    "face-details": 518,
+    "face-outline": 2071,
+    "hair": 41412,
+    "mouth": 2286,
+    "nose": 653
+  },
+  "original_class_pixels": {
+    "eyebrows": 2397,
+    "eyes": 6166,
+    "face-details": 1156,
+    "face-outline": 4739,
+    "hair": 94742,
+    "mouth": 5201,
+    "nose": 1514
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

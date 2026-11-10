@@ -1,0 +1,37 @@
+{
+  "subject": "sylvester-stallone",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4429,
+    "eyebrows": 3613,
+    "eyes": 6149,
+    "face-details": 7577,
+    "face-outline": 7737,
+    "hair": 25538,
+    "mouth": 2794,
+    "nose": 2514
+  },
+  "original_class_pixels": {
+    "ears": 2300,
+    "eyebrows": 1861,
+    "eyes": 3152,
+    "face-details": 3983,
+    "face-outline": 3927,
+    "hair": 13137,
+    "mouth": 1445,
+    "nose": 1313
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

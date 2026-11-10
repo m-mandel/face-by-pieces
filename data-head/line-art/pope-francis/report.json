@@ -1,0 +1,39 @@
+{
+  "subject": "pope-francis",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5776,
+    "eyebrows": 5598,
+    "eyes": 3844,
+    "face-details": 7601,
+    "face-outline": 6193,
+    "hair": 6556,
+    "headwear": 8572,
+    "mouth": 5971,
+    "nose": 1710
+  },
+  "original_class_pixels": {
+    "ears": 5706,
+    "eyebrows": 5358,
+    "eyes": 3728,
+    "face-details": 7767,
+    "face-outline": 6032,
+    "hair": 6596,
+    "headwear": 8474,
+    "mouth": 5911,
+    "nose": 1717
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

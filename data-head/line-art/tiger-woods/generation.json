@@ -1,0 +1,100 @@
+{
+  "subject": "tiger-woods",
+  "fingerprint": "365f70f291ed16d57291988613650147aaa9d0fafeef0c8f0981ab9774e1bd4d",
+  "input_size": [
+    1051,
+    1493
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    127,
+    49,
+    902,
+    824
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/tiger-woods/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/tiger-woods/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/tiger-woods/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/tiger-woods/transparent/ears.png",
+    "line-art/tiger-woods/white/ears.png",
+    "line-art/tiger-woods/transparent/eyebrows.png",
+    "line-art/tiger-woods/white/eyebrows.png",
+    "line-art/tiger-woods/transparent/eyes.png",
+    "line-art/tiger-woods/white/eyes.png",
+    "line-art/tiger-woods/transparent/face-details.png",
+    "line-art/tiger-woods/white/face-details.png",
+    "line-art/tiger-woods/transparent/face-outline.png",
+    "line-art/tiger-woods/white/face-outline.png",
+    "line-art/tiger-woods/transparent/hair.png",
+    "line-art/tiger-woods/white/hair.png",
+    "line-art/tiger-woods/transparent/mouth.png",
+    "line-art/tiger-woods/white/mouth.png",
+    "line-art/tiger-woods/transparent/nose.png",
+    "line-art/tiger-woods/white/nose.png",
+    "line-art/tiger-woods/merged-white.png",
+    "sources/tiger-woods/source.png",
+    "sources/tiger-woods/source-no-bg.png",
+    "line-art/tiger-woods/labels.json",
+    "line-art/tiger-woods/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

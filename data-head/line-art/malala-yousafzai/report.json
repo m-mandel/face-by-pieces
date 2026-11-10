@@ -1,0 +1,39 @@
+{
+  "subject": "malala-yousafzai",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 1025,
+    "eyebrows": 2474,
+    "eyes": 4595,
+    "face-details": 996,
+    "face-outline": 4235,
+    "hair": 9703,
+    "headwear": 50668,
+    "mouth": 2114,
+    "nose": 1764
+  },
+  "original_class_pixels": {
+    "ears": 2031,
+    "eyebrows": 4895,
+    "eyes": 9221,
+    "face-details": 1931,
+    "face-outline": 8286,
+    "hair": 19333,
+    "headwear": 333121,
+    "mouth": 4161,
+    "nose": 3523
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

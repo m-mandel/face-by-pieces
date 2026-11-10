@@ -1,0 +1,39 @@
+{
+  "subject": "robert-downey-jr",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4279,
+    "eyebrows": 6897,
+    "eyes": 5833,
+    "face-details": 2293,
+    "face-outline": 3499,
+    "facial-hair": 6457,
+    "hair": 21920,
+    "mouth": 1737,
+    "nose": 1954
+  },
+  "original_class_pixels": {
+    "ears": 17910,
+    "eyebrows": 29963,
+    "eyes": 25011,
+    "face-details": 9378,
+    "face-outline": 14739,
+    "facial-hair": 26868,
+    "hair": 92471,
+    "mouth": 7273,
+    "nose": 8286
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

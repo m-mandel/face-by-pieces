@@ -1,0 +1,39 @@
+{
+  "subject": "hillary-clinton",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 624,
+    "ears": 1611,
+    "eyebrows": 2849,
+    "eyes": 5501,
+    "face-details": 932,
+    "face-outline": 8049,
+    "hair": 37741,
+    "mouth": 5542,
+    "nose": 1388
+  },
+  "original_class_pixels": {
+    "earrings": 1230,
+    "ears": 3173,
+    "eyebrows": 5798,
+    "eyes": 10926,
+    "face-details": 1868,
+    "face-outline": 15813,
+    "hair": 75643,
+    "mouth": 11115,
+    "nose": 2838
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

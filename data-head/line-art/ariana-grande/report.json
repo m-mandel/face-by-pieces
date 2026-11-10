@@ -1,0 +1,35 @@
+{
+  "subject": "ariana-grande",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 2220,
+    "eyebrows": 1692,
+    "eyes": 3825,
+    "face-outline": 2957,
+    "hair": 41988,
+    "mouth": 3294,
+    "nose": 1003
+  },
+  "original_class_pixels": {
+    "ears": 518,
+    "eyebrows": 396,
+    "eyes": 913,
+    "face-outline": 722,
+    "hair": 10204,
+    "mouth": 777,
+    "nose": 241
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

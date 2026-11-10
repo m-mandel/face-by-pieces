@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
+import { isHeadLayer } from '../src/headLayers.js'
 import {
   addSessionEvent,
   completeSession,
@@ -40,12 +41,12 @@ const portraitStyles = new Map([
 ])
 
 // The PNG catalog follows the data folders; the SVG catalog above is legacy.
-const lineArtDirectory = path.resolve(currentDirectory, '../data/line-art')
+const lineArtDirectory = path.resolve(currentDirectory, '../data-head/line-art')
 for (const folder of fs.readdirSync(lineArtDirectory, { withFileTypes: true })) {
   if (!folder.isDirectory()) continue
   const transparentDirectory = path.join(lineArtDirectory, folder.name, 'transparent')
   if (!fs.existsSync(transparentDirectory)) continue
-  if (!fs.readdirSync(transparentDirectory).some((file) => file.endsWith('.png'))) continue
+  if (!fs.readdirSync(transparentDirectory).some((file) => file.endsWith('.png') && isHeadLayer(file.slice(0, -4)))) continue
 
   const portraitId = folder.name.replaceAll('_', '-').toLowerCase()
   if (!portraitStyles.has(portraitId)) portraitStyles.set(portraitId, new Set())

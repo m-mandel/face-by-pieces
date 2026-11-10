@@ -1,0 +1,39 @@
+{
+  "subject": "dalai-lama",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5692,
+    "eyebrows": 2225,
+    "eyes": 4371,
+    "eyewear": 8125,
+    "face-details": 8524,
+    "face-outline": 5181,
+    "hair": 9216,
+    "mouth": 4290,
+    "nose": 2123
+  },
+  "original_class_pixels": {
+    "ears": 13738,
+    "eyebrows": 5324,
+    "eyes": 10393,
+    "eyewear": 19617,
+    "face-details": 20899,
+    "face-outline": 12415,
+    "hair": 22241,
+    "mouth": 10203,
+    "nose": 5146
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

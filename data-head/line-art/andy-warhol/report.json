@@ -1,0 +1,39 @@
+{
+  "subject": "andy-warhol",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4396,
+    "eyebrows": 2401,
+    "eyes": 5949,
+    "eyewear": 16321,
+    "face-details": 2913,
+    "face-outline": 8778,
+    "hair": 41565,
+    "mouth": 3317,
+    "nose": 2603
+  },
+  "original_class_pixels": {
+    "ears": 5371,
+    "eyebrows": 3039,
+    "eyes": 7303,
+    "eyewear": 20316,
+    "face-details": 3814,
+    "face-outline": 10790,
+    "hair": 51849,
+    "mouth": 4185,
+    "nose": 3255
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

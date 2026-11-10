@@ -1,0 +1,37 @@
+{
+  "subject": "donald-trump",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5641,
+    "eyebrows": 2713,
+    "eyes": 4205,
+    "face-details": 3178,
+    "face-outline": 8756,
+    "hair": 20088,
+    "mouth": 1961,
+    "nose": 1643
+  },
+  "original_class_pixels": {
+    "ears": 12855,
+    "eyebrows": 6186,
+    "eyes": 9653,
+    "face-details": 7228,
+    "face-outline": 20076,
+    "hair": 45967,
+    "mouth": 4481,
+    "nose": 3768
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

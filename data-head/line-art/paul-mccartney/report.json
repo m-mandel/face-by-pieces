@@ -1,0 +1,37 @@
+{
+  "subject": "paul-mccartney",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4215,
+    "eyebrows": 5726,
+    "eyes": 4417,
+    "face-details": 6868,
+    "face-outline": 8614,
+    "hair": 87671,
+    "mouth": 5061,
+    "nose": 3065
+  },
+  "original_class_pixels": {
+    "ears": 441,
+    "eyebrows": 611,
+    "eyes": 469,
+    "face-details": 763,
+    "face-outline": 920,
+    "hair": 9544,
+    "mouth": 561,
+    "nose": 346
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

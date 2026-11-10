@@ -1,0 +1,99 @@
+{
+  "subject": "winston-churchill",
+  "fingerprint": "a61e7c78746822bbee785e2bed651fa04fad14333ec3fb67c965910ac6671331",
+  "input_size": [
+    1854,
+    2304
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    598,
+    183,
+    1294,
+    879
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/winston-churchill/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/winston-churchill/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/winston-churchill/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/winston-churchill/transparent/ears.png",
+    "line-art/winston-churchill/white/ears.png",
+    "line-art/winston-churchill/transparent/eyebrows.png",
+    "line-art/winston-churchill/white/eyebrows.png",
+    "line-art/winston-churchill/transparent/eyes.png",
+    "line-art/winston-churchill/white/eyes.png",
+    "line-art/winston-churchill/transparent/face-details.png",
+    "line-art/winston-churchill/white/face-details.png",
+    "line-art/winston-churchill/transparent/face-outline.png",
+    "line-art/winston-churchill/white/face-outline.png",
+    "line-art/winston-churchill/transparent/hair.png",
+    "line-art/winston-churchill/white/hair.png",
+    "line-art/winston-churchill/transparent/mouth.png",
+    "line-art/winston-churchill/white/mouth.png",
+    "line-art/winston-churchill/transparent/nose.png",
+    "line-art/winston-churchill/white/nose.png",
+    "line-art/winston-churchill/merged-white.png",
+    "sources/winston-churchill/source.png",
+    "sources/winston-churchill/source-no-bg.png",
+    "line-art/winston-churchill/labels.json",
+    "line-art/winston-churchill/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

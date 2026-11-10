@@ -1,0 +1,39 @@
+{
+  "subject": "emma-watson",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 1292,
+    "ears": 4011,
+    "eyebrows": 3006,
+    "eyes": 6829,
+    "face-details": 694,
+    "face-outline": 4013,
+    "hair": 32244,
+    "mouth": 5068,
+    "nose": 1352
+  },
+  "original_class_pixels": {
+    "earrings": 402,
+    "ears": 1258,
+    "eyebrows": 996,
+    "eyes": 2224,
+    "face-details": 228,
+    "face-outline": 1344,
+    "hair": 10760,
+    "mouth": 1692,
+    "nose": 456
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

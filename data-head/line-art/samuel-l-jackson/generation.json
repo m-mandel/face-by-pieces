@@ -1,0 +1,109 @@
+{
+  "subject": "samuel-l-jackson",
+  "fingerprint": "84814d967db438193f3f5bec18bb75e5c826de8253239afd1ca76e52b06e3112",
+  "input_size": [
+    2048,
+    3072
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -184,
+    -132,
+    2437,
+    2489
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/samuel-l-jackson/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/samuel-l-jackson/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/samuel-l-jackson/background_removed.png",
+  "overrides": {
+    "note": "Remove a trailing neck stroke from the head outline.",
+    "clip_box": [
+      0,
+      0,
+      1,
+      0.765
+    ]
+  },
+  "outputs": [
+    "line-art/samuel-l-jackson/transparent/ears.png",
+    "line-art/samuel-l-jackson/white/ears.png",
+    "line-art/samuel-l-jackson/transparent/eyebrows.png",
+    "line-art/samuel-l-jackson/white/eyebrows.png",
+    "line-art/samuel-l-jackson/transparent/eyes.png",
+    "line-art/samuel-l-jackson/white/eyes.png",
+    "line-art/samuel-l-jackson/transparent/eyewear.png",
+    "line-art/samuel-l-jackson/white/eyewear.png",
+    "line-art/samuel-l-jackson/transparent/face-details.png",
+    "line-art/samuel-l-jackson/white/face-details.png",
+    "line-art/samuel-l-jackson/transparent/face-outline.png",
+    "line-art/samuel-l-jackson/white/face-outline.png",
+    "line-art/samuel-l-jackson/transparent/mouth.png",
+    "line-art/samuel-l-jackson/white/mouth.png",
+    "line-art/samuel-l-jackson/transparent/nose.png",
+    "line-art/samuel-l-jackson/white/nose.png",
+    "line-art/samuel-l-jackson/merged-white.png",
+    "sources/samuel-l-jackson/source.png",
+    "sources/samuel-l-jackson/source-no-bg.png",
+    "line-art/samuel-l-jackson/labels.json",
+    "line-art/samuel-l-jackson/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

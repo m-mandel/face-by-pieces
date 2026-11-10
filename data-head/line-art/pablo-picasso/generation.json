@@ -1,0 +1,103 @@
+{
+  "subject": "pablo-picasso",
+  "fingerprint": "89f013e27f7d90f6448cd89fe8f86d34308ab296114dc497e2e277de79882968",
+  "input_size": [
+    1079,
+    1261
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -112,
+    -65,
+    1160,
+    1207
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/pablo-picasso/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/pablo-picasso/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/pablo-picasso/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/pablo-picasso/transparent/ears.png",
+    "line-art/pablo-picasso/white/ears.png",
+    "line-art/pablo-picasso/transparent/eyebrows.png",
+    "line-art/pablo-picasso/white/eyebrows.png",
+    "line-art/pablo-picasso/transparent/eyes.png",
+    "line-art/pablo-picasso/white/eyes.png",
+    "line-art/pablo-picasso/transparent/face-details.png",
+    "line-art/pablo-picasso/white/face-details.png",
+    "line-art/pablo-picasso/transparent/face-outline.png",
+    "line-art/pablo-picasso/white/face-outline.png",
+    "line-art/pablo-picasso/transparent/hair.png",
+    "line-art/pablo-picasso/white/hair.png",
+    "line-art/pablo-picasso/transparent/headwear.png",
+    "line-art/pablo-picasso/white/headwear.png",
+    "line-art/pablo-picasso/transparent/mouth.png",
+    "line-art/pablo-picasso/white/mouth.png",
+    "line-art/pablo-picasso/transparent/nose.png",
+    "line-art/pablo-picasso/white/nose.png",
+    "line-art/pablo-picasso/merged-white.png",
+    "sources/pablo-picasso/source.png",
+    "sources/pablo-picasso/source-no-bg.png",
+    "line-art/pablo-picasso/labels.json",
+    "line-art/pablo-picasso/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

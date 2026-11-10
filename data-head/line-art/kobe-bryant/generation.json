@@ -1,0 +1,100 @@
+{
+  "subject": "kobe-bryant",
+  "fingerprint": "e25f510f0df1e773a54bbd3566a4f855f758be108231b10fd71b142a4b4b3882",
+  "input_size": [
+    2048,
+    2960
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    650,
+    47,
+    1709,
+    1106
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/kobe-bryant/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/kobe-bryant/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/kobe-bryant/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/kobe-bryant/transparent/ears.png",
+    "line-art/kobe-bryant/white/ears.png",
+    "line-art/kobe-bryant/transparent/eyebrows.png",
+    "line-art/kobe-bryant/white/eyebrows.png",
+    "line-art/kobe-bryant/transparent/eyes.png",
+    "line-art/kobe-bryant/white/eyes.png",
+    "line-art/kobe-bryant/transparent/face-details.png",
+    "line-art/kobe-bryant/white/face-details.png",
+    "line-art/kobe-bryant/transparent/face-outline.png",
+    "line-art/kobe-bryant/white/face-outline.png",
+    "line-art/kobe-bryant/transparent/hair.png",
+    "line-art/kobe-bryant/white/hair.png",
+    "line-art/kobe-bryant/transparent/mouth.png",
+    "line-art/kobe-bryant/white/mouth.png",
+    "line-art/kobe-bryant/transparent/nose.png",
+    "line-art/kobe-bryant/white/nose.png",
+    "line-art/kobe-bryant/merged-white.png",
+    "sources/kobe-bryant/source.png",
+    "sources/kobe-bryant/source-no-bg.png",
+    "line-art/kobe-bryant/labels.json",
+    "line-art/kobe-bryant/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

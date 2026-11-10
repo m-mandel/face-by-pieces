@@ -1,0 +1,37 @@
+{
+  "subject": "elon-musk",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 3918,
+    "eyebrows": 2504,
+    "eyes": 4665,
+    "face-details": 522,
+    "face-outline": 4453,
+    "hair": 20230,
+    "mouth": 2800,
+    "nose": 2089
+  },
+  "original_class_pixels": {
+    "ears": 9728,
+    "eyebrows": 6280,
+    "eyes": 11661,
+    "face-details": 1302,
+    "face-outline": 10955,
+    "hair": 50482,
+    "mouth": 6941,
+    "nose": 5249
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "subject": "taylor-swift",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 463,
+    "ears": 2459,
+    "eyebrows": 1080,
+    "eyes": 4305,
+    "face-details": 223,
+    "face-outline": 4380,
+    "hair": 44071,
+    "mouth": 1989,
+    "nose": 912
+  },
+  "original_class_pixels": {
+    "earrings": 1161,
+    "ears": 6177,
+    "eyebrows": 2668,
+    "eyes": 11032,
+    "face-details": 545,
+    "face-outline": 11031,
+    "hair": 112360,
+    "mouth": 5043,
+    "nose": 2368
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "subject": "lewis-hamilton",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5892,
+    "eyebrows": 3905,
+    "eyes": 5603,
+    "face-details": 1117,
+    "face-outline": 4117,
+    "facial-hair": 12066,
+    "hair": 22926,
+    "mouth": 2928,
+    "nose": 2606
+  },
+  "original_class_pixels": {
+    "ears": 1557,
+    "eyebrows": 1035,
+    "eyes": 1458,
+    "face-details": 309,
+    "face-outline": 1073,
+    "facial-hair": 3203,
+    "hair": 6084,
+    "mouth": 779,
+    "nose": 691
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

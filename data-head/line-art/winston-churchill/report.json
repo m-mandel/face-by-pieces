@@ -1,0 +1,37 @@
+{
+  "subject": "winston-churchill",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 6633,
+    "eyebrows": 4928,
+    "eyes": 6047,
+    "face-details": 1864,
+    "face-outline": 17450,
+    "hair": 24012,
+    "mouth": 3799,
+    "nose": 3825
+  },
+  "original_class_pixels": {
+    "ears": 3120,
+    "eyebrows": 2302,
+    "eyes": 2837,
+    "face-details": 904,
+    "face-outline": 8108,
+    "hair": 11329,
+    "mouth": 1769,
+    "nose": 1804
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

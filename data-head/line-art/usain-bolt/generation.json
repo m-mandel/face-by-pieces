@@ -1,0 +1,96 @@
+{
+  "subject": "usain-bolt",
+  "fingerprint": "033bdfcdfe95925a767e7989d2cdf1a6dec67ced6ba7282c98bef390af7edef2",
+  "input_size": [
+    1568,
+    2696
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    670,
+    167,
+    1181,
+    678
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/usain-bolt/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/usain-bolt/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/usain-bolt/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/usain-bolt/transparent/ears.png",
+    "line-art/usain-bolt/white/ears.png",
+    "line-art/usain-bolt/transparent/eyebrows.png",
+    "line-art/usain-bolt/white/eyebrows.png",
+    "line-art/usain-bolt/transparent/eyes.png",
+    "line-art/usain-bolt/white/eyes.png",
+    "line-art/usain-bolt/transparent/face-outline.png",
+    "line-art/usain-bolt/white/face-outline.png",
+    "line-art/usain-bolt/transparent/hair.png",
+    "line-art/usain-bolt/white/hair.png",
+    "line-art/usain-bolt/transparent/mouth.png",
+    "line-art/usain-bolt/white/mouth.png",
+    "line-art/usain-bolt/transparent/nose.png",
+    "line-art/usain-bolt/white/nose.png",
+    "line-art/usain-bolt/merged-white.png",
+    "sources/usain-bolt/source.png",
+    "sources/usain-bolt/source-no-bg.png",
+    "line-art/usain-bolt/labels.json",
+    "line-art/usain-bolt/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

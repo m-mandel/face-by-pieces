@@ -1,0 +1,39 @@
+{
+  "subject": "nikola-tesla",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 6710,
+    "eyebrows": 8547,
+    "eyes": 6062,
+    "face-details": 769,
+    "face-outline": 8730,
+    "facial-hair": 12855,
+    "hair": 30908,
+    "mouth": 2052,
+    "nose": 2160
+  },
+  "original_class_pixels": {
+    "ears": 3691,
+    "eyebrows": 4562,
+    "eyes": 3285,
+    "face-details": 423,
+    "face-outline": 4744,
+    "facial-hair": 6883,
+    "hair": 16897,
+    "mouth": 1124,
+    "nose": 1153
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "subject": "abraham-lincoln",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5623,
+    "eyebrows": 3267,
+    "eyes": 4426,
+    "face-details": 5727,
+    "facial-hair": 12686,
+    "hair": 20069,
+    "mouth": 2317,
+    "nose": 1733
+  },
+  "original_class_pixels": {
+    "ears": 14424,
+    "eyebrows": 8358,
+    "eyes": 11363,
+    "face-details": 14799,
+    "facial-hair": 32655,
+    "hair": 51692,
+    "mouth": 5942,
+    "nose": 4535
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

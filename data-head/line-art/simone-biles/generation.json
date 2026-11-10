@@ -1,0 +1,103 @@
+{
+  "subject": "simone-biles",
+  "fingerprint": "6d69af2017b11e476f95fa2c9cc90fde62e889a7b7287126e2bf5b06de7309b9",
+  "input_size": [
+    1728,
+    2494
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    32,
+    -3,
+    1710,
+    1675
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/simone-biles/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/simone-biles/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/simone-biles/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/simone-biles/transparent/earrings.png",
+    "line-art/simone-biles/white/earrings.png",
+    "line-art/simone-biles/transparent/ears.png",
+    "line-art/simone-biles/white/ears.png",
+    "line-art/simone-biles/transparent/eyebrows.png",
+    "line-art/simone-biles/white/eyebrows.png",
+    "line-art/simone-biles/transparent/eyes.png",
+    "line-art/simone-biles/white/eyes.png",
+    "line-art/simone-biles/transparent/face-details.png",
+    "line-art/simone-biles/white/face-details.png",
+    "line-art/simone-biles/transparent/face-outline.png",
+    "line-art/simone-biles/white/face-outline.png",
+    "line-art/simone-biles/transparent/hair.png",
+    "line-art/simone-biles/white/hair.png",
+    "line-art/simone-biles/transparent/mouth.png",
+    "line-art/simone-biles/white/mouth.png",
+    "line-art/simone-biles/transparent/nose.png",
+    "line-art/simone-biles/white/nose.png",
+    "line-art/simone-biles/merged-white.png",
+    "sources/simone-biles/source.png",
+    "sources/simone-biles/source-no-bg.png",
+    "line-art/simone-biles/labels.json",
+    "line-art/simone-biles/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

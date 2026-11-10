@@ -1,0 +1,99 @@
+{
+  "subject": "rafael-nadal",
+  "fingerprint": "2df7c2c2d1d1cf3083c6d81c3129126974728401f7cc20d90a57062d1977274d",
+  "input_size": [
+    1006,
+    1355
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    140,
+    4,
+    843,
+    707
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/rafael-nadal/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/rafael-nadal/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/rafael-nadal/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/rafael-nadal/transparent/ears.png",
+    "line-art/rafael-nadal/white/ears.png",
+    "line-art/rafael-nadal/transparent/eyebrows.png",
+    "line-art/rafael-nadal/white/eyebrows.png",
+    "line-art/rafael-nadal/transparent/eyes.png",
+    "line-art/rafael-nadal/white/eyes.png",
+    "line-art/rafael-nadal/transparent/face-details.png",
+    "line-art/rafael-nadal/white/face-details.png",
+    "line-art/rafael-nadal/transparent/face-outline.png",
+    "line-art/rafael-nadal/white/face-outline.png",
+    "line-art/rafael-nadal/transparent/hair.png",
+    "line-art/rafael-nadal/white/hair.png",
+    "line-art/rafael-nadal/transparent/mouth.png",
+    "line-art/rafael-nadal/white/mouth.png",
+    "line-art/rafael-nadal/transparent/nose.png",
+    "line-art/rafael-nadal/white/nose.png",
+    "line-art/rafael-nadal/merged-white.png",
+    "sources/rafael-nadal/source.png",
+    "sources/rafael-nadal/source-no-bg.png",
+    "line-art/rafael-nadal/labels.json",
+    "line-art/rafael-nadal/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

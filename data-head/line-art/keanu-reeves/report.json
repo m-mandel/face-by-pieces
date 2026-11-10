@@ -1,0 +1,37 @@
+{
+  "subject": "keanu-reeves",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 259,
+    "eyebrows": 2051,
+    "eyes": 3549,
+    "face-details": 497,
+    "facial-hair": 15254,
+    "hair": 40268,
+    "mouth": 1603,
+    "nose": 1357
+  },
+  "original_class_pixels": {
+    "ears": 1084,
+    "eyebrows": 8476,
+    "eyes": 14883,
+    "face-details": 2066,
+    "facial-hair": 63785,
+    "hair": 168372,
+    "mouth": 6552,
+    "nose": 5640
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

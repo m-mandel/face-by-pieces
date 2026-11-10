@@ -1,0 +1,41 @@
+{
+  "subject": "morgan-freeman",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 1866,
+    "ears": 8458,
+    "eyebrows": 9874,
+    "eyes": 8453,
+    "face-details": 13323,
+    "face-outline": 2834,
+    "facial-hair": 74939,
+    "hair": 123573,
+    "mouth": 5200,
+    "nose": 6361
+  },
+  "original_class_pixels": {
+    "earrings": 408,
+    "ears": 1842,
+    "eyebrows": 2132,
+    "eyes": 1858,
+    "face-details": 2977,
+    "face-outline": 621,
+    "facial-hair": 16223,
+    "hair": 26620,
+    "mouth": 1160,
+    "nose": 1424
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

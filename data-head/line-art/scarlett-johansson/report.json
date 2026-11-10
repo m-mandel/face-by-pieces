@@ -1,0 +1,37 @@
+{
+  "subject": "scarlett-johansson",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 1410,
+    "ears": 1953,
+    "eyebrows": 2364,
+    "eyes": 5218,
+    "face-outline": 4775,
+    "hair": 34217,
+    "mouth": 2084,
+    "nose": 1484
+  },
+  "original_class_pixels": {
+    "earrings": 4029,
+    "ears": 5641,
+    "eyebrows": 6902,
+    "eyes": 15227,
+    "face-outline": 13933,
+    "hair": 100497,
+    "mouth": 6105,
+    "nose": 4370
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

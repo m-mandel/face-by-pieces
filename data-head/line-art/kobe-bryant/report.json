@@ -1,0 +1,37 @@
+{
+  "subject": "kobe-bryant",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 8501,
+    "eyebrows": 8137,
+    "eyes": 5843,
+    "face-details": 5263,
+    "face-outline": 9015,
+    "hair": 17202,
+    "mouth": 9896,
+    "nose": 2731
+  },
+  "original_class_pixels": {
+    "ears": 9654,
+    "eyebrows": 8942,
+    "eyes": 6563,
+    "face-details": 6329,
+    "face-outline": 10111,
+    "hair": 21387,
+    "mouth": 11096,
+    "nose": 3194
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

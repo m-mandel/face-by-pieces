@@ -1,0 +1,99 @@
+{
+  "subject": "elon-musk",
+  "fingerprint": "49533424e68553846fdd73ecd20f8ff28627966077c8d010f49543bc1cef0895",
+  "input_size": [
+    1760,
+    2408
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    128,
+    2,
+    1751,
+    1625
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/elon-musk/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/elon-musk/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/elon-musk/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/elon-musk/transparent/ears.png",
+    "line-art/elon-musk/white/ears.png",
+    "line-art/elon-musk/transparent/eyebrows.png",
+    "line-art/elon-musk/white/eyebrows.png",
+    "line-art/elon-musk/transparent/eyes.png",
+    "line-art/elon-musk/white/eyes.png",
+    "line-art/elon-musk/transparent/face-details.png",
+    "line-art/elon-musk/white/face-details.png",
+    "line-art/elon-musk/transparent/face-outline.png",
+    "line-art/elon-musk/white/face-outline.png",
+    "line-art/elon-musk/transparent/hair.png",
+    "line-art/elon-musk/white/hair.png",
+    "line-art/elon-musk/transparent/mouth.png",
+    "line-art/elon-musk/white/mouth.png",
+    "line-art/elon-musk/transparent/nose.png",
+    "line-art/elon-musk/white/nose.png",
+    "line-art/elon-musk/merged-white.png",
+    "sources/elon-musk/source.png",
+    "sources/elon-musk/source-no-bg.png",
+    "line-art/elon-musk/labels.json",
+    "line-art/elon-musk/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

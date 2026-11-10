@@ -1,0 +1,99 @@
+{
+  "subject": "cristiano-ronaldo",
+  "fingerprint": "c5116f3d0b3be81becea8eb3e3ee8075689dd02d033d70d29f1e917290cb5630",
+  "input_size": [
+    1686,
+    2528
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    333,
+    18,
+    1357,
+    1042
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/cristiano-ronaldo/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/cristiano-ronaldo/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/cristiano-ronaldo/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/cristiano-ronaldo/transparent/ears.png",
+    "line-art/cristiano-ronaldo/white/ears.png",
+    "line-art/cristiano-ronaldo/transparent/eyebrows.png",
+    "line-art/cristiano-ronaldo/white/eyebrows.png",
+    "line-art/cristiano-ronaldo/transparent/eyes.png",
+    "line-art/cristiano-ronaldo/white/eyes.png",
+    "line-art/cristiano-ronaldo/transparent/face-details.png",
+    "line-art/cristiano-ronaldo/white/face-details.png",
+    "line-art/cristiano-ronaldo/transparent/face-outline.png",
+    "line-art/cristiano-ronaldo/white/face-outline.png",
+    "line-art/cristiano-ronaldo/transparent/hair.png",
+    "line-art/cristiano-ronaldo/white/hair.png",
+    "line-art/cristiano-ronaldo/transparent/mouth.png",
+    "line-art/cristiano-ronaldo/white/mouth.png",
+    "line-art/cristiano-ronaldo/transparent/nose.png",
+    "line-art/cristiano-ronaldo/white/nose.png",
+    "line-art/cristiano-ronaldo/merged-white.png",
+    "sources/cristiano-ronaldo/source.png",
+    "sources/cristiano-ronaldo/source-no-bg.png",
+    "line-art/cristiano-ronaldo/labels.json",
+    "line-art/cristiano-ronaldo/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

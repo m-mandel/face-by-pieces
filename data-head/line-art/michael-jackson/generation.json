@@ -1,0 +1,96 @@
+{
+  "subject": "michael-jackson",
+  "fingerprint": "8c0b18cb9e0587e876a8955fb77b6b91f46c967101791f2d8d1708c777cef17f",
+  "input_size": [
+    1792,
+    2382
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    634,
+    9,
+    1416,
+    791
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/michael-jackson/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/michael-jackson/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/michael-jackson/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/michael-jackson/transparent/ears.png",
+    "line-art/michael-jackson/white/ears.png",
+    "line-art/michael-jackson/transparent/eyebrows.png",
+    "line-art/michael-jackson/white/eyebrows.png",
+    "line-art/michael-jackson/transparent/eyes.png",
+    "line-art/michael-jackson/white/eyes.png",
+    "line-art/michael-jackson/transparent/face-outline.png",
+    "line-art/michael-jackson/white/face-outline.png",
+    "line-art/michael-jackson/transparent/hair.png",
+    "line-art/michael-jackson/white/hair.png",
+    "line-art/michael-jackson/transparent/mouth.png",
+    "line-art/michael-jackson/white/mouth.png",
+    "line-art/michael-jackson/transparent/nose.png",
+    "line-art/michael-jackson/white/nose.png",
+    "line-art/michael-jackson/merged-white.png",
+    "sources/michael-jackson/source.png",
+    "sources/michael-jackson/source-no-bg.png",
+    "line-art/michael-jackson/labels.json",
+    "line-art/michael-jackson/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

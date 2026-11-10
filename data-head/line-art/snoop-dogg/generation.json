@@ -1,0 +1,101 @@
+{
+  "subject": "snoop-dogg",
+  "fingerprint": "5265157353c61678db1287fb8f6e8e4e5359b0a8c47d1f352f60add5fa69dae9",
+  "input_size": [
+    2048,
+    3071
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    272,
+    25,
+    1808,
+    1561
+  ],
+  "layers": [
+    "ears",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyebrows": "below minimum input pixel count",
+    "eyes": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair",
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/snoop-dogg/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/snoop-dogg/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/snoop-dogg/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/snoop-dogg/transparent/ears.png",
+    "line-art/snoop-dogg/white/ears.png",
+    "line-art/snoop-dogg/transparent/eyewear.png",
+    "line-art/snoop-dogg/white/eyewear.png",
+    "line-art/snoop-dogg/transparent/face-details.png",
+    "line-art/snoop-dogg/white/face-details.png",
+    "line-art/snoop-dogg/transparent/face-outline.png",
+    "line-art/snoop-dogg/white/face-outline.png",
+    "line-art/snoop-dogg/transparent/facial-hair.png",
+    "line-art/snoop-dogg/white/facial-hair.png",
+    "line-art/snoop-dogg/transparent/hair.png",
+    "line-art/snoop-dogg/white/hair.png",
+    "line-art/snoop-dogg/transparent/mouth.png",
+    "line-art/snoop-dogg/white/mouth.png",
+    "line-art/snoop-dogg/transparent/nose.png",
+    "line-art/snoop-dogg/white/nose.png",
+    "line-art/snoop-dogg/merged-white.png",
+    "sources/snoop-dogg/source.png",
+    "sources/snoop-dogg/source-no-bg.png",
+    "line-art/snoop-dogg/labels.json",
+    "line-art/snoop-dogg/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

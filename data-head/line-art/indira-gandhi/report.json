@@ -1,0 +1,35 @@
+{
+  "subject": "indira-gandhi",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "eyebrows": 4350,
+    "eyes": 5372,
+    "face-details": 2342,
+    "face-outline": 6643,
+    "hair": 279611,
+    "mouth": 2189,
+    "nose": 2526
+  },
+  "original_class_pixels": {
+    "eyebrows": 6343,
+    "eyes": 7965,
+    "face-details": 3520,
+    "face-outline": 9874,
+    "hair": 407246,
+    "mouth": 3266,
+    "nose": 3835
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

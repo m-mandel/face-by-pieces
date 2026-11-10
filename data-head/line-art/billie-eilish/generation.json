@@ -1,0 +1,103 @@
+{
+  "subject": "billie-eilish",
+  "fingerprint": "8cd0ca4ff866ff9e12a4a609760b5c333dbefd352240500c92ddc8db51a58a52",
+  "input_size": [
+    1792,
+    2390
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    135,
+    66,
+    1646,
+    1577
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/billie-eilish/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/billie-eilish/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/billie-eilish/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/billie-eilish/transparent/ears.png",
+    "line-art/billie-eilish/white/ears.png",
+    "line-art/billie-eilish/transparent/eyebrows.png",
+    "line-art/billie-eilish/white/eyebrows.png",
+    "line-art/billie-eilish/transparent/eyes.png",
+    "line-art/billie-eilish/white/eyes.png",
+    "line-art/billie-eilish/transparent/face-details.png",
+    "line-art/billie-eilish/white/face-details.png",
+    "line-art/billie-eilish/transparent/face-outline.png",
+    "line-art/billie-eilish/white/face-outline.png",
+    "line-art/billie-eilish/transparent/hair.png",
+    "line-art/billie-eilish/white/hair.png",
+    "line-art/billie-eilish/transparent/headwear.png",
+    "line-art/billie-eilish/white/headwear.png",
+    "line-art/billie-eilish/transparent/mouth.png",
+    "line-art/billie-eilish/white/mouth.png",
+    "line-art/billie-eilish/transparent/nose.png",
+    "line-art/billie-eilish/white/nose.png",
+    "line-art/billie-eilish/merged-white.png",
+    "sources/billie-eilish/source.png",
+    "sources/billie-eilish/source-no-bg.png",
+    "line-art/billie-eilish/labels.json",
+    "line-art/billie-eilish/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

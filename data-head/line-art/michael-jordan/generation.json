@@ -1,0 +1,105 @@
+{
+  "subject": "michael-jordan",
+  "fingerprint": "26f5cf7198af6d886848f1177d0b3ceadea26cb77ee459d61466f98a90eb52d2",
+  "input_size": [
+    1633,
+    2162
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -95,
+    -2,
+    1738,
+    1831
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/michael-jordan/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/michael-jordan/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/michael-jordan/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/michael-jordan/transparent/earrings.png",
+    "line-art/michael-jordan/white/earrings.png",
+    "line-art/michael-jordan/transparent/ears.png",
+    "line-art/michael-jordan/white/ears.png",
+    "line-art/michael-jordan/transparent/eyebrows.png",
+    "line-art/michael-jordan/white/eyebrows.png",
+    "line-art/michael-jordan/transparent/eyes.png",
+    "line-art/michael-jordan/white/eyes.png",
+    "line-art/michael-jordan/transparent/face-details.png",
+    "line-art/michael-jordan/white/face-details.png",
+    "line-art/michael-jordan/transparent/face-outline.png",
+    "line-art/michael-jordan/white/face-outline.png",
+    "line-art/michael-jordan/transparent/facial-hair.png",
+    "line-art/michael-jordan/white/facial-hair.png",
+    "line-art/michael-jordan/transparent/mouth.png",
+    "line-art/michael-jordan/white/mouth.png",
+    "line-art/michael-jordan/transparent/nose.png",
+    "line-art/michael-jordan/white/nose.png",
+    "line-art/michael-jordan/merged-white.png",
+    "sources/michael-jordan/source.png",
+    "sources/michael-jordan/source-no-bg.png",
+    "line-art/michael-jordan/labels.json",
+    "line-art/michael-jordan/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

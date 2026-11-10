@@ -1,0 +1,35 @@
+{
+  "subject": "adele",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "eyebrows": 1988,
+    "eyes": 4243,
+    "face-details": 557,
+    "face-outline": 3681,
+    "hair": 27519,
+    "mouth": 3939,
+    "nose": 1189
+  },
+  "original_class_pixels": {
+    "eyebrows": 6177,
+    "eyes": 13631,
+    "face-details": 1767,
+    "face-outline": 11376,
+    "hair": 87151,
+    "mouth": 12516,
+    "nose": 3760
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

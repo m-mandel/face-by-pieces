@@ -1,0 +1,35 @@
+{
+  "subject": "audrey-hepburn",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 1641,
+    "eyebrows": 1340,
+    "eyes": 5870,
+    "face-outline": 3594,
+    "hair": 28434,
+    "mouth": 4138,
+    "nose": 1737
+  },
+  "original_class_pixels": {
+    "ears": 7363,
+    "eyebrows": 5752,
+    "eyes": 27190,
+    "face-outline": 16168,
+    "hair": 128377,
+    "mouth": 18720,
+    "nose": 7713
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

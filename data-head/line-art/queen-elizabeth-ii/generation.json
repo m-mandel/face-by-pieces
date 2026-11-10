@@ -1,0 +1,103 @@
+{
+  "subject": "queen-elizabeth-ii",
+  "fingerprint": "1bd25a4aaa9927db0ab7c21638f03fe125fb4afeea20c5eb2db55494f81b0535",
+  "input_size": [
+    1792,
+    2388
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    447,
+    25,
+    1268,
+    846
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "headwear",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "headwear",
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/queen-elizabeth-ii/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/queen-elizabeth-ii/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/queen-elizabeth-ii/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/queen-elizabeth-ii/transparent/earrings.png",
+    "line-art/queen-elizabeth-ii/white/earrings.png",
+    "line-art/queen-elizabeth-ii/transparent/ears.png",
+    "line-art/queen-elizabeth-ii/white/ears.png",
+    "line-art/queen-elizabeth-ii/transparent/eyebrows.png",
+    "line-art/queen-elizabeth-ii/white/eyebrows.png",
+    "line-art/queen-elizabeth-ii/transparent/eyes.png",
+    "line-art/queen-elizabeth-ii/white/eyes.png",
+    "line-art/queen-elizabeth-ii/transparent/face-outline.png",
+    "line-art/queen-elizabeth-ii/white/face-outline.png",
+    "line-art/queen-elizabeth-ii/transparent/hair.png",
+    "line-art/queen-elizabeth-ii/white/hair.png",
+    "line-art/queen-elizabeth-ii/transparent/headwear.png",
+    "line-art/queen-elizabeth-ii/white/headwear.png",
+    "line-art/queen-elizabeth-ii/transparent/mouth.png",
+    "line-art/queen-elizabeth-ii/white/mouth.png",
+    "line-art/queen-elizabeth-ii/transparent/nose.png",
+    "line-art/queen-elizabeth-ii/white/nose.png",
+    "line-art/queen-elizabeth-ii/merged-white.png",
+    "sources/queen-elizabeth-ii/source.png",
+    "sources/queen-elizabeth-ii/source-no-bg.png",
+    "line-art/queen-elizabeth-ii/labels.json",
+    "line-art/queen-elizabeth-ii/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

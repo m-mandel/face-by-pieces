@@ -1,0 +1,35 @@
+{
+  "subject": "beyonce",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "eyebrows": 1292,
+    "eyes": 2809,
+    "face-details": 269,
+    "face-outline": 1589,
+    "hair": 41998,
+    "mouth": 1425,
+    "nose": 555
+  },
+  "original_class_pixels": {
+    "eyebrows": 2527,
+    "eyes": 5358,
+    "face-details": 537,
+    "face-outline": 2986,
+    "hair": 80773,
+    "mouth": 2737,
+    "nose": 1040
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

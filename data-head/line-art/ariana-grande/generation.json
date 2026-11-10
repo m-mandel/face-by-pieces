@@ -1,0 +1,95 @@
+{
+  "subject": "ariana-grande",
+  "fingerprint": "cb333a4846a9d4a082fd34d78be2c53f164cd7a6cc992521b6ba0563b3502a02",
+  "input_size": [
+    517,
+    701
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    1,
+    11,
+    498,
+    508
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-details": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/ariana-grande/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/ariana-grande/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/ariana-grande/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/ariana-grande/transparent/ears.png",
+    "line-art/ariana-grande/white/ears.png",
+    "line-art/ariana-grande/transparent/eyebrows.png",
+    "line-art/ariana-grande/white/eyebrows.png",
+    "line-art/ariana-grande/transparent/eyes.png",
+    "line-art/ariana-grande/white/eyes.png",
+    "line-art/ariana-grande/transparent/face-outline.png",
+    "line-art/ariana-grande/white/face-outline.png",
+    "line-art/ariana-grande/transparent/hair.png",
+    "line-art/ariana-grande/white/hair.png",
+    "line-art/ariana-grande/transparent/mouth.png",
+    "line-art/ariana-grande/white/mouth.png",
+    "line-art/ariana-grande/transparent/nose.png",
+    "line-art/ariana-grande/white/nose.png",
+    "line-art/ariana-grande/merged-white.png",
+    "sources/ariana-grande/source.png",
+    "sources/ariana-grande/source-no-bg.png",
+    "line-art/ariana-grande/labels.json",
+    "line-art/ariana-grande/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

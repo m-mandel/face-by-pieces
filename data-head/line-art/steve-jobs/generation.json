@@ -1,0 +1,106 @@
+{
+  "subject": "steve-jobs",
+  "fingerprint": "674225d152539c600ce9897ee610af2bf1797b9171495f7a2a815dd3b7589b21",
+  "input_size": [
+    1632,
+    2608
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -234,
+    -16,
+    1852,
+    2070
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "headwear": "below minimum output pixel count"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair",
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/steve-jobs/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/steve-jobs/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/steve-jobs/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/steve-jobs/transparent/ears.png",
+    "line-art/steve-jobs/white/ears.png",
+    "line-art/steve-jobs/transparent/eyebrows.png",
+    "line-art/steve-jobs/white/eyebrows.png",
+    "line-art/steve-jobs/transparent/eyes.png",
+    "line-art/steve-jobs/white/eyes.png",
+    "line-art/steve-jobs/transparent/eyewear.png",
+    "line-art/steve-jobs/white/eyewear.png",
+    "line-art/steve-jobs/transparent/face-details.png",
+    "line-art/steve-jobs/white/face-details.png",
+    "line-art/steve-jobs/transparent/face-outline.png",
+    "line-art/steve-jobs/white/face-outline.png",
+    "line-art/steve-jobs/transparent/facial-hair.png",
+    "line-art/steve-jobs/white/facial-hair.png",
+    "line-art/steve-jobs/transparent/hair.png",
+    "line-art/steve-jobs/white/hair.png",
+    "line-art/steve-jobs/transparent/mouth.png",
+    "line-art/steve-jobs/white/mouth.png",
+    "line-art/steve-jobs/transparent/nose.png",
+    "line-art/steve-jobs/white/nose.png",
+    "line-art/steve-jobs/merged-white.png",
+    "sources/steve-jobs/source.png",
+    "sources/steve-jobs/source-no-bg.png",
+    "line-art/steve-jobs/labels.json",
+    "line-art/steve-jobs/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

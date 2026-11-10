@@ -1,0 +1,37 @@
+{
+  "subject": "celine-dion",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 440,
+    "eyebrows": 1112,
+    "eyes": 2845,
+    "face-details": 744,
+    "face-outline": 2201,
+    "hair": 42798,
+    "mouth": 1580,
+    "nose": 607
+  },
+  "original_class_pixels": {
+    "ears": 313,
+    "eyebrows": 845,
+    "eyes": 2108,
+    "face-details": 561,
+    "face-outline": 1644,
+    "hair": 32383,
+    "mouth": 1177,
+    "nose": 478
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

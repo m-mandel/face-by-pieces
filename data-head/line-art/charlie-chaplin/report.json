@@ -1,0 +1,37 @@
+{
+  "subject": "charlie-chaplin",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 3049,
+    "eyebrows": 2569,
+    "eyes": 5402,
+    "face-details": 1117,
+    "face-outline": 7346,
+    "hair": 23360,
+    "mouth": 2034,
+    "nose": 1715
+  },
+  "original_class_pixels": {
+    "ears": 9441,
+    "eyebrows": 7874,
+    "eyes": 16690,
+    "face-details": 3499,
+    "face-outline": 22508,
+    "hair": 72234,
+    "mouth": 6258,
+    "nose": 5337
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

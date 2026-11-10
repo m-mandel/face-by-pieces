@@ -1,0 +1,39 @@
+{
+  "subject": "roger-federer",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 4695,
+    "eyebrows": 7945,
+    "eyes": 3400,
+    "face-details": 2583,
+    "face-outline": 7394,
+    "hair": 28813,
+    "headwear": 11675,
+    "mouth": 2239,
+    "nose": 2396
+  },
+  "original_class_pixels": {
+    "ears": 4564,
+    "eyebrows": 7457,
+    "eyes": 3252,
+    "face-details": 2618,
+    "face-outline": 7185,
+    "hair": 28383,
+    "headwear": 11354,
+    "mouth": 2194,
+    "nose": 2377
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

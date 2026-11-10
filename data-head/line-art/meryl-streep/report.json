@@ -1,0 +1,41 @@
+{
+  "subject": "meryl-streep",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 1527,
+    "ears": 4204,
+    "eyebrows": 1482,
+    "eyes": 4041,
+    "eyewear": 11858,
+    "face-details": 2960,
+    "face-outline": 3417,
+    "hair": 19477,
+    "mouth": 4134,
+    "nose": 1163
+  },
+  "original_class_pixels": {
+    "earrings": 3190,
+    "ears": 8740,
+    "eyebrows": 3045,
+    "eyes": 8509,
+    "eyewear": 24436,
+    "face-details": 6340,
+    "face-outline": 6979,
+    "hair": 41022,
+    "mouth": 8686,
+    "nose": 2437
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

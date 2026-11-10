@@ -1,0 +1,37 @@
+{
+  "subject": "vladimir-putin",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 7712,
+    "eyebrows": 2683,
+    "eyes": 4955,
+    "face-details": 3103,
+    "face-outline": 6336,
+    "hair": 11891,
+    "mouth": 2384,
+    "nose": 2107
+  },
+  "original_class_pixels": {
+    "ears": 41604,
+    "eyebrows": 14036,
+    "eyes": 26386,
+    "face-details": 16169,
+    "face-outline": 34218,
+    "hair": 63766,
+    "mouth": 12732,
+    "nose": 11364
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "subject": "novak-djokovic",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5328,
+    "eyebrows": 2315,
+    "eyes": 2653,
+    "face-details": 4364,
+    "facial-hair": 8382,
+    "hair": 9489,
+    "mouth": 4833,
+    "nose": 1662
+  },
+  "original_class_pixels": {
+    "ears": 21992,
+    "eyebrows": 9412,
+    "eyes": 11121,
+    "face-details": 17967,
+    "facial-hair": 34470,
+    "hair": 39363,
+    "mouth": 20061,
+    "nose": 6946
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

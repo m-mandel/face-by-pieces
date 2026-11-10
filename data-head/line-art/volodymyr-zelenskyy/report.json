@@ -1,0 +1,37 @@
+{
+  "subject": "volodymyr-zelenskyy",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 5259,
+    "eyebrows": 8423,
+    "eyes": 6105,
+    "face-details": 1236,
+    "facial-hair": 69480,
+    "hair": 20246,
+    "mouth": 3023,
+    "nose": 3131
+  },
+  "original_class_pixels": {
+    "ears": 2140,
+    "eyebrows": 3353,
+    "eyes": 2467,
+    "face-details": 522,
+    "facial-hair": 27516,
+    "hair": 8245,
+    "mouth": 1226,
+    "nose": 1315
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "subject": "muhammad-ali",
+  "fingerprint": "5372ba34892f573870b2b4a521a360d3d8f6978ca73861e00214eee2cce3f6a2",
+  "input_size": [
+    1842,
+    2304
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -123,
+    31,
+    1939,
+    2093
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/muhammad-ali/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/muhammad-ali/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/muhammad-ali/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/muhammad-ali/transparent/ears.png",
+    "line-art/muhammad-ali/white/ears.png",
+    "line-art/muhammad-ali/transparent/eyebrows.png",
+    "line-art/muhammad-ali/white/eyebrows.png",
+    "line-art/muhammad-ali/transparent/eyes.png",
+    "line-art/muhammad-ali/white/eyes.png",
+    "line-art/muhammad-ali/transparent/face-details.png",
+    "line-art/muhammad-ali/white/face-details.png",
+    "line-art/muhammad-ali/transparent/face-outline.png",
+    "line-art/muhammad-ali/white/face-outline.png",
+    "line-art/muhammad-ali/transparent/hair.png",
+    "line-art/muhammad-ali/white/hair.png",
+    "line-art/muhammad-ali/transparent/mouth.png",
+    "line-art/muhammad-ali/white/mouth.png",
+    "line-art/muhammad-ali/transparent/nose.png",
+    "line-art/muhammad-ali/white/nose.png",
+    "line-art/muhammad-ali/merged-white.png",
+    "sources/muhammad-ali/source.png",
+    "sources/muhammad-ali/source-no-bg.png",
+    "line-art/muhammad-ali/labels.json",
+    "line-art/muhammad-ali/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

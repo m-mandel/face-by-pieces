@@ -1,0 +1,43 @@
+{
+  "subject": "johnny-depp",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 2581,
+    "eyebrows": 3009,
+    "eyes": 3699,
+    "eyewear": 12745,
+    "face-details": 2476,
+    "face-outline": 4091,
+    "facial-hair": 12491,
+    "hair": 13152,
+    "headwear": 35348,
+    "mouth": 2275,
+    "nose": 1398
+  },
+  "original_class_pixels": {
+    "earrings": 342,
+    "eyebrows": 436,
+    "eyes": 486,
+    "eyewear": 1668,
+    "face-details": 387,
+    "face-outline": 548,
+    "facial-hair": 1775,
+    "hair": 1777,
+    "headwear": 4787,
+    "mouth": 309,
+    "nose": 210
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

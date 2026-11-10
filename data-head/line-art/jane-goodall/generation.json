@@ -1,0 +1,99 @@
+{
+  "subject": "jane-goodall",
+  "fingerprint": "a56d0a75cf29198707c17e9a55fb19888a7aef9154c74295a3cde6ff0c4ae6bd",
+  "input_size": [
+    1792,
+    2400
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    216,
+    67,
+    1453,
+    1304
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "headwear": "below minimum output pixel count"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/jane-goodall/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/jane-goodall/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/jane-goodall/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/jane-goodall/transparent/ears.png",
+    "line-art/jane-goodall/white/ears.png",
+    "line-art/jane-goodall/transparent/eyebrows.png",
+    "line-art/jane-goodall/white/eyebrows.png",
+    "line-art/jane-goodall/transparent/eyes.png",
+    "line-art/jane-goodall/white/eyes.png",
+    "line-art/jane-goodall/transparent/face-details.png",
+    "line-art/jane-goodall/white/face-details.png",
+    "line-art/jane-goodall/transparent/face-outline.png",
+    "line-art/jane-goodall/white/face-outline.png",
+    "line-art/jane-goodall/transparent/hair.png",
+    "line-art/jane-goodall/white/hair.png",
+    "line-art/jane-goodall/transparent/mouth.png",
+    "line-art/jane-goodall/white/mouth.png",
+    "line-art/jane-goodall/transparent/nose.png",
+    "line-art/jane-goodall/white/nose.png",
+    "line-art/jane-goodall/merged-white.png",
+    "sources/jane-goodall/source.png",
+    "sources/jane-goodall/source-no-bg.png",
+    "line-art/jane-goodall/labels.json",
+    "line-art/jane-goodall/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

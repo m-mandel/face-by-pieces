@@ -1,0 +1,104 @@
+{
+  "subject": "michelle-obama",
+  "fingerprint": "b838de54cf1bbcd616a189c088249ab99fcae4f2f2a02ccac77cee9ede22652a",
+  "input_size": [
+    1792,
+    2390
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    57,
+    -42,
+    1741,
+    1642
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/michelle-obama/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/michelle-obama/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/michelle-obama/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/michelle-obama/transparent/earrings.png",
+    "line-art/michelle-obama/white/earrings.png",
+    "line-art/michelle-obama/transparent/ears.png",
+    "line-art/michelle-obama/white/ears.png",
+    "line-art/michelle-obama/transparent/eyebrows.png",
+    "line-art/michelle-obama/white/eyebrows.png",
+    "line-art/michelle-obama/transparent/eyes.png",
+    "line-art/michelle-obama/white/eyes.png",
+    "line-art/michelle-obama/transparent/face-details.png",
+    "line-art/michelle-obama/white/face-details.png",
+    "line-art/michelle-obama/transparent/face-outline.png",
+    "line-art/michelle-obama/white/face-outline.png",
+    "line-art/michelle-obama/transparent/hair.png",
+    "line-art/michelle-obama/white/hair.png",
+    "line-art/michelle-obama/transparent/mouth.png",
+    "line-art/michelle-obama/white/mouth.png",
+    "line-art/michelle-obama/transparent/nose.png",
+    "line-art/michelle-obama/white/nose.png",
+    "line-art/michelle-obama/merged-white.png",
+    "sources/michelle-obama/source.png",
+    "sources/michelle-obama/source-no-bg.png",
+    "line-art/michelle-obama/labels.json",
+    "line-art/michelle-obama/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

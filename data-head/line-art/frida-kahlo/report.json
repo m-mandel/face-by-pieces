@@ -1,0 +1,37 @@
+{
+  "subject": "frida-kahlo",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 5756,
+    "ears": 4195,
+    "eyebrows": 9918,
+    "eyes": 6378,
+    "face-outline": 7041,
+    "hair": 27589,
+    "mouth": 2026,
+    "nose": 1215
+  },
+  "original_class_pixels": {
+    "earrings": 11224,
+    "ears": 8055,
+    "eyebrows": 19369,
+    "eyes": 12464,
+    "face-outline": 13545,
+    "hair": 53879,
+    "mouth": 3994,
+    "nose": 2414
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

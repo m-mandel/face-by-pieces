@@ -1,0 +1,35 @@
+{
+  "subject": "usain-bolt",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 14449,
+    "eyebrows": 5317,
+    "eyes": 10448,
+    "face-outline": 29148,
+    "hair": 19982,
+    "mouth": 12572,
+    "nose": 6418
+  },
+  "original_class_pixels": {
+    "ears": 3728,
+    "eyebrows": 1420,
+    "eyes": 2719,
+    "face-outline": 7608,
+    "hair": 5202,
+    "mouth": 3298,
+    "nose": 1695
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "subject": "michael-jordan",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "earrings": 566,
+    "ears": 5030,
+    "eyebrows": 1744,
+    "eyes": 3999,
+    "face-details": 3818,
+    "face-outline": 9627,
+    "facial-hair": 2294,
+    "mouth": 2071,
+    "nose": 2777
+  },
+  "original_class_pixels": {
+    "earrings": 1749,
+    "ears": 15822,
+    "eyebrows": 5339,
+    "eyes": 12591,
+    "face-details": 11638,
+    "face-outline": 30118,
+    "facial-hair": 7008,
+    "mouth": 6443,
+    "nose": 8677
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

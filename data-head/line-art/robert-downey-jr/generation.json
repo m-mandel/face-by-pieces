@@ -1,0 +1,103 @@
+{
+  "subject": "robert-downey-jr",
+  "fingerprint": "8170be2a01a8a0619d2f31fd23ef72eadd523dd72625c15224f11305a544a384",
+  "input_size": [
+    1768,
+    2505
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -227,
+    -67,
+    1924,
+    2084
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/robert-downey-jr/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/robert-downey-jr/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/robert-downey-jr/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/robert-downey-jr/transparent/ears.png",
+    "line-art/robert-downey-jr/white/ears.png",
+    "line-art/robert-downey-jr/transparent/eyebrows.png",
+    "line-art/robert-downey-jr/white/eyebrows.png",
+    "line-art/robert-downey-jr/transparent/eyes.png",
+    "line-art/robert-downey-jr/white/eyes.png",
+    "line-art/robert-downey-jr/transparent/face-details.png",
+    "line-art/robert-downey-jr/white/face-details.png",
+    "line-art/robert-downey-jr/transparent/face-outline.png",
+    "line-art/robert-downey-jr/white/face-outline.png",
+    "line-art/robert-downey-jr/transparent/facial-hair.png",
+    "line-art/robert-downey-jr/white/facial-hair.png",
+    "line-art/robert-downey-jr/transparent/hair.png",
+    "line-art/robert-downey-jr/white/hair.png",
+    "line-art/robert-downey-jr/transparent/mouth.png",
+    "line-art/robert-downey-jr/white/mouth.png",
+    "line-art/robert-downey-jr/transparent/nose.png",
+    "line-art/robert-downey-jr/white/nose.png",
+    "line-art/robert-downey-jr/merged-white.png",
+    "sources/robert-downey-jr/source.png",
+    "sources/robert-downey-jr/source-no-bg.png",
+    "line-art/robert-downey-jr/labels.json",
+    "line-art/robert-downey-jr/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

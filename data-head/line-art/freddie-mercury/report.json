@@ -1,0 +1,37 @@
+{
+  "subject": "freddie-mercury",
+  "size": [
+    1024,
+    1024
+  ],
+  "class_pixels": {
+    "ears": 786,
+    "eyebrows": 3426,
+    "eyes": 2030,
+    "face-details": 1237,
+    "face-outline": 5133,
+    "hair": 26632,
+    "mouth": 4285,
+    "nose": 3918
+  },
+  "original_class_pixels": {
+    "ears": 819,
+    "eyebrows": 3701,
+    "eyes": 2221,
+    "face-details": 1407,
+    "face-outline": 5550,
+    "hair": 28779,
+    "mouth": 4562,
+    "nose": 4296
+  },
+  "framing": {
+    "width": 1024,
+    "height": 1024,
+    "viewBox": [
+      0,
+      0,
+      1024,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "subject": "arnold-schwarzenegger",
+  "fingerprint": "d7aaf8530f46ce461f16eb3770824b4fce32c1b820561f99903f3937797a93ea",
+  "input_size": [
+    978,
+    1308
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -66,
+    -25,
+    962,
+    1003
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "facial-hair",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-outline": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/arnold-schwarzenegger/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/arnold-schwarzenegger/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/app/data/sources/arnold-schwarzenegger/source.png",
+  "overrides": {
+    "note": "The existing background_removed.png is damaged. Use the original photo with this head contour instead.",
+    "use_source_for_cutout": true,
+    "photo_polygon": [
+      [
+        0.18,
+        0.32
+      ],
+      [
+        0.19,
+        0.24
+      ],
+      [
+        0.22,
+        0.15
+      ],
+      [
+        0.29,
+        0.075
+      ],
+      [
+        0.4,
+        0.03
+      ],
+      [
+        0.53,
+        0.035
+      ],
+      [
+        0.64,
+        0.09
+      ],
+      [
+        0.71,
+        0.17
+      ],
+      [
+        0.75,
+        0.27
+      ],
+      [
+        0.74,
+        0.33
+      ],
+      [
+        0.775,
+        0.34
+      ],
+      [
+        0.775,
+        0.42
+      ],
+      [
+        0.735,
+        0.49
+      ],
+      [
+        0.7,
+        0.57
+      ],
+      [
+        0.61,
+        0.64
+      ],
+      [
+        0.5,
+        0.7
+      ],
+      [
+        0.4,
+        0.735
+      ],
+      [
+        0.32,
+        0.7
+      ],
+      [
+        0.25,
+        0.63
+      ],
+      [
+        0.22,
+        0.55
+      ],
+      [
+        0.2,
+        0.48
+      ],
+      [
+        0.17,
+        0.45
+      ],
+      [
+        0.17,
+        0.37
+      ]
+    ]
+  },
+  "outputs": [
+    "line-art/arnold-schwarzenegger/transparent/ears.png",
+    "line-art/arnold-schwarzenegger/white/ears.png",
+    "line-art/arnold-schwarzenegger/transparent/eyebrows.png",
+    "line-art/arnold-schwarzenegger/white/eyebrows.png",
+    "line-art/arnold-schwarzenegger/transparent/eyes.png",
+    "line-art/arnold-schwarzenegger/white/eyes.png",
+    "line-art/arnold-schwarzenegger/transparent/face-details.png",
+    "line-art/arnold-schwarzenegger/white/face-details.png",
+    "line-art/arnold-schwarzenegger/transparent/facial-hair.png",
+    "line-art/arnold-schwarzenegger/white/facial-hair.png",
+    "line-art/arnold-schwarzenegger/transparent/hair.png",
+    "line-art/arnold-schwarzenegger/white/hair.png",
+    "line-art/arnold-schwarzenegger/transparent/mouth.png",
+    "line-art/arnold-schwarzenegger/white/mouth.png",
+    "line-art/arnold-schwarzenegger/transparent/nose.png",
+    "line-art/arnold-schwarzenegger/white/nose.png",
+    "line-art/arnold-schwarzenegger/merged-white.png",
+    "sources/arnold-schwarzenegger/source.png",
+    "sources/arnold-schwarzenegger/source-no-bg.png",
+    "line-art/arnold-schwarzenegger/labels.json",
+    "line-art/arnold-schwarzenegger/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

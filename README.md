@@ -1,6 +1,6 @@
 # Face by Pieces
 
-A mobile-first portrait guessing game built from transparent PNG layers in `data/line-art/`, with one layer revealed at a time and server-side session and activity recording.
+A mobile-first portrait guessing game built from head-focused transparent PNG layers in `data-head/line-art/`, with one layer revealed at a time and server-side session and activity recording. Original images remain in `data/`.
 
 ## Run locally
 
@@ -36,11 +36,11 @@ New players first see a **How to play** popup explaining that the goal is to gue
 
 There is no category picker or category button. Returning players who completed the old category setup continue straight into the game, and their saved category no longer filters the faces. Each game uses five distinct faces when enough portraits are available.
 
-Line-art portraits fit the combined visible bounds of every eligible PNG layer. Transparent and pure-white margins are removed from the displayed viewport, with one source pixel of padding for edge antialiasing. All layers retain their original alignment, and the viewport stays fixed as clues change. `npm run dev:client` and `npm run build` automatically generate a small bounds manifest from the PNGs, so the browser only needs to download and decode the selected clues before displaying the drawing. The clue button is disabled and grey while those layers load. After the first clue, the current drawing stays visible until the next layer set is ready. Sequence additions fade in over 180 ms while existing layers stay in place. The fade respects reduced-motion preferences. A failed download keeps the current drawing visible and enables a retry of the same step without adding to the step count. Original PNG files remain unchanged.
+Line-art portraits use the shared 1024 × 1024 head framing recorded in their generated reports. The same crop and scale apply to every layer and both photo variants, with approximately 6% breathing room around the head. The renderer preserves this framing through clues, results, and replay instead of independently recropping the drawing. `npm run dev:client` and `npm run build` automatically generate a small bounds manifest, so the browser only needs to download and decode the selected clues before displaying the drawing. The clue button is disabled and grey while those layers load. After the first clue, the current drawing stays visible until the next layer set is ready. Sequence additions fade in over 180 ms while existing layers stay in place. The fade respects reduced-motion preferences. A failed download keeps the current drawing visible and enables a retry of the same step without adding to the step count. Original PNG files remain unchanged.
 
 After the first clue appears, the remaining eligible layers for that portrait preload in the background, two at a time with low fetch priority. Selecting a layer that is still preloading shares its pending download. Background failures do not interrupt play, and selecting a failed layer retries it normally. Changing portraits or leaving the view stops queued preloads; in-flight downloads may finish, and decoded images are not retained by the loader after completion.
 
-The generated manifest in `src/generated/` is ignored by Git and recreated during each build using the pure JavaScript `pngjs` development dependency. Run `npm run prepare:portraits` (or restart the dev client) after changing PNGs or pixel-count reports during development. If the layer list no longer matches the manifest, the browser measures that portrait as a fallback; unusable bounds retain the full image canvas.
+The generated manifest in `src/generated/` is ignored by Git and recreated during each build. After changing original assets, run `npm run prepare:heads` and restart the dev client or rebuild. Generated framing remains available directly from each portrait's report if the manifest is stale. Older data without framing metadata uses the existing bounds-measurement fallback.
 
 The previous colorful interface remains archived in `src/legacy/LegacyApp.jsx` and `src/legacy/styles.css`. It is no longer loaded by the app. Old `?ux=legacy` links and saved interface, mode, or style preferences open the same Sequence/Line art game.
 
@@ -52,32 +52,68 @@ Reveal order is configured in [`src/config/layer-order.json`](src/config/layer-o
 2. Random core features: `eyes`, `eyebrows`, `nose`, `mouth`, `hair`, `ears`
 3. `facial-hair`, then `eyewear`
 4. `face-details`
-5. `body`
-6. `headwear`, `earrings`, `necklace`, `face-piercings`, `accessories`, `unassigned`
+5. `headwear`, `earrings`, `face-piercings`
 
-The first clue follows the same order as subsequent clues. Missing layers and layers excluded by the pixel-count filter are skipped; a portrait without an eligible outline starts in the first available group. New layer names omitted from the configuration are revealed last, in catalog order. Edit the JSON and rebuild to change the deployed order. `npm test` checks the selection rules and coverage of every current portrait.
+The first clue follows the same order as subsequent clues. Missing layers and layers excluded by the pixel-count filter are skipped; a portrait without an eligible outline starts in the first available group. Only configured head/face layers enter the catalog. `body`, `necklace`, `accessories`, and `unassigned` are excluded during generation and catalog loading. Edit the JSON, regenerate heads, and rebuild to change the deployed order. `npm test` checks the selection rules and coverage of every current portrait.
 
 **Next clue** adds one previously hidden layer and keeps every existing layer visible. Once all eligible layers are revealed, the clue button is disabled. The catalog's layer indices and stacking order remain unchanged for activity recording and replay. Activity records use the existing `progressive` mode ID and `line-art` style ID.
 
 ## Line-art portraits
 
-The game automatically discovers portraits in `data/line-art/`. Each PNG in a portrait's `transparent/` folder is a separate layer, aligned at its original aspect ratio over a pure white background. Layers with fewer than 200 pixels in `report.json`'s `class_pixels` are excluded entirely, including the initial clue, subsequent clues, the full reveal, and replay. Exactly 200 pixels is eligible. Files in `masks/`, `white/`, and contact sheets are not used. Archived SVG assets remain in `data/vector-lines/` and `data/svg/`, but subjects without line-art layers are not selected for play.
+The game automatically discovers portraits in `data-head/line-art/`. Each PNG in a portrait's `transparent/` folder is a separate aligned layer over a pure white background. Layers with fewer than 200 pixels in `report.json`'s `class_pixels` are excluded entirely, including the initial clue, subsequent clues, the full reveal, and replay. Exactly 200 pixels is eligible. Files in `white/` and `merged-white.png` are previews, not clues. Archived SVG assets remain in `data/vector-lines/` and `data/svg/`, but subjects without head-focused line-art layers are not selected for play.
 
-Add new line-art portraits as `data/line-art/<person-name>/transparent/*.png`, alongside their `report.json` pixel counts. All layers for a portrait should share the same canvas dimensions. Both hyphens and underscores in folder names are supported. The catalog is discovered at build time; rebuild the app and restart the server after adding portraits. If a report or a layer's pixel count is missing, that PNG remains eligible.
+Add original line-art portraits as `data/line-art/<person-name>/transparent/*.png`, alongside their `report.json` pixel counts, and photos under `data/sources/<person-name>/`. All layers and input photos for a subject must share the same canvas dimensions. Both hyphens and underscores in folder names are supported. Run the head converter below, rebuild the app, and restart the server after adding portraits.
+
+### Generate head-focused assets
+
+The runnable converter is [`scripts/prepare-heads.py`](scripts/prepare-heads.py). Set up its local Python dependencies once:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -r scripts/head-requirements.txt
+npm run prepare:heads
+npm run build
+```
+
+It reads `data/line-art` and `data/sources` and writes only to `data-head`. Existing background-removed inputs are looked up first beside each source as `source-no-bg.png`, `source_no_bg.png`, or `background_removed.png`, then in sibling `../abstraction/data/sources-no-bg` and `../abstraction/data/line_art_4`. On another machine, provide the background-removed dataset explicitly:
+
+```bash
+npm run prepare:heads -- --no-bg-root /path/to/background-removed-subjects
+npm run prepare:heads -- --check
+npm run prepare:heads -- --subject albert-einstein
+npm run test:heads
+```
+
+`--no-bg-root` and `--subject` can be repeated. `--layers`, `--sources`, `--output`, `--size`, `--margin`, and `--force` are also supported; use `--help` for details. Unchanged inputs are cached by content hash. A dimension mismatch is reported instead of silently stretching a photo. The converter removes distant segmentation debris before choosing the head crop, keeps relative positions among layers, and applies that crop to the photos. Source-only folders without drawing layers are not part of the playable catalog and are not converted.
+
+Each generated subject has:
+
+- `data-head/line-art/<subject>/transparent/` and `white/`: retained head layers.
+- `data-head/line-art/<subject>/merged-white.png`: complete drawing preview.
+- `data-head/line-art/<subject>/report.json`, `labels.json` when supplied, and `generation.json`: pixel counts, shared framing, labels, input provenance, and reproducible settings.
+- `data-head/sources/<subject>/source.png`: aligned head crop with the original background.
+- `data-head/sources/<subject>/source-no-bg.png`: head-only photo on white, using the existing background-removed input and a silhouette mask to remove clothing.
+
+[`src/config/head-framing.json`](src/config/head-framing.json) contains reviewed exceptions for source/drawing alignment and mislabeled neck or torso strokes. `clip_box` and `photo_polygon` coordinates are fractions of the original canvas; `crop_box` uses original pixels. `photo_transform` applies the same uniform scale and fractional translation to both photo variants before their common crop. Arnold Schwarzenegger's supplied background-removed file is damaged, so its configured head contour is applied to the original photograph instead. The original files are never modified.
+
+`data-head/preparation-report.json` lists missing sources, missing background-removed inputs, source-only folders without drawing layers, and conversion errors. Selected-subject runs write `preparation-report-selected.json`. No synthetic replacement is silently produced when a background-removed file is missing; the app can use the aligned original crop as a fallback. Commit/deploy the generated `data-head` assets along with the app. Normal development/build/start commands consume these assets and do not require Python or access to the sibling abstraction datasets.
 
 Each game has five faces. Submitting a name ends that face and advances to the next; scores and names are shown in the results gallery after the fifth face. Steps count the drawing clues used.
 
 In the results gallery, **Retrace your steps** replays the selected face's drawing clues. The stars remain in face order, and **Play again** starts a new five-face game.
 
-At the last drawing clue, **I don't know :(** immediately opens the current face's source photo and asks whether the player recognizes the person. **Yes** keeps the photo visible and opens another name input. The round stays **Incorrect** even if the photo answer is correct: stars and scores reflect identification from the sketch. The result subtitle reports **Photo answer: Correct** or **Photo answer: Incorrect** for submitted names. **No**, or **I still don't know**, displays **Photo answer: did not know**. Names and scores stay hidden until the final gallery, and the clue count still reflects drawing clues.
+At the last drawing clue, **I don't know :(** immediately opens the current face's source photo and asks whether the player recognizes the person. **Yes** keeps the photo visible and opens another name input. The round stays **Incorrect** even if the photo answer is correct: stars and scores reflect identification from the sketch. The result subtitle reports **Photo answer: Correct**, **Photo answer: Inaccurate**, or **Photo answer: Incorrect** using the same name-matching rules as sketch guesses. Inaccurate photo answers also show **Did you mean …?**. **No**, or **I still don't know**, displays **Photo answer: did not know**. Names and scores stay hidden until the final gallery, and the clue count still reflects drawing clues.
 
-Photos are discovered from `data/sources/<subject-id>/source.png` (also `.jpg`, `.jpeg`, or `.webp`). Rebuild after adding photos and include the source-photo directory when deploying. Missing or failed photos allow the player to continue, with an unavailable recognition response rather than a false No; failed downloads can also be retried. A pending download offers **Continue without photo**.
+Photos are discovered from `data-head/sources/<subject-id>/source-no-bg.png`, falling back to the aligned `source.png` when a cutout is missing. Rebuild after regenerating photos and include `data-head` when deploying. Missing or failed photos allow the player to continue, with an unavailable recognition response rather than a false No; failed downloads can also be retried. A pending download offers **Continue without photo**.
 
 ## Answer aliases
 
 Additional accepted spellings are listed by subject ID in [`src/config/subject-aliases.json`](src/config/subject-aliases.json). Every catalog subject has a curated list, including the 88 playable line-art subjects. These variants are added to the subject's canonical name and existing aliases. For example, Serena Williams accepts both `Wiliams` and `Serena Wiliams`; Albert Einstein accepts `Einstien` and `Albert Einstien`.
 
 Matching ignores capitalization, accents, spaces, and punctuation. Name words can appear in any order: **Pitt Brad** is Correct for **Brad Pitt**. Canonical names, correctly spelled surnames, original correctly spelled aliases, and the nicknames in [`src/config/subject-correct-aliases.json`](src/config/subject-correct-aliases.json) receive **Correct**. For example, **The Rock**, **Johnson**, and **J.Lo** are valid aliases. Reordered misspellings in the typo list remain Inaccurate. Suffixes such as `Jr` are not valid answers by themselves. The original submitted text is retained in activity records.
+
+First-name-only guesses for people with multiword names receive **Inaccurate**, even when an older alias list accepted them as correct. For example, **Hillary**, **Elon**, **Kobe**, **Francis** (Pope Francis), and **Elizabeth** (Queen Elizabeth II) are incomplete; **Clinton**, **Hillary Clinton**, **The Pope**, and **Queen Elizabeth** remain Correct. Names recorded as complete one-word names, such as **Adele**, **Madonna**, and **Beyoncé**, remain Correct. Trusted given-name variants and sufficiently similar misspellings of first names are also Inaccurate. Accepted nicknames such as **Arnie**, **Shaq**, and **The Rock** remain Correct. These rules apply to both sketch and photo guesses; historical scores are not rewritten.
 
 Misspellings listed in `subject-aliases.json` and new close spellings receive **Inaccurate**, a blue star in that face's position, and **Did you mean Novak Djokovic? You guessed Jokoviz**. For example, `Einstien` is now Inaccurate rather than Correct. Correct answers keep gold stars; incorrect or skipped answers keep outline stars. The five-face summary counts correct and inaccurate answers separately.
 

@@ -1,0 +1,101 @@
+{
+  "subject": "natalie-portman",
+  "fingerprint": "533d788a39750769f205d78fc0217d8506e9ba9a1c692e5eb60d1553fbb0c498",
+  "input_size": [
+    2048,
+    3072
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -171,
+    40,
+    2218,
+    2429
+  ],
+  "layers": [
+    "earrings",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer",
+    "ears": "below minimum output pixel count",
+    "headwear": "below minimum output pixel count"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/natalie-portman/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/natalie-portman/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/natalie-portman/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/natalie-portman/transparent/earrings.png",
+    "line-art/natalie-portman/white/earrings.png",
+    "line-art/natalie-portman/transparent/eyebrows.png",
+    "line-art/natalie-portman/white/eyebrows.png",
+    "line-art/natalie-portman/transparent/eyes.png",
+    "line-art/natalie-portman/white/eyes.png",
+    "line-art/natalie-portman/transparent/face-details.png",
+    "line-art/natalie-portman/white/face-details.png",
+    "line-art/natalie-portman/transparent/face-outline.png",
+    "line-art/natalie-portman/white/face-outline.png",
+    "line-art/natalie-portman/transparent/hair.png",
+    "line-art/natalie-portman/white/hair.png",
+    "line-art/natalie-portman/transparent/mouth.png",
+    "line-art/natalie-portman/white/mouth.png",
+    "line-art/natalie-portman/transparent/nose.png",
+    "line-art/natalie-portman/white/nose.png",
+    "line-art/natalie-portman/merged-white.png",
+    "sources/natalie-portman/source.png",
+    "sources/natalie-portman/source-no-bg.png",
+    "line-art/natalie-portman/labels.json",
+    "line-art/natalie-portman/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

@@ -1,0 +1,100 @@
+{
+  "subject": "barack-obama",
+  "fingerprint": "d115dd824617bfbbab8ff03b0ddca9f5e71101ea84c3cb813a4aa6d8f20cee4a",
+  "input_size": [
+    2687,
+    3356
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    692,
+    7,
+    1948,
+    1263
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/barack-obama/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/barack-obama/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/barack-obama/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/barack-obama/transparent/ears.png",
+    "line-art/barack-obama/white/ears.png",
+    "line-art/barack-obama/transparent/eyebrows.png",
+    "line-art/barack-obama/white/eyebrows.png",
+    "line-art/barack-obama/transparent/eyes.png",
+    "line-art/barack-obama/white/eyes.png",
+    "line-art/barack-obama/transparent/face-details.png",
+    "line-art/barack-obama/white/face-details.png",
+    "line-art/barack-obama/transparent/face-outline.png",
+    "line-art/barack-obama/white/face-outline.png",
+    "line-art/barack-obama/transparent/hair.png",
+    "line-art/barack-obama/white/hair.png",
+    "line-art/barack-obama/transparent/mouth.png",
+    "line-art/barack-obama/white/mouth.png",
+    "line-art/barack-obama/transparent/nose.png",
+    "line-art/barack-obama/white/nose.png",
+    "line-art/barack-obama/merged-white.png",
+    "sources/barack-obama/source.png",
+    "sources/barack-obama/source-no-bg.png",
+    "line-art/barack-obama/labels.json",
+    "line-art/barack-obama/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

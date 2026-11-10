@@ -1,0 +1,103 @@
+{
+  "subject": "jackie-chan",
+  "fingerprint": "a602370418c0eb45fa0d866ce160b2baa3f8dfa2d6c3b3f343a1175c47a8425d",
+  "input_size": [
+    1760,
+    2426
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    258,
+    52,
+    1617,
+    1411
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "eyewear",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "eyewear"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/jackie-chan/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/line_art_4/jackie-chan/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/line_art_4/jackie-chan/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/jackie-chan/transparent/ears.png",
+    "line-art/jackie-chan/white/ears.png",
+    "line-art/jackie-chan/transparent/eyebrows.png",
+    "line-art/jackie-chan/white/eyebrows.png",
+    "line-art/jackie-chan/transparent/eyes.png",
+    "line-art/jackie-chan/white/eyes.png",
+    "line-art/jackie-chan/transparent/eyewear.png",
+    "line-art/jackie-chan/white/eyewear.png",
+    "line-art/jackie-chan/transparent/face-details.png",
+    "line-art/jackie-chan/white/face-details.png",
+    "line-art/jackie-chan/transparent/face-outline.png",
+    "line-art/jackie-chan/white/face-outline.png",
+    "line-art/jackie-chan/transparent/hair.png",
+    "line-art/jackie-chan/white/hair.png",
+    "line-art/jackie-chan/transparent/mouth.png",
+    "line-art/jackie-chan/white/mouth.png",
+    "line-art/jackie-chan/transparent/nose.png",
+    "line-art/jackie-chan/white/nose.png",
+    "line-art/jackie-chan/merged-white.png",
+    "sources/jackie-chan/source.png",
+    "sources/jackie-chan/source-no-bg.png",
+    "line-art/jackie-chan/labels.json",
+    "line-art/jackie-chan/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

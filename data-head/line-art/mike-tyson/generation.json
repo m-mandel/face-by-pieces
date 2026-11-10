@@ -1,0 +1,110 @@
+{
+  "subject": "mike-tyson",
+  "fingerprint": "463ee67f3a7c0b25bb1efddc4d52fdac94921eb03375bc0a9433bd7055897b53",
+  "input_size": [
+    844,
+    1126
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -57,
+    -25,
+    913,
+    945
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "facial-hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "facial-hair"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/mike-tyson/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/mike-tyson/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/mike-tyson/background_removed.png",
+  "overrides": {
+    "note": "The drawing head is larger than the source photo head. Align both photo variants before applying the shared crop.",
+    "photo_transform": {
+      "scale": 1.4,
+      "translate": [
+        -0.23,
+        -0.04
+      ]
+    }
+  },
+  "outputs": [
+    "line-art/mike-tyson/transparent/ears.png",
+    "line-art/mike-tyson/white/ears.png",
+    "line-art/mike-tyson/transparent/eyebrows.png",
+    "line-art/mike-tyson/white/eyebrows.png",
+    "line-art/mike-tyson/transparent/eyes.png",
+    "line-art/mike-tyson/white/eyes.png",
+    "line-art/mike-tyson/transparent/face-details.png",
+    "line-art/mike-tyson/white/face-details.png",
+    "line-art/mike-tyson/transparent/face-outline.png",
+    "line-art/mike-tyson/white/face-outline.png",
+    "line-art/mike-tyson/transparent/facial-hair.png",
+    "line-art/mike-tyson/white/facial-hair.png",
+    "line-art/mike-tyson/transparent/mouth.png",
+    "line-art/mike-tyson/white/mouth.png",
+    "line-art/mike-tyson/transparent/nose.png",
+    "line-art/mike-tyson/white/nose.png",
+    "line-art/mike-tyson/merged-white.png",
+    "sources/mike-tyson/source.png",
+    "sources/mike-tyson/source-no-bg.png",
+    "line-art/mike-tyson/labels.json",
+    "line-art/mike-tyson/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

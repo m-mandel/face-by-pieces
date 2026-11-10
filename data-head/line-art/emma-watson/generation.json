@@ -1,0 +1,103 @@
+{
+  "subject": "emma-watson",
+  "fingerprint": "be5626826296cd85f7be6143da4138c019959cc9d2152d2cd3a8a06c30f663d7",
+  "input_size": [
+    492,
+    660
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    -33,
+    -19,
+    548,
+    562
+  ],
+  "layers": [
+    "earrings",
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "earrings"
+      ]
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/emma-watson/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/emma-watson/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/emma-watson/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/emma-watson/transparent/earrings.png",
+    "line-art/emma-watson/white/earrings.png",
+    "line-art/emma-watson/transparent/ears.png",
+    "line-art/emma-watson/white/ears.png",
+    "line-art/emma-watson/transparent/eyebrows.png",
+    "line-art/emma-watson/white/eyebrows.png",
+    "line-art/emma-watson/transparent/eyes.png",
+    "line-art/emma-watson/white/eyes.png",
+    "line-art/emma-watson/transparent/face-details.png",
+    "line-art/emma-watson/white/face-details.png",
+    "line-art/emma-watson/transparent/face-outline.png",
+    "line-art/emma-watson/white/face-outline.png",
+    "line-art/emma-watson/transparent/hair.png",
+    "line-art/emma-watson/white/hair.png",
+    "line-art/emma-watson/transparent/mouth.png",
+    "line-art/emma-watson/white/mouth.png",
+    "line-art/emma-watson/transparent/nose.png",
+    "line-art/emma-watson/white/nose.png",
+    "line-art/emma-watson/merged-white.png",
+    "sources/emma-watson/source.png",
+    "sources/emma-watson/source-no-bg.png",
+    "line-art/emma-watson/labels.json",
+    "line-art/emma-watson/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}

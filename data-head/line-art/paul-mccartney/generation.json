@@ -1,0 +1,100 @@
+{
+  "subject": "paul-mccartney",
+  "fingerprint": "d3b7467261f3b57f2bf88e6283b8e7634905897b2de39f753477e73edfa304ad",
+  "input_size": [
+    2048,
+    1146
+  ],
+  "canvas_size": [
+    1024,
+    1024
+  ],
+  "crop_box": [
+    1049,
+    50,
+    1377,
+    378
+  ],
+  "layers": [
+    "ears",
+    "eyebrows",
+    "eyes",
+    "face-details",
+    "face-outline",
+    "hair",
+    "mouth",
+    "nose"
+  ],
+  "excluded": {
+    "accessories": "not a retained head layer",
+    "body": "not a retained head layer",
+    "earrings": "below minimum input pixel count",
+    "eyewear": "below minimum input pixel count",
+    "face-piercings": "below minimum input pixel count",
+    "facial-hair": "below minimum input pixel count",
+    "headwear": "below minimum input pixel count",
+    "necklace": "not a retained head layer",
+    "unassigned": "not a retained head layer"
+  },
+  "groups": [
+    {
+      "order": "ordered",
+      "layers": [
+        "face-outline"
+      ]
+    },
+    {
+      "order": "random",
+      "layers": [
+        "eyes",
+        "eyebrows",
+        "nose",
+        "mouth",
+        "hair",
+        "ears"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    },
+    {
+      "order": "ordered",
+      "layers": [
+        "face-details"
+      ]
+    },
+    {
+      "order": "ordered",
+      "layers": []
+    }
+  ],
+  "source": "/Users/moshe/pivenet/app/data/sources/paul-mccartney/source.png",
+  "source_no_bg": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/paul-mccartney/background_removed.png",
+  "cutout_input": "/Users/moshe/pivenet/abstraction/data/sources-no-bg/paul-mccartney/background_removed.png",
+  "overrides": {},
+  "outputs": [
+    "line-art/paul-mccartney/transparent/ears.png",
+    "line-art/paul-mccartney/white/ears.png",
+    "line-art/paul-mccartney/transparent/eyebrows.png",
+    "line-art/paul-mccartney/white/eyebrows.png",
+    "line-art/paul-mccartney/transparent/eyes.png",
+    "line-art/paul-mccartney/white/eyes.png",
+    "line-art/paul-mccartney/transparent/face-details.png",
+    "line-art/paul-mccartney/white/face-details.png",
+    "line-art/paul-mccartney/transparent/face-outline.png",
+    "line-art/paul-mccartney/white/face-outline.png",
+    "line-art/paul-mccartney/transparent/hair.png",
+    "line-art/paul-mccartney/white/hair.png",
+    "line-art/paul-mccartney/transparent/mouth.png",
+    "line-art/paul-mccartney/white/mouth.png",
+    "line-art/paul-mccartney/transparent/nose.png",
+    "line-art/paul-mccartney/white/nose.png",
+    "line-art/paul-mccartney/merged-white.png",
+    "sources/paul-mccartney/source.png",
+    "sources/paul-mccartney/source-no-bg.png",
+    "line-art/paul-mccartney/labels.json",
+    "line-art/paul-mccartney/report.json"
+  ],
+  "framing_policy": "Shared head crop with 6% margin; photo cutout follows the head-layer silhouette"
+}
