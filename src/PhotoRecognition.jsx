@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import './photoRecognition.css'
 
-export default function PhotoRecognition({ photoSrc, roundNumber, viewportHeight, onAnswer }) {
+export default function PhotoRecognition({ photoSrc, roundNumber, viewportHeight, viewportOffset = 0, keyboardLayoutActive = false, onEditingChange, onAnswer }) {
   const [status, setStatus] = useState(photoSrc ? 'loading' : 'unavailable')
   const [attempt, setAttempt] = useState(0)
-  const [recognizes, setRecognizes] = useState(false)
+  const [answerFocused, setAnswerFocused] = useState(false)
   const [guess, setGuess] = useState('')
   const [error, setError] = useState('')
   const headingRef = useRef(null)
@@ -22,6 +22,7 @@ export default function PhotoRecognition({ photoSrc, roundNumber, viewportHeight
 
   const submitGuess = (event) => {
     event.preventDefault()
+    if (!ready || answeredRef.current) return
     if (!guess.trim()) {
       setError('Type a name before you guess.')
       return
@@ -34,13 +35,16 @@ export default function PhotoRecognition({ photoSrc, roundNumber, viewportHeight
   }
 
   return (
-    <main className="ink-app photo-recognition" style={viewportHeight ? { height: viewportHeight } : undefined}>
+    <main
+      className={`ink-app photo-recognition ${keyboardLayoutActive ? 'answer-focused' : ''}`}
+      style={{ height: viewportHeight, '--viewport-offset': `${viewportOffset}px` }}
+    >
       <header className="photo-recognition-header">
         <p className="guess-face-counter">Face {roundNumber} of 5</p>
         <h1 ref={headingRef} tabIndex={-1}>
-          {unavailable ? 'Photo unavailable' : recognizes ? 'Who is it?' : 'Recognize this person?'}
+          {unavailable ? 'Photo unavailable' : 'Who is it?'}
         </h1>
-        <p>{unavailable ? (roundNumber === 5 ? 'You can continue to your results.' : 'You can continue to the next face.') : recognizes ? 'Take another guess using the photo.' : 'Do you recognize the person in this photo?'}</p>
+        <p>{unavailable ? (roundNumber === 5 ? 'You can continue to your results.' : 'You can continue to the next face.') : 'Take another guess using the photo.'}</p>
       </header>
       <div className="recognition-photo" aria-busy={status === 'loading'}>
         {photoSrc && status !== 'error' && (
@@ -56,28 +60,7 @@ export default function PhotoRecognition({ photoSrc, roundNumber, viewportHeight
         {unavailable && <p role="status">The photo isn’t available right now.</p>}
       </div>
       <div className="photo-recognition-actions">
-        {recognizes && ready ? (
-          <form className="photo-guess-form" onSubmit={submitGuess} noValidate>
-            <label className="visually-hidden" htmlFor="photo-guess">Enter their name</label>
-            <input
-              id="photo-guess"
-              autoFocus
-              type="text"
-              placeholder="Their name…"
-              value={guess}
-              maxLength={200}
-              autoComplete="off"
-              autoCapitalize="words"
-              enterKeyHint="go"
-              aria-invalid={Boolean(error)}
-              aria-describedby={error ? 'photo-guess-error' : undefined}
-              onChange={(event) => { setGuess(event.target.value); setError('') }}
-            />
-            <button className="primary-button" type="submit">Submit guess</button>
-            <p id="photo-guess-error" role="status">{error}</p>
-            <button className="text-button" type="button" onClick={() => answer(true)}>I still don’t know</button>
-          </form>
-        ) : unavailable ? (
+        {unavailable ? (
           <>
             {photoSrc && (
               <button className="recognition-choice" onClick={() => { setStatus('loading'); setAttempt(attempt + 1) }}>
@@ -90,8 +73,51 @@ export default function PhotoRecognition({ photoSrc, roundNumber, viewportHeight
           </>
         ) : (
           <>
-            <button className="recognition-choice" disabled={!ready} onClick={() => { if (ready && !answeredRef.current) setRecognizes(true) }}>Yes, I recognize them</button>
-            <button className="recognition-choice" disabled={!ready} onClick={() => answer(false)}>No, I don’t</button>
+            <form className={`guess-form photo-guess-form ${answerFocused ? 'is-editing' : 'has-skip'}`} onSubmit={submitGuess} noValidate>
+              <label className="visually-hidden" htmlFor="photo-guess">Enter their name</label>
+              <div className="guess-answer-row">
+                <div
+                  className={`guess-input ${error ? 'has-error' : ''}`}
+                  onFocus={() => {
+                    if (!ready) return
+                    setAnswerFocused(true)
+                    onEditingChange?.(true)
+                  }}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) {
+                      setAnswerFocused(false)
+                      onEditingChange?.(false)
+                    }
+                  }}
+                >
+                  <input
+                    id="photo-guess"
+                    type="text"
+                    placeholder="Their name…"
+                    value={guess}
+                    maxLength={200}
+                    disabled={!ready}
+                    autoComplete="off"
+                    autoCapitalize="words"
+                    enterKeyHint="go"
+                    aria-invalid={Boolean(error)}
+                    aria-describedby={error ? 'photo-guess-error' : undefined}
+                    onChange={(event) => { setGuess(event.target.value); setError('') }}
+                  />
+                  {answerFocused && (
+                    <button type="submit" aria-label="Submit guess" onPointerDown={(event) => event.preventDefault()}>
+                      Submit
+                    </button>
+                  )}
+                </div>
+                {!answerFocused && (
+                  <button className="reveal-answer-button" type="button" disabled={!ready} onClick={() => answer(false)}>
+                    I don't know :(
+                  </button>
+                )}
+              </div>
+              <p id="photo-guess-error" className="guess-error" aria-live="polite">{error}</p>
+            </form>
             {status === 'loading' && <button className="text-button" onClick={() => answer(null)}>Continue without photo</button>}
           </>
         )}

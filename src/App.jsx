@@ -675,7 +675,17 @@ function GameRound({
   }
 
   if (photoOpen) {
-    return <PhotoRecognition photoSrc={portrait.photoSrc} roundNumber={roundNumber} viewportHeight={viewportHeight} onAnswer={handlePhotoRecognition} />
+    return (
+      <PhotoRecognition
+        photoSrc={portrait.photoSrc}
+        roundNumber={roundNumber}
+        viewportHeight={viewportHeight}
+        viewportOffset={viewportOffset}
+        keyboardLayoutActive={keyboardLayoutActive}
+        onEditingChange={setAnswerFocused}
+        onAnswer={handlePhotoRecognition}
+      />
+    )
   }
 
   return (

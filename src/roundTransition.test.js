@@ -266,31 +266,29 @@ test('five-face sessions reveal only completed results and reset cleanly', async
           await act(async () => { finishOnce() })
           if (revealsAnswer) {
             assert.equal(completions().length, index, 'skip waits for photo recognition before completing the face')
-            assert.equal(textOf(renderer.root.findByType('h1')), 'Recognize this person?')
-            assert.equal(renderer.root.findAllByType('input').length, 0)
+            assert.equal(textOf(renderer.root.findByType('h1')), 'Who is it?')
+            assert.equal(renderer.root.findByType('input').props.disabled, true)
             const photo = renderer.root.findByType('img')
             assert.equal(photo.props.src, `/photo-${round.portraitIndex}.png`)
             assert.equal(photo.props.alt, 'Photo of the person from this round')
             for (const name of names) assert.ok(!JSON.stringify(renderer.toJSON()).includes(name), 'photo screen does not reveal the name')
-            assert.equal(findButtonByText('Yes, I recognize them'), undefined, 'wait for the photo to load before accepting recognition')
+            assert.equal(findButtonByText("I don't know :("), undefined, 'wait for the photo to load before accepting an answer')
             await act(async () => { photo.props.onLoad() })
-            const respond = findButtonByText(index === 2 ? 'Yes, I recognize them' : 'No, I don’t').props.onClick
+            assert.equal(renderer.root.findByType('input').props.disabled, false)
+            assert.equal(findButtonByText('Yes, I recognize them'), undefined, 'there is no separate recognition step')
+            let respond
+            if (index === 2 && photoGuess) {
+              await act(async () => renderer.root.findByType('input').parent.props.onFocus())
+              assert.ok(findButton('Submit guess'))
+              assert.equal(findButtonByText("I don't know :("), undefined)
+              await act(async () => renderer.root.findByType('input').props.onChange({ target: { value: photoAnswer } }))
+              const submitPhoto = renderer.root.findByType('form').props.onSubmit
+              respond = () => submitPhoto({ preventDefault() {} })
+            } else {
+              respond = findButtonByText("I don't know :(").props.onClick
+            }
             commits.length = 0
             await act(async () => { respond(); respond() })
-            if (index === 2) {
-              assert.equal(completions().length, index, 'Yes opens a second guess')
-              assert.equal(textOf(renderer.root.findByType('h1')), 'Who is it?')
-              if (photoGuess) {
-                await act(async () => renderer.root.findByType('input').props.onChange({ target: { value: photoAnswer } }))
-                const submitPhoto = renderer.root.findByType('form').props.onSubmit
-                commits.length = 0
-                await act(async () => { submitPhoto({ preventDefault() {} }); submitPhoto({ preventDefault() {} }) })
-              } else {
-                const stillUnknown = findButtonByText('I still don’t know').props.onClick
-                commits.length = 0
-                await act(async () => { stillUnknown(); stillUnknown() })
-              }
-            }
             await act(async () => { respond(); finishOnce() })
           }
           await resolveImages()
@@ -301,7 +299,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
               outcome: ['correct', 'inaccurate'].includes(action) ? action : 'incorrect',
               submittedAnswer: revealsAnswer ? photoAnswer : answer,
               visibleElements: usesAllClues ? 2 : 1,
-              ...(revealsAnswer && { photoRecognized: index === 2, photoOutcome: index === 2 && photoGuess ? photoGuess : 'incorrect' }),
+              ...(revealsAnswer && { photoRecognized: index === 2 && Boolean(photoGuess), photoOutcome: index === 2 && photoGuess ? photoGuess : 'incorrect' }),
             },
           })
           if (index < 4) {
@@ -316,7 +314,7 @@ test('five-face sessions reveal only completed results and reset cleanly', async
         assert.equal(savedRounds.length, 5)
         assert.deepEqual(savedRounds.map(({ result }) => result), [inaccurate ? 'inaccurate' : 'incorrect', 'correct', 'incorrect', 'incorrect', skipLast ? 'incorrect' : 'correct'])
         assert.deepEqual(savedRounds.map(({ portrait }) => portrait.name), visited.map(({ name }) => name))
-        assert.deepEqual(savedRounds.map(({ photoRecognized }) => photoRecognized), [null, null, true, false, skipLast ? false : null])
+        assert.deepEqual(savedRounds.map(({ photoRecognized }) => photoRecognized), [null, null, Boolean(photoGuess), false, skipLast ? false : null])
         assert.deepEqual(savedRounds.map(({ photoOutcome }) => photoOutcome), [null, null, photoGuess || 'incorrect', 'incorrect', skipLast ? 'incorrect' : null])
         const photoResult = renderer.root.findAllByType('article')[2]
         assert.equal(textOf(photoResult.findByType('h2')), 'Incorrect', 'the sketch is incorrect even when the photo guess is correct')
